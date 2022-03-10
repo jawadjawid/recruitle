@@ -35,8 +35,11 @@ The idea is to create an application similar to Glassdoor/LinkedIn. We want a we
 * Candidates can browse companies
 
 ## Potential Features
-* Send emails on sign-up
 * Video calling capabilities
+* Send emails on sign-up
+* Premium feature maybe
+* Activate emails
+* Password reset
 
 ## Tech Stack
 Node/Express/MongoDB for backend, React on frontend, and GraphQL for data exchange. We will deploy on a VM using Azure.
