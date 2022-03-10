@@ -5,19 +5,15 @@ const app = express();
 const https = require('https');
 const fs = require('fs');
 const path = require("path");
+const resolvers = require('./graphql/resolvers');
+const schema = buildSchema(require("./graphql/schema.js")());
 
-// Construct a schema, using GraphQL schema language
-var schema = buildSchema(`
-  type Query {
-    hello: String
-  }
-`);
+app.use(express.static(path.join(__dirname, "..", "/client/build")));
+app.use(express.static("../client/public"));
 
-// The root provides a resolver function for each API endpoint
 var root = {
-  hello: () => {
-    return 'Hello world!';
-  },
+  hello: resolvers.hello(),
+  boy: resolvers.boy()
 };
 
 app.use('/graphql', graphqlHTTP({
@@ -25,9 +21,6 @@ app.use('/graphql', graphqlHTTP({
   rootValue: root,
   graphiql: true,
 }));
-
-app.use(express.static(path.join(__dirname, "..", "/client/build")));
-app.use(express.static("../client/public"));
 
 var privateKey = fs.readFileSync( 'server.key' );
 var certificate = fs.readFileSync( 'server.crt' );
