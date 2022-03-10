@@ -5,3 +5,4 @@ Thumbs.db
 # node.js
 node_modules
 *-lock.json
+recruitme/client/build/**
