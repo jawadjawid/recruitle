@@ -1,6 +1,13 @@
 # Recruit me!
 Created by: Muhammad Osman Amjad, Ali Al Rawaf, Jawad Jawid
 
+## How to run
+- Clone repo
+- Navigate to ```recruitme```
+- Run ```npm install``` and wait for it to finish
+- Run ```npm start```
+- Done. App should start running on PORT 3000
+
 ## Description
 The idea is to create an application similar to Glassdoor/LinkedIn. We want a web application that will allows companies to post job postings, let candidates apply to postings, let candidates review companies, let candidates submit their salaries. 
 
