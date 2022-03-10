@@ -40,6 +40,7 @@ The idea is to create an application similar to Glassdoor/LinkedIn. We want a we
 * Premium feature maybe
 * Activate emails
 * Password reset
+* Easy apply vs hard apply with leetcode question
 
 ## Tech Stack
 Node/Express/MongoDB for backend, React on frontend, and GraphQL for data exchange. We will deploy on a VM using Azure.
