@@ -1,4 +1,4 @@
-# Recruit me!
+# Recruitle!
 Created by: Muhammad Osman Amjad, Ali Al Rawaf, Jawad Jawid
 
 ## How to run
@@ -33,6 +33,14 @@ The idea is to create an application similar to Glassdoor/LinkedIn. We want a we
 * Search filter on job postings
 * Candidate reviews company
 * Candidates can browse companies
+
+## Potential Features
+* Video calling capabilities
+* Send emails on sign-up
+* Premium feature maybe
+* Activate emails
+* Password reset
+* Easy apply vs hard apply with leetcode question
 
 ## Tech Stack
 Node/Express/MongoDB for backend, React on frontend, and GraphQL for data exchange. We will deploy on a VM using Azure.
