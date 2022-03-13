@@ -6,3 +6,4 @@ Thumbs.db
 node_modules
 *-lock.json
 recruitme/client/build/**
+recruitme/server/db
