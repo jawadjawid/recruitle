@@ -7,20 +7,54 @@ const fs = require('fs');
 const path = require("path");
 const resolvers = require('./graphql/resolvers');
 const schema = buildSchema(require("./graphql/schema.js")());
+const auth = require('./auth');
 
-app.use(express.static(path.join(__dirname, "..", "/client/build")));
-app.use(express.static("../client/public"));
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
 
 var root = {
   hello: resolvers.hello(),
   boy: resolvers.boy()
 };
 
+const cookie = require('cookie');
+
+const session = require('express-session');
+app.use(session({
+    secret: 'please change this secret',
+    resave: false,
+    saveUninitialized: true,
+}));
+
 app.use('/graphql', graphqlHTTP({
   schema: schema,
   rootValue: root,
   graphiql: true,
 }));
+
+app.use(express.static(path.join(__dirname, "..", "/client/build")));
+app.use(express.static("../client/public"));
+app.get('*', (req, res) => res.sendFile(path.resolve('../client', 'build', 'index.html')));
+
+app.use(function (req, res, next){
+  let cookies = cookie.parse(req.headers.cookie || '');
+  req.username = (cookies.username)? cookies.username : null;
+  console.log("HTTPS request", req.username, req.method, req.url, req.body);
+  next();
+});
+
+app.use(function (req, res, next){
+  console.log("HTTPS request", req.method, req.url, req.body);
+  next();
+});
+
+const isAuthenticated = function(req, res, next) {
+  if (!req.session.username) return res.status(401).end("access denied");
+  next();
+};
+
+// curl -X POST -d "username=admin&password=pass4admin" https://localhost:3000/signup/
+app.post('/signup/', auth.signup);
 
 var privateKey = fs.readFileSync( 'server.key' );
 var certificate = fs.readFileSync( 'server.crt' );
