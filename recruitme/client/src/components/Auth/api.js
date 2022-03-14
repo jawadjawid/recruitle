@@ -14,7 +14,10 @@ function send(method, url, data, callback){
 }
 
 export function signup(username, password, callback){
-    console.log(username)
     send("POST", "/signup/", {username, password}, callback);
+}
+
+export function signin(username, password, callback){
+    send("POST", "/signin/", {username, password}, callback);
 }
     

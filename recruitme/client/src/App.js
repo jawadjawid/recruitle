@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import AboutPage from './components/AboutPage';
 import SignUp from './components/Auth/SignUp';
+import SignIn from './components/Auth/SignIn';
 import NavBar from './components/NavBar';
 
 export default function BasicExample() {
@@ -15,7 +16,7 @@ export default function BasicExample() {
       <NavBar/>
       <Routes>
         <Route path='/employer' element={<AboutPage />}/>
-        <Route path='/signin' element={<AboutPage />}/>
+        <Route path='/signin' element={<SignIn />}/>
         <Route path='/signup' element={<SignUp />}/>
       </Routes>
     </Router>

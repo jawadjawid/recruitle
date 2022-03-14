@@ -33,7 +33,7 @@ app.use('/graphql', graphqlHTTP({
 }));
 
 app.use(express.static(path.join(__dirname, "..", "/client/build")));
-app.use(express.static("../client/public"));
+// app.use(express.static("../client/public"));
 app.get('*', (req, res) => res.sendFile(path.resolve('../client', 'build', 'index.html')));
 
 app.use(function (req, res, next){
@@ -55,6 +55,9 @@ const isAuthenticated = function(req, res, next) {
 
 // curl -X POST -d "username=admin&password=pass4admin" https://localhost:3000/signup/
 app.post('/signup/', auth.signup);
+
+// curl -X POST -d "username=admin&password=pass4admin" https://localhost:3000/signin/
+app.post('/signin/', auth.signin);
 
 var privateKey = fs.readFileSync( 'server.key' );
 var certificate = fs.readFileSync( 'server.crt' );
