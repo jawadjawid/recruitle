@@ -20,6 +20,7 @@ export default function NavBar() {
         <Nav.Link href="employer">Employer</Nav.Link>
         <Nav.Link href="signin">Sign In</Nav.Link>
         <Nav.Link href="signup">Sign Up</Nav.Link>
+        <Nav.Link href="profile">Profile</Nav.Link>
       </Nav>
       );
     } else {

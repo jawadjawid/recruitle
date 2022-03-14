@@ -3,7 +3,7 @@ Created by: Muhammad Osman Amjad, Ali Al Rawaf, Jawad Jawid
 
 ## How to run
 - Clone repo
-- Navigate to ```recruitme```
+- Navigate to ```recruitle```
 - Run ```npm install``` and wait for it to finish
 - Run ```npm start```
 - Done. App should start running on PORT 3000

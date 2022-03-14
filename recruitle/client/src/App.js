@@ -18,6 +18,7 @@ export default function BasicExample() {
         <Route path='/employer' element={<AboutPage />}/>
         <Route path='/signin' element={<SignIn />}/>
         <Route path='/signup' element={<SignUp />}/>
+        <Route path='/profile' element={<AboutPage />}/>
       </Routes>
     </Router>
   );
