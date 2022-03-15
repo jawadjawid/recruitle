@@ -59,6 +59,9 @@ app.post('/signup/', auth.signup);
 // curl -X POST -d "username=admin&password=pass4admin" https://localhost:3000/signin/
 app.post('/signin/', auth.signin);
 
+// curl -X POST -d https://localhost:3000/signout/
+app.get('/signout/', auth.signout);
+
 var privateKey = fs.readFileSync( 'server.key' );
 var certificate = fs.readFileSync( 'server.crt' );
 var config = {
