@@ -26,7 +26,6 @@ export default function NavBar() {
     if (!isSignedIn){
       return (      
       <Nav className="me-auto">
-        <Nav.Link href="employer">Employer</Nav.Link>
         <Nav.Link href="signin">Sign In</Nav.Link>
         <Nav.Link href="signup">Sign Up</Nav.Link>
       </Nav>
