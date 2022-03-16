@@ -20,9 +20,9 @@ module.exports = {
                 });
             });
         });
-      },
+    },
 
-      signin: (req, res, next) => {
+    signin: (req, res, next) => {
         var username = req.body.username;
         var password = req.body.password;
         // retrieve user from the database
@@ -36,8 +36,8 @@ module.exports = {
                 res.setHeader('Set-Cookie', cookie.serialize('username', username, {
                     path : '/', 
                     maxAge: 60 * 60 * 24 * 7
-              }));
-              return res.json(username);
+                }));
+                return res.json(username);
             });
         });
     }
