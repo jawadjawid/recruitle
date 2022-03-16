@@ -7,3 +7,4 @@ node_modules
 *-lock.json
 recruitle/client/build/**
 recruitle/server/db
+recruitle/server/db/users.db

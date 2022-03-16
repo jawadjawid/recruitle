@@ -33,10 +33,6 @@ app.use('/graphql', graphqlHTTP({
   graphiql: true,
 }));
 
-app.use(express.static(path.join(__dirname, "..", "/client/build")));
-// app.use(express.static("../client/public"));
-app.get('*', (req, res) => res.sendFile(path.resolve('../client', 'build', 'index.html')));
-
 app.use(function (req, res, next){
   let cookies = cookie.parse(req.headers.cookie || '');
   req.username = (cookies.username)? cookies.username : null;
@@ -59,6 +55,12 @@ app.post('/signup/', auth.signup);
 
 // curl -X POST -d "username=admin&password=pass4admin" https://localhost:3000/signin/
 app.post('/signin/', auth.signin);
+
+// curl -X POST -d https://localhost:3000/signout/
+app.get('/signout/', auth.signout);
+
+app.use(express.static(path.join(__dirname, "..", "/client/build")));
+app.get('*', (req, res) => res.sendFile(path.resolve('../client', 'build', 'index.html')));
 
 var privateKey = fs.readFileSync( 'server.key' );
 var certificate = fs.readFileSync( 'server.crt' );
