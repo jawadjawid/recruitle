@@ -14,7 +14,8 @@ app.use(bodyParser.json());
 
 var root = {
   hello: resolvers.hello(),
-  boy: resolvers.boy()
+  boy: resolvers.boy(),
+  user: resolvers.user(),
 };
 
 const cookie = require('cookie');
