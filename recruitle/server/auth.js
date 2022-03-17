@@ -1,13 +1,24 @@
 const bcrypt = require('bcrypt');
-
 const Datastore = require('nedb');
-const users = new Datastore({ filename: 'db/users.db', autoload: true });
+// const users = new Datastore({ filename: 'db/users.db', autoload: true });
 const cookie = require('cookie');
+const users = require('./database/models/user');
+const { mongo } = require('mongoose');
 
 module.exports = {
     signup: (req, res, next) => {
         let username = req.body.username;
         let password = req.body.password;
+        
+        const user = new User({
+            username: "Hi",
+        })
+        user.save()
+        .then(res.status(200).json(user))
+        .catch(error => {
+            res.status(500).json({ error: error });;
+        });
+
         users.findOne({_id: username}, function(err, user){
             if (err) return res.status(500).end(err);
             if (user) return res.status(409).end("username " + username + " already exists");
@@ -43,12 +54,22 @@ module.exports = {
     },
 
     signout: (req, res, next) => {
-        console.log("here")
       res.setHeader('Set-Cookie', cookie.serialize('username', '', {
         path : '/', 
         maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
       }));
       req.session.destroy();
       return res.json("Good");
-    }
+    },
+
+    addUser: (req, res, next) => {
+        const user = new User({
+            username: "Hi",
+        })
+        user.save()
+        .then(res.status(200).json(user))
+        .catch(error => {
+            res.status(500).json({ error: error });;
+        });
+    },
  }

@@ -26,6 +26,15 @@ app.use(session({
     saveUninitialized: true,
 }));
 
+const mongoose = require("mongoose");
+const db = require('./database/config').mongoURI;
+const MongoDBStore = require("connect-mongodb-session")(session);
+const mongoDBstore = new MongoDBStore({ uri: db, collection: "Recruitle" });
+
+mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(()=> console.log('Mongo Connected...'))
+    .catch(err => console.log(err));
+
 app.use('/graphql', graphqlHTTP({
   schema: schema,
   rootValue: root,
@@ -57,6 +66,8 @@ app.post('/signin/', auth.signin);
 
 // curl -X POST -d https://localhost:3000/signout/
 app.get('/signout/', auth.signout);
+
+app.get('/addUser/', auth.addUser);
 
 app.use(express.static(path.join(__dirname, "..", "/client/build")));
 app.get('*', (req, res) => res.sendFile(path.resolve('../client', 'build', 'index.html')));
