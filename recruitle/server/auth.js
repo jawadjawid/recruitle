@@ -7,22 +7,25 @@ const { mongo } = require('mongoose');
 
 module.exports = {
     signup: (req, res, next) => {
-        let username = req.body.username;
+        let email = req.body.email;
         let password = req.body.password;
-    
+        let firstName = req.body.firstName;
+        let lastName = req.body.lastName;
+        let userType = req.body.userType;
+
         bcrypt.genSalt(10, function(err, salt) {
             bcrypt.hash(password, salt, function(err, hash) {
                 const newUser = new user({
-                    username: username,
+                    email: email,
                     password: hash,
+                    firstName: firstName,
+                    lastName: lastName,
+                    userType: userType
                 })
-                 newUser.save()
-                .then(smth => {
-                    res.status(200).json(newUser)
-                })
-                .catch(error => {
-                    console.log(error)
-                    return res.status(500).json({error})
+
+                newUser.save(function (err, user) {
+                    if (err) return res.status(500).json({err});
+                    return res.status(200).json({user});
                 });
             });
         });
@@ -55,17 +58,5 @@ module.exports = {
       }));
       req.session.destroy();
       return res.json("Good");
-    },
-
-    addUser: (req, res, next) => {
-        const user = new User({
-            username: "Hi",
-        })
-        user.save()
-        .then(res.status(200).json(user))
-        .catch(error => {
-            console.log("hi")
-            // res.status(500).json({ error: error });;
-        });
     },
  }

@@ -39,7 +39,7 @@ export default function SignUpPage() {
                 <ToggleButton value="employer">Employer</ToggleButton>
             </ToggleButtonGroup>
         </Box>
-        <SignUp/>
+        <SignUp userType={signUpType}/>
     </React.Fragment>
   );
 }

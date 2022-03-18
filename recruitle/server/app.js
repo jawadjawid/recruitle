@@ -68,8 +68,6 @@ app.post('/signin/', auth.signin);
 // curl -X POST -d https://localhost:3000/signout/
 app.get('/signout/', auth.signout);
 
-app.get('/addUser/', auth.addUser);
-
 app.use(express.static(path.join(__dirname, "..", "/client/build")));
 app.get('*', (req, res) => res.sendFile(path.resolve('../client', 'build', 'index.html')));
 

@@ -1,11 +1,11 @@
 import { send } from '../api.js';
 
-export function signup(username, password, callback){
-    send("POST", "/signup/", {username, password}, callback);
+export function signup(firstName, lastName, email, password, userType, callback){
+    send("POST", "/signup/", {firstName, lastName, email, password, userType}, callback);
 }
 
-export function signin(username, password, callback){
-    send("POST", "/signin/", {username, password}, callback);
+export function signin(email, password, callback){
+    send("POST", "/signin/", {email, password}, callback);
 }
 
 export function signout (callback){
