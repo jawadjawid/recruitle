@@ -1,33 +1,28 @@
 const bcrypt = require('bcrypt');
-const Datastore = require('nedb');
+// const Datastore = require('nedb');
 // const users = new Datastore({ filename: 'db/users.db', autoload: true });
 const cookie = require('cookie');
-const users = require('./database/models/user');
+const user = require('./database/models/user');
 const { mongo } = require('mongoose');
 
 module.exports = {
     signup: (req, res, next) => {
         let username = req.body.username;
         let password = req.body.password;
-        
-        const user = new User({
-            username: "Hi",
-        })
-        user.save()
-        .then(res.status(200).json(user))
-        .catch(error => {
-            res.status(500).json({ error: error });;
-        });
-
-        users.findOne({_id: username}, function(err, user){
-            if (err) return res.status(500).end(err);
-            if (user) return res.status(409).end("username " + username + " already exists");
-            bcrypt.genSalt(10, function(err, salt) {
-                bcrypt.hash(password, salt, function(err, hash) {
-                    users.update({_id: username},{_id: username, password: hash}, {upsert: true}, function(err){
-                        if (err) return res.status(500).end(err);
-                        return res.json(username);
-                    });
+    
+        bcrypt.genSalt(10, function(err, salt) {
+            bcrypt.hash(password, salt, function(err, hash) {
+                const newUser = new user({
+                    username: username,
+                    password: hash,
+                })
+                 newUser.save()
+                .then(smth => {
+                    res.status(200).json(newUser)
+                })
+                .catch(error => {
+                    console.log(error)
+                    return res.status(500).json({error})
                 });
             });
         });
@@ -69,7 +64,8 @@ module.exports = {
         user.save()
         .then(res.status(200).json(user))
         .catch(error => {
-            res.status(500).json({ error: error });;
+            console.log("hi")
+            // res.status(500).json({ error: error });;
         });
     },
  }
