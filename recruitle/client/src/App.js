@@ -26,12 +26,6 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
-// apollo client setup
-const client = new ApolloClient({
-  uri: 'https://localhost:3000/graphql',
-  cache: new InMemoryCache()
-});
-
 export default function BasicExample() { 
   const [isSignedIn, setIsSignedIn] = useState(false);
 
