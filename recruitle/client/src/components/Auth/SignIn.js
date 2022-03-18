@@ -50,7 +50,7 @@ export default function SignIn(props) {
         setSnackBarOpen(true);
         setSnackBarMsg("Welcome " + user.firstName);
         setSeverity("success");
-        setTimeout(function(){window.location.href = '/';}, 500);
+        setTimeout(function(){window.location.href = '/profile';}, 200);
       }
     });
   };
