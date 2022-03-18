@@ -11,12 +11,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { signup } from './api.js';
 import { useNavigate  } from "react-router-dom";
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
-
-const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+import SnackBarAlert from '../SnackBarAlert';
 
 function Copyright(props) {
   return (
@@ -38,13 +33,18 @@ export default function SignUp(props) {
   const [snackBarMsg, setSnackBarMsg] = React.useState("");
   const [severity, setSeverity] = React.useState("success");
 
+  const handleSnackBarClose = (event, reason) => {
+    if (reason === 'clickaway')
+        return;
+    setSnackBarOpen(false);
+  };
+
   const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     signup(data.get('firstName'), data.get('lastName'), data.get('email'), data.get('password'), props.userType, function(err, user) {
         if (err){
-          console.log(err)
           setSnackBarOpen(true);
           setSnackBarMsg("Sign up fail!");
           setSeverity("error");
@@ -55,13 +55,6 @@ export default function SignUp(props) {
           setSeverity("success");
         }
       });
-  };
-
-  const handleSnackBarClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setSnackBarOpen(false);
   };
 
   return (
@@ -140,11 +133,7 @@ export default function SignUp(props) {
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
-      <Snackbar open={snackBarOpen} autoHideDuration={6000} onClose={handleSnackBarClose}>
-        <Alert onClose={handleSnackBarClose} severity={severity} sx={{ width: '100%' }}>
-          {snackBarMsg}
-        </Alert>
-      </Snackbar>
+      <SnackBarAlert open={snackBarOpen} severity={severity} msg={snackBarMsg} handleSnackBarClose={handleSnackBarClose} />
     </ThemeProvider>
   );
 }

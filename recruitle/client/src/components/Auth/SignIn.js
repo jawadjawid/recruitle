@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { signin } from './api.js';
+import SnackBarAlert from '../SnackBarAlert';
 
 function Copyright(props) {
   return (
@@ -27,12 +28,30 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
+  const [snackBarOpen, setSnackBarOpen] = React.useState(false);
+  const [snackBarMsg, setSnackBarMsg] = React.useState("");
+  const [severity, setSeverity] = React.useState("success");
+
+  const handleSnackBarClose = (event, reason) => {
+    if (reason === 'clickaway')
+        return;
+    setSnackBarOpen(false);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     signin(data.get('email'), data.get('password'), function(err, user) {
-        if (err) console.log(err);
-        window.location.href = '/';
+      if (err){
+        setSnackBarOpen(true);
+        setSnackBarMsg("Sign in fail!");
+        setSeverity("error");
+      } 
+      else {
+        setSnackBarOpen(true);
+        setSnackBarMsg("Welcome " + user.firstName);
+        setSeverity("success");
+      }
     });
   };
 
@@ -96,6 +115,7 @@ export default function SignIn() {
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
+      <SnackBarAlert open={snackBarOpen} severity={severity} msg={snackBarMsg} handleSnackBarClose={handleSnackBarClose} />
     </ThemeProvider>
   );
 }
