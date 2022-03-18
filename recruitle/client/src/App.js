@@ -5,6 +5,11 @@ import {
   ApolloProvider,
 } from '@apollo/client';
 import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+} from '@apollo/client';
+import {
   BrowserRouter as Router,
   Routes,
   Route,
@@ -16,6 +21,12 @@ import NavBar from './components/NavBar';
 import CreditsPage from './components/CreditsPage';
 import { getUsername } from './components/api';
 
+const client = new ApolloClient({
+  uri: 'https://localhost:3000/graphql',
+  cache: new InMemoryCache()
+});
+
+// apollo client setup
 const client = new ApolloClient({
   uri: 'https://localhost:3000/graphql',
   cache: new InMemoryCache()
