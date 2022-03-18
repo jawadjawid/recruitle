@@ -41,7 +41,6 @@ module.exports = {
             bcrypt.compare(password, user.password, function(err, result) {
                 if (err) return res.status(500).end("error");
                 if (!result) return res.status(401).end("access denied"); 
-                console.log("email is" + user.email)
                 req.session.email = result.email;  
                 res.setHeader('Set-Cookie', cookie.serialize('username', user.email, {
                     path : '/', 
