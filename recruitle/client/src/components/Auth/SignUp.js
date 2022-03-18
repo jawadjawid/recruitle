@@ -12,6 +12,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { signup } from './api.js';
 import { useNavigate  } from "react-router-dom";
 import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function Copyright(props) {
   return (
@@ -31,17 +36,24 @@ const theme = createTheme();
 export default function SignUp(props) {
   const [snackBarOpen, setSnackBarOpen] = React.useState(false);
   const [snackBarMsg, setSnackBarMsg] = React.useState("");
+  const [severity, setSeverity] = React.useState("success");
 
   const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     signup(data.get('firstName'), data.get('lastName'), data.get('email'), data.get('password'), props.userType, function(err, user) {
-        if (err) console.log(err);
-        setSnackBarOpen(true);
-        setSnackBarMsg("hi");
-        navigate('/signin');
-
+        if (err){
+          console.log(err)
+          setSnackBarOpen(true);
+          setSnackBarMsg("Sign up fail!");
+          setSeverity("error");
+        } 
+        else {
+          setSnackBarOpen(true);
+          setSnackBarMsg("Sign up success!");
+          setSeverity("success");
+        }
       });
   };
 
@@ -128,12 +140,11 @@ export default function SignUp(props) {
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
-      <Snackbar
-        open={snackBarOpen}
-        autoHideDuration={6000}
-        onClose={handleSnackBarClose}
-        message={snackBarMsg}
-      />
+      <Snackbar open={snackBarOpen} autoHideDuration={6000} onClose={handleSnackBarClose}>
+        <Alert onClose={handleSnackBarClose} severity={severity} sx={{ width: '100%' }}>
+          {snackBarMsg}
+        </Alert>
+      </Snackbar>
     </ThemeProvider>
   );
 }
