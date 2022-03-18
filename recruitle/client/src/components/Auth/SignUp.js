@@ -10,6 +10,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { signup } from './api.js';
+import { useNavigate  } from "react-router-dom";
+import Snackbar from '@mui/material/Snackbar';
 
 function Copyright(props) {
   return (
@@ -26,14 +28,28 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignUp() {
+export default function SignUp(props) {
+  const [snackBarOpen, setSnackBarOpen] = React.useState(false);
+  const [snackBarMsg, setSnackBarMsg] = React.useState("");
+
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    signup(data.get('email'), data.get('password'), function(err, user) {
+    signup(data.get('firstName'), data.get('lastName'), data.get('email'), data.get('password'), props.userType, function(err, user) {
         if (err) console.log(err);
-        window.location.href = '/';
-    });
+        setSnackBarOpen(true);
+        setSnackBarMsg("hi");
+        navigate('/signin');
+
+      });
+  };
+
+  const handleSnackBarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackBarOpen(false);
   };
 
   return (
@@ -112,6 +128,12 @@ export default function SignUp() {
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
+      <Snackbar
+        open={snackBarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackBarClose}
+        message={snackBarMsg}
+      />
     </ThemeProvider>
   );
 }
