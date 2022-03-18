@@ -30,7 +30,7 @@ app.use(session({
 const mongoose = require("mongoose");
 const db = require('./database/config').mongoURI;
 const MongoDBStore = require("connect-mongodb-session")(session);
-const mongoDBstore = new MongoDBStore({ uri: db, collection: "Recruitle" });
+// const mongoDBstore = new MongoDBStore({ uri: db, collection: "Recruitle" });
 
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(()=> console.log('Mongo Connected...'))

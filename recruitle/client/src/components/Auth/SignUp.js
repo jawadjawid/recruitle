@@ -10,7 +10,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { signup } from './api.js';
-import { useNavigate  } from "react-router-dom";
 import SnackBarAlert from '../SnackBarAlert';
 
 function Copyright(props) {
@@ -38,21 +37,21 @@ export default function SignUp(props) {
     setSnackBarOpen(false);
   };
 
-  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     signup(data.get('firstName'), data.get('lastName'), data.get('email'), data.get('password'), props.userType, function(err, user) {
         if (err){
+          console.log(err);
           setSnackBarOpen(true);
-          setSnackBarMsg("Sign up fail!");
+          setSnackBarMsg(err);
           setSeverity("error");
         } 
         else {
           setSnackBarOpen(true);
           setSnackBarMsg("Sign up success!");
           setSeverity("success");
-          navigate("/");
+          setTimeout(function(){window.location.href = '/signin';}, 1000);
         }
       });
   };

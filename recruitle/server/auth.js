@@ -3,7 +3,22 @@ const bcrypt = require('bcrypt');
 // const users = new Datastore({ filename: 'db/users.db', autoload: true });
 const cookie = require('cookie');
 const user = require('./database/models/user');
-const { mongo } = require('mongoose');
+
+function resolveSignupError(error){
+    if (!error.errors)
+        return "Error signing up"
+    errors = error.errors
+    if(errors.firstName)
+        return errors.firstName.message;
+    else if(errors.lastName)
+        return errors.lastName.message;
+    else if(errors.password)
+        return errors.password.message;
+    else if(errors.email)
+        return errors.email.message;
+    else if(errors.userType)
+        return errors.userType.message;
+}
 
 module.exports = {
     signup: (req, res, next) => {
@@ -24,7 +39,10 @@ module.exports = {
                 })
 
                 newUser.save(function (err, user) {
-                    if (err) return res.status(500).json({err});
+                    if (err) {
+                        err = resolveSignupError(err).split("Path")[1];
+                        return res.status(500).end(err);
+                    };
                     return res.status(200).json({user});
                 });
             });
