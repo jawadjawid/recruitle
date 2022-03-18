@@ -5,18 +5,13 @@ const app = express();
 const https = require('https');
 const fs = require('fs');
 const path = require("path");
-const resolvers = require('./graphql/resolvers');
-const schema = buildSchema(require("./graphql/schema.js")());
+//const resolvers = require('./graphql/resolvers');
+const schema = require('./graphql/schema');
+//const schema = buildSchema(require("./graphql/schema.js")());
 const auth = require('./auth');
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
-
-var root = {
-  hello: resolvers.hello(),
-  boy: resolvers.boy(),
-  user: resolvers.user(),
-};
 
 const cookie = require('cookie');
 
@@ -38,7 +33,6 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
 
 app.use('/graphql', graphqlHTTP({
   schema: schema,
-  rootValue: root,
   graphiql: true,
 }));
 
