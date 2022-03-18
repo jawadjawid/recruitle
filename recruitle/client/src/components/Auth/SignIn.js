@@ -11,6 +11,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { signin } from './api.js';
 import SnackBarAlert from '../SnackBarAlert';
+import { useNavigate  } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -38,6 +39,7 @@ export default function SignIn() {
     setSnackBarOpen(false);
   };
 
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -51,6 +53,7 @@ export default function SignIn() {
         setSnackBarOpen(true);
         setSnackBarMsg("Welcome " + user.firstName);
         setSeverity("success");
+        setTimeout(function(){window.location.href = '/';}, 1000);
       }
     });
   };

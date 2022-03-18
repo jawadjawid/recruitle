@@ -53,6 +53,7 @@ export default function SignUp(props) {
           setSnackBarOpen(true);
           setSnackBarMsg("Sign up success!");
           setSeverity("success");
+          navigate("/");
         }
       });
   };
