@@ -34,6 +34,7 @@ export default function BasicExample() {
       <Router>
         <NavBar/>
         <Routes>
+          <Route path='/' element={<SignIn isSignedIn={isSignedIn} />}/>
           <Route path='/signin' element={<SignIn isSignedIn={isSignedIn} />}/>
           <Route path='/signup' element={<SignUpPage isSignedIn={isSignedIn}/>}/>
           <Route path='/profile' element={<ProfilePage isSignedIn={isSignedIn}/>}/>

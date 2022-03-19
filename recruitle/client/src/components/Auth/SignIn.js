@@ -8,22 +8,35 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Paper from '@mui/material/Paper';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { signin } from './api.js';
 import SnackBarAlert from '../SnackBarAlert';
+import Image from '../../media/background.jpg';
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="https://localhost:3000/">
+      Recruitle
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
 }
+
+const styles = {
+  paperContainer: {
+      backgroundImage: `url(${Image})`,
+      borderRadius: '0px',
+      width: '100%',
+      height: 1200,
+      minHeight: '100%',
+      backgroundSize: 'cover'
+    }
+};
 
 const theme = createTheme();
 export default function SignIn(props) {
@@ -57,26 +70,26 @@ export default function SignIn(props) {
 
   function authResolver(){
     if (props.isSignedIn){
-      window.location.href = '/';
+      window.location.href = '/profile';
     } else {
       return (  
+        <Paper style={styles.paperContainer}>
         <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <Box
             sx={{
-              marginTop: 8,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main', marginTop: 19 }}>
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <Box  component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -121,6 +134,7 @@ export default function SignIn(props) {
         </Container>
         <SnackBarAlert open={snackBarOpen} severity={severity} msg={snackBarMsg} handleSnackBarClose={handleSnackBarClose} />
       </ThemeProvider>
+      </Paper>
         );
     }
   }

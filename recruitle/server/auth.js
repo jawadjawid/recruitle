@@ -1,6 +1,4 @@
 const bcrypt = require('bcrypt');
-// const Datastore = require('nedb');
-// const users = new Datastore({ filename: 'db/users.db', autoload: true });
 const cookie = require('cookie');
 const applicant = require('./database/models/applicant');
 const employer = require('./database/models/employer');
