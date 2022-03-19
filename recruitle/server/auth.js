@@ -119,10 +119,13 @@ module.exports = {
     },
 
     signout: (req, res, next) => {
-      res.setHeader('Set-Cookie', cookie.serialize('username', '', {
+      res.setHeader('Set-Cookie', [cookie.serialize('username', '', {
         path : '/', 
         maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
-      }));
+      }), cookie.serialize('userType', '', {
+        path : '/', 
+        maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
+      })]);
       req.session.destroy();
       return res.json("Good");
     },
