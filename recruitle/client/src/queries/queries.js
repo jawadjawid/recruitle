@@ -12,7 +12,7 @@ const GET_BOOKS = gql`
 
 const GET_USER = gql`
   query ($id: ID) {
-    user(id: $id) {
+    applicant(id: $id) {
       id
       firstName
       lastName

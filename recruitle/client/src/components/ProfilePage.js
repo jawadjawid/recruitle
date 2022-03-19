@@ -1,8 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { GET_USER } from '../queries/queries';
 import { getUsername } from './api.js';
-import React, { useEffect, useState } from "react";
-
+import React from "react";
 
 export default function ProfilePage() {
     const username = getUsername();
@@ -11,13 +10,13 @@ export default function ProfilePage() {
     });
 
     const displayUserDetails = () => {
-        if (data && data.user) {
+        if (data && data.applicant) {
             return (
                 <div>
-                <h2>{ data.user.id }</h2>
-                <p>{ data.user.firstName }</p>
-                <p>{ data.user.lastName }</p>
-                <p>{ data.user.email }</p>
+                <h2>{ data.applicant.id }</h2>
+                <p>{ data.applicant.firstName }</p>
+                <p>{ data.applicant.lastName }</p>
+                <p>{ data.applicant.email }</p>
                 </div>
             );
         }

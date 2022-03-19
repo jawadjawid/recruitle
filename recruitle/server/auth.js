@@ -92,18 +92,25 @@ module.exports = {
                      bcrypt.compare(password, user.password, function(err, result) {
                         if (err) return res.status(500).end("error");
                         if (!result) return res.status(401).end("access denied"); 
-                        // req.session.email = result.email;  
-                        console.log("hi" + user)
                         res.setHeader('Set-Cookie', cookie.serialize('username', user.id, {
                             path : '/', 
                             maxAge: 60 * 60 * 24 * 7
                         }));
-                        console.log("jas")
                         return res.json(user);
                     })
                 });
-            }
-            // return res.json(bcrypt(password, user.password, signinCallBack));
+            }else{
+                bcrypt.compare(password, user.password, function(err, result) {
+                    if (err) return res.status(500).end("error");
+                    if (!result) return res.status(401).end("access denied"); 
+                    // req.session.email = result.email;  
+                    res.setHeader('Set-Cookie', cookie.serialize('username', user.id, {
+                        path : '/', 
+                        maxAge: 60 * 60 * 24 * 7
+                    }));
+                    return res.json(user);
+                })
+            }           
         });
     },
 

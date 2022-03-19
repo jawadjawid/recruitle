@@ -11,10 +11,10 @@ const {
 } = graphql;
 const _ = require('lodash');
 // project imports
-const User = require('../database/models/applicant');
+const Applicant = require('../database/models/applicant');
 
-const UserType = new GraphQLObjectType({
-  name: 'User',
+const ApplicantType = new GraphQLObjectType({
+  name: 'Applicant',
   fields: () => ({
     id: { type: GraphQLID },
     firstName: { type: GraphQLString },
@@ -41,14 +41,14 @@ const UserType = new GraphQLObjectType({
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
-    user: {
-      type: UserType,
+    applicant: {
+      type: ApplicantType,
       args: { id: { type: GraphQLID }},
       resolve(parent, args) {
         //return {id: args.id, firstName: "osman", lastName: "aj", emailAddress: "ag"}
-        //return User.findById(args.id);
+        //return Applicant.findById(args.id);
         console.log(args.id)
-        return User.findOne({"_id": args.id})
+        return Applicant.findOne({"_id": args.id})
       }
     }
     // author: {
