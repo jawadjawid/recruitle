@@ -5,11 +5,6 @@ import {
   ApolloProvider,
 } from '@apollo/client';
 import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-} from '@apollo/client';
-import {
   BrowserRouter as Router,
   Routes,
   Route,
