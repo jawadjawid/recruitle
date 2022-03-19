@@ -42,7 +42,6 @@ export default function SignUp(props) {
     const data = new FormData(event.currentTarget);
     signup(data.get('firstName'), data.get('lastName'), data.get('email'), data.get('password'), data.get('companyName'), props.userType, function(err, user) {
         if (err){
-          console.log(err);
           setSnackBarOpen(true);
           setSnackBarMsg(err);
           setSeverity("error");

@@ -6,15 +6,7 @@ import { signout } from './Auth/api.js';
 import React, { useEffect, useState } from "react";
 import Button from '@mui/material/Button';
 
-export default function NavBar() { 
-  const [isSignedIn, setIsSignedIn] = useState(false);
-
-  useEffect(() => {
-    if(getUsername() !== ''){
-      setIsSignedIn(true);
-    } 
-  });
-
+export default function NavBar(props) { 
   function signoutUser(){ 
     signout(function(err, user) {
       if (err) console.log(err);
@@ -23,11 +15,12 @@ export default function NavBar() {
   };
 
   function buttons(){
-    if (!isSignedIn){
+    if (!props.isSignedIn){
       return (      
       <Nav className="me-auto">
         <Nav.Link href="signin">Sign In</Nav.Link>
         <Nav.Link href="signup">Sign Up</Nav.Link>
+        <Nav.Link href="credits">Credits</Nav.Link>
       </Nav>
       );
     } else {
@@ -35,6 +28,7 @@ export default function NavBar() {
         <Navbar.Collapse className="justify-content-end">
           <Nav className="me-auto">
             <Nav.Link href="profile">Profile</Nav.Link>
+            <Nav.Link href="credits">Credits</Nav.Link>
           </Nav>
           <Nav>
             <Button className="justify-content-end" variant="text" onClick={signoutUser}> Sign out</Button>

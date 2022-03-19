@@ -13,6 +13,7 @@ import ProfilePage from './components/ProfilePage';
 import SignIn from './components/Auth/SignIn';
 import SignUpPage from './components/Auth/SignUpPage';
 import NavBar from './components/NavBar';
+import CreditsPage from './components/CreditsPage';
 import { getUsername } from './components/api';
 
 const client = new ApolloClient({
@@ -32,12 +33,13 @@ export default function BasicExample() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <NavBar/>
+        <NavBar isSignedIn={isSignedIn}/>
         <Routes>
           <Route path='/' element={<SignIn isSignedIn={isSignedIn} />}/>
           <Route path='/signin' element={<SignIn isSignedIn={isSignedIn} />}/>
           <Route path='/signup' element={<SignUpPage isSignedIn={isSignedIn}/>}/>
           <Route path='/profile' element={<ProfilePage isSignedIn={isSignedIn}/>}/>
+          <Route path='/credits' element={<CreditsPage/>}/>
         </Routes>
       </Router>
     </ApolloProvider>
