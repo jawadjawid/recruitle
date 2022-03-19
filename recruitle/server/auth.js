@@ -90,10 +90,13 @@ module.exports = {
                      bcrypt.compare(password, user.password, function(err, result) {
                         if (err) return res.status(500).end("error");
                         if (!result) return res.status(401).end("access denied"); 
-                        res.setHeader('Set-Cookie', cookie.serialize('username', user.id, {
+                        res.setHeader('Set-Cookie', [cookie.serialize('username', user.id, {
                             path : '/', 
                             maxAge: 60 * 60 * 24 * 7
-                        }));
+                        }), cookie.serialize('userType', 'employer', {
+                            path : '/', 
+                            maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
+                        })]);
                         return res.json(user);
                     })
                 });
@@ -102,10 +105,13 @@ module.exports = {
                     if (err) return res.status(500).end("error");
                     if (!result) return res.status(401).end("access denied"); 
                     // req.session.email = result.email;  
-                    res.setHeader('Set-Cookie', cookie.serialize('username', user.id, {
+                    res.setHeader('Set-Cookie', [cookie.serialize('username', user.id, {
                         path : '/', 
                         maxAge: 60 * 60 * 24 * 7
-                    }));
+                    }), cookie.serialize('userType', 'applicant', {
+                        path : '/', 
+                        maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
+                    })]);
                     return res.json(user);
                 })
             }           
@@ -113,10 +119,13 @@ module.exports = {
     },
 
     signout: (req, res, next) => {
-      res.setHeader('Set-Cookie', cookie.serialize('username', '', {
+      res.setHeader('Set-Cookie', [cookie.serialize('username', '', {
         path : '/', 
         maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
-      }));
+      }), cookie.serialize('userType', '', {
+        path : '/', 
+        maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
+      })]);
       req.session.destroy();
       return res.json("Good");
     },

@@ -13,6 +13,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { signin } from './api.js';
 import SnackBarAlert from '../SnackBarAlert';
 import Image from '../../media/background.jpg';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -40,6 +41,7 @@ const styles = {
 
 const theme = createTheme();
 export default function SignIn(props) {
+  const navigate = useNavigate();
   const [snackBarOpen, setSnackBarOpen] = React.useState(false);
   const [snackBarMsg, setSnackBarMsg] = React.useState("");
   const [severity, setSeverity] = React.useState("success");
@@ -70,7 +72,7 @@ export default function SignIn(props) {
 
   function authResolver(){
     if (props.isSignedIn){
-      window.location.href = '/profile';
+      navigate('/profile')
     } else {
       return (  
         <Paper style={styles.paperContainer}>

@@ -10,12 +10,22 @@ const GET_BOOKS = gql`
   }
 `;
 
-const GET_USER = gql`
+const GET_APPLICANT = gql`
   query ($id: ID) {
     applicant(id: $id) {
       id
       firstName
       lastName
+      email
+    }
+  }
+`;
+
+const GET_EMPLOYER = gql`
+  query ($id: ID) {
+    employer(id: $id) {
+      id
+      companyName
       email
     }
   }
@@ -39,4 +49,4 @@ const ADD_BOOK = gql`
   }
 `;
 
-export { GET_BOOKS, GET_USER, GET_AUTHORS, ADD_BOOK };
+export { GET_BOOKS, GET_APPLICANT, GET_EMPLOYER, GET_AUTHORS, ADD_BOOK };

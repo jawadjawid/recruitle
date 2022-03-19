@@ -12,6 +12,7 @@ const {
 const _ = require('lodash');
 // project imports
 const Applicant = require('../database/models/applicant');
+const Employer = require('../database/models/employer');
 
 const ApplicantType = new GraphQLObjectType({
   name: 'Applicant',
@@ -20,6 +21,21 @@ const ApplicantType = new GraphQLObjectType({
     firstName: { type: GraphQLString },
     lastName: { type: GraphQLString },
     email: { type: GraphQLString },
+  })
+});
+
+const EmployerType = new GraphQLObjectType({
+  name: 'Employer',
+  fields: () => ({
+    id: { type: GraphQLID },
+    email: { type: GraphQLString },
+    companyName: { type: GraphQLString },
+    // jobs: {
+    //   type: new GraphQLList(BookType),
+    //    resolve(parent, args) {
+    //      return Jobs.find({employerId: parent.id });
+    //    }
+    // }
   })
 });
 
@@ -47,10 +63,16 @@ const RootQuery = new GraphQLObjectType({
       resolve(parent, args) {
         //return {id: args.id, firstName: "osman", lastName: "aj", emailAddress: "ag"}
         //return Applicant.findById(args.id);
-        console.log(args.id)
         return Applicant.findOne({"_id": args.id})
       }
-    }
+    },
+    employer: {
+      type: EmployerType,
+      args: { id: { type: GraphQLID }},
+      resolve(parent, args) {
+        return Employer.findOne({"_id": args.id})
+      }
+    },
     // author: {
     //   type: AuthorType,
     //   args: { id: { type: GraphQLID }},

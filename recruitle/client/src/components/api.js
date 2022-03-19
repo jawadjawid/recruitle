@@ -13,5 +13,9 @@ export function send(method, url, data, callback){
 }  
 
 export function getUsername(){
-    return document.cookie.replace(/(?:(?:^|.*;\s*)username\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    return document.cookie.split(";")[0].replace(/(?:(?:^|.*;\s*)username\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+}
+
+export function getUsertype(){
+    return document.cookie.split(";")[1].trim().replace(/(?:(?:^|.*;\s*)userType\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 }
