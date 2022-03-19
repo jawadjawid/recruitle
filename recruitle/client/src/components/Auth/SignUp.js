@@ -40,7 +40,7 @@ export default function SignUp(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    signup(data.get('firstName'), data.get('lastName'), data.get('email'), data.get('password'), props.userType, function(err, user) {
+    signup(data.get('firstName'), data.get('lastName'), data.get('email'), data.get('password'), data.get('companyName'), props.userType, function(err, user) {
         if (err){
           console.log(err);
           setSnackBarOpen(true);
@@ -54,6 +54,52 @@ export default function SignUp(props) {
           setTimeout(function(){window.location.href = '/signin';}, 1000);
         }
       });
+  };
+
+  function name(){ 
+    if(props.userType == "applicant"){
+      return (
+        <React.Fragment>
+          <Grid item xs={12} sm={6}>
+          <TextField
+            autoComplete="given-name"
+            name="firstName"
+            required
+            fullWidth
+            id="firstName"
+            label="First Name"
+            autoFocus
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            fullWidth
+            id="lastName"
+            label="Last Name"
+            name="lastName"
+            autoComplete="family-name"
+          />
+        </Grid>
+      </React.Fragment>
+      )
+    } else{
+      return(
+        <React.Fragment>
+        <Grid item xs={12}>
+        <TextField
+          autoComplete="company-name"
+          name="companyName"
+          required
+          fullWidth
+          id="companyName"
+          label="Company Name"
+          autoFocus
+        />
+      </Grid>
+    </React.Fragment>
+      )
+    }
   };
 
   return (
@@ -70,27 +116,7 @@ export default function SignUp(props) {
           >
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    autoComplete="given-name"
-                    name="firstName"
-                    required
-                    fullWidth
-                    id="firstName"
-                    label="First Name"
-                    autoFocus
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="lastName"
-                    label="Last Name"
-                    name="lastName"
-                    autoComplete="family-name"
-                  />
-                </Grid>
+                {name()}
                 <Grid item xs={12}>
                   <TextField
                     required

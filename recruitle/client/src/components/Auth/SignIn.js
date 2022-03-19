@@ -48,7 +48,7 @@ export default function SignIn(props) {
       } 
       else {
         setSnackBarOpen(true);
-        setSnackBarMsg("Welcome " + user.firstName);
+        setSnackBarMsg("Welcome " + user.companyName);
         setSeverity("success");
         setTimeout(function(){window.location.href = '/profile';}, 200);
       }

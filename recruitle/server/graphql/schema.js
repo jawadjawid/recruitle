@@ -11,7 +11,7 @@ const {
 } = graphql;
 const _ = require('lodash');
 // project imports
-const User = require('../database/models/user');
+const User = require('../database/models/applicant');
 
 const UserType = new GraphQLObjectType({
   name: 'User',
