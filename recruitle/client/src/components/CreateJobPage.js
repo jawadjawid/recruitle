@@ -131,6 +131,7 @@ export default function CreateJobPage(props) {
                       ))}
                     </TextField>
                     <TextField
+                      InputLabelProps={{ shrink: true }}
                       type="number"
                       margin="normal"
                       required
