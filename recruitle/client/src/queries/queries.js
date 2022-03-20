@@ -17,6 +17,7 @@ const GET_APPLICANT = gql`
       firstName
       lastName
       email
+      resume
     }
   }
 `;
