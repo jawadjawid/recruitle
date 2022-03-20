@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
-import { GET_EMPLOYER, GET_APPLICANT } from '../queries/queries';
-import { getUsername, getUsertype } from './api.js';
+import { GET_EMPLOYER, GET_APPLICANT } from '../../queries/queries';
+import { getUsername, getUsertype } from '../api.js';
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 
