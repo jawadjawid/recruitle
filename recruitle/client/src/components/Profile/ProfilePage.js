@@ -78,6 +78,18 @@ export default function ProfilePage(props) {
         })
     };
 
+    const handleFirstNameChange = (e) => {
+        setFirstName(e.target.value)
+    }
+
+    const handleLastNameChange = (e) => {
+        setLastName(e.target.value)
+    }
+
+    const handleCompanyNameChange = (e) => {
+        setCompanyName(e.target.value)
+    }
+
     const displayApplicantDetails = () => {  
         if (data && data.applicant) { 
             return (
@@ -106,7 +118,7 @@ export default function ProfilePage(props) {
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-blue-300"
                                 placeholder={data.applicant.firstName}
                                 value={firstName}
-                                onChange={e => setFirstName(e.target.value)}
+                                onChange={handleFirstNameChange}
                                 />
                         </Editable>
                     </Typography>
@@ -125,7 +137,7 @@ export default function ProfilePage(props) {
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-blue-300"
                                 placeholder={data.applicant.lastName}
                                 value={lastName}
-                                onChange={e => setLastName(e.target.value)}
+                                onChange={handleLastNameChange}
                                 />
                         </Editable>
                     </Typography>
@@ -190,7 +202,7 @@ export default function ProfilePage(props) {
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-blue-300"
                                 placeholder={data.employer.companyName}
                                 value={companyName}
-                                onChange={e => setCompanyName(e.target.value)}
+                                onChange={handleCompanyNameChange}
                                 />
                         </Editable>
                     </Typography>
@@ -236,67 +248,3 @@ export default function ProfilePage(props) {
         </React.Fragment>
     );
 }
-
-// export default function ProfilePage(props) {
-//     const navigate = useNavigate();
-
-//     const username = getUsername();
-//     const userType = getUsertype();
-
-//     const { loading, error, data } = useQuery((userType == "applicant" ? GET_APPLICANT : GET_EMPLOYER), {
-//         variables: { id: username }
-//     });
-
-//     const displayApplicantDetails = () => {   
-//         if (data && data.applicant) { 
-//             return (
-//                 <div>
-//                 <h2>{ data.applicant.id }</h2>
-//                 <p>{ data.applicant.firstName }</p>
-//                 <p>{ data.applicant.lastName }</p>
-//                 <p>{ data.applicant.email }</p>
-//                 <input type="file" id="image_url" class="form_element" name="image_url" accept="image/*" required/>
-//                 </div>
-//             );
-//         }
-//     };
-
-//     const displayEmployerDetails = () => {
-//         if (data && data.employer) {
-//             return (
-//                 <div>
-//                 <h2>{ data.employer.id }</h2>
-//                 <p>{ data.employer.companyName }</p>
-//                 <p>{ data.employer.email }</p>
-//                 <input type="file" id="image_url" class="form_element" name="image_url" accept="image/*" required/>
-//                 </div>
-//             );
-//         }
-//     };
-
-//     function authResolver(){
-//         if (!props.isSignedIn) {
-//             navigate('/')
-//         } else {
-//             if (userType == "applicant") {
-//                 return (
-//                     <div>
-//                         {displayApplicantDetails()}
-//                     </div>
-//                 );
-//             } else {
-//                 return (
-//                     <div>
-//                         {displayEmployerDetails()}
-//                     </div>
-//                 );
-//             }
-//         }
-//     }
-    
-//     return (
-//         <React.Fragment>
-//             {authResolver()}
-//         </React.Fragment>
-//     );
-// };
