@@ -44,6 +44,7 @@ const JobType = new GraphQLObjectType({
     title: { type: GraphQLString },
     companyName: { type: GraphQLString },
     salary: { type: GraphQLInt },
+    currency: { type: GraphQLString },
     location: { type: GraphQLString }
   })
 });
@@ -68,7 +69,7 @@ const RootQuery = new GraphQLObjectType({
     jobs: {
       type: new GraphQLList(JobType),
       resolve(parent, args) {
-        return Job.findOne({})
+        return Job.find({})
       }
     }
   }
@@ -83,6 +84,7 @@ const Mutation = new GraphQLObjectType({
         title: { type: new GraphQLNonNull(GraphQLString) },
         companyName: { type: new GraphQLNonNull(GraphQLString) },
         salary: { type: new GraphQLNonNull(GraphQLInt) },
+        currency: { type: new GraphQLNonNull(GraphQLString) },
         location: { type: new GraphQLNonNull(GraphQLString) }
       },
       resolve(parent, args) {
@@ -90,6 +92,7 @@ const Mutation = new GraphQLObjectType({
           title: args.title,
           companyName: args.companyName,
           salary: args.salary,
+          currency: args.currency,
           location: args.location
         });
         return job.save();
