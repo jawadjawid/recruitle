@@ -8,13 +8,14 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SnackBarAlert from '../SnackBarAlert';
+import Editable from "./Editable";
 
 import { useQuery } from '@apollo/client';
 import { GET_EMPLOYER, GET_APPLICANT } from '../../queries/queries';
 import { getUsername, getUsertype } from '../api.js';
 import { uploadResume } from './api.js';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 function Copyright(props) {
     return (
@@ -33,6 +34,11 @@ const theme = createTheme();
 
 export default function ProfilePage(props) {
     const navigate = useNavigate();
+
+    const inputRef = useRef();
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [companyName, setCompanyName] = useState("");
 
     const username = getUsername();
     const userType = getUsertype();
@@ -86,13 +92,44 @@ export default function ProfilePage(props) {
                         alignItems: 'center',
                     }}
                     >
-                    <Typography component="h1" variant="h2">
-                        {data.applicant.firstName}
+                    <Typography component="h1" variant="h2" sx={{marginBottom: 5}}>
+                            <Editable
+                                text={firstName}
+                                placeholder={data.applicant.firstName}
+                                childRef={inputRef}
+                                type="input"
+                            >
+                                <input
+                                ref={inputRef}
+                                type="text"
+                                name="name"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-blue-300"
+                                placeholder={data.applicant.firstName}
+                                value={firstName}
+                                onChange={e => setFirstName(e.target.value)}
+                                />
+                        </Editable>
                     </Typography>
+                    <img className="edit-icon" alt="Edit" style={{height:22, width:22}} src="https://upload.wikimedia.org/wikipedia/en/8/8a/OOjs_UI_icon_edit-ltr-progressive.svg"/>
                     <Typography component="h1" variant="h2">
-                        {data.applicant.lastName}
+                        <Editable
+                                text={lastName}
+                                placeholder={data.applicant.lastName}
+                                childRef={inputRef}
+                                type="input"
+                            >
+                                <input
+                                ref={inputRef}
+                                type="text"
+                                name="lastName"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-blue-300"
+                                placeholder={data.applicant.lastName}
+                                value={lastName}
+                                onChange={e => setLastName(e.target.value)}
+                                />
+                        </Editable>
                     </Typography>
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 6 }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <img className="email-icon" alt="Email" style={{height:35, width:35}} src="https://cdn0.iconfinder.com/data/icons/apple-apps/100/Apple_Mail-512.png"/>
@@ -124,7 +161,54 @@ export default function ProfilePage(props) {
         }
     };
 
-    
+    const displayEmployerDetails = () => {  
+        if (data && data.employer) { 
+            return (
+                <ThemeProvider theme={theme}>
+                <Container component="main" maxWidth="xs">
+                    <CssBaseline />
+                    <Box
+                    sx={{
+                        marginTop: 8,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                    >
+                    <img className="edit-icon" alt="Edit" style={{height:22, width:22}} src="https://upload.wikimedia.org/wikipedia/en/8/8a/OOjs_UI_icon_edit-ltr-progressive.svg"/>
+                    <Typography component="h1" variant="h2" sx={{marginBottom: 5}}>
+                        <Editable
+                                text={companyName}
+                                placeholder={data.employer.companyName}
+                                childRef={inputRef}
+                                type="input"
+                            >
+                                <input
+                                ref={inputRef}
+                                type="text"
+                                name="name"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-blue-300"
+                                placeholder={data.employer.companyName}
+                                value={companyName}
+                                onChange={e => setCompanyName(e.target.value)}
+                                />
+                        </Editable>
+                    </Typography>
+                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <img className="email-icon" alt="Email" style={{height:35, width:35}} src="https://cdn0.iconfinder.com/data/icons/apple-apps/100/Apple_Mail-512.png"/>
+                                  {data.employer.email}
+                            </Grid>
+                        </Grid>
+                    </Box>
+                    </Box>
+                    <Copyright sx={{ mt: 5 }} />
+                </Container>
+                </ThemeProvider>
+            );
+        }
+    };
 
     function authResolver(){
         if (!props.isSignedIn) {
@@ -139,7 +223,7 @@ export default function ProfilePage(props) {
             } else {
                 return (
                     <div>
-                        {displayApplicantDetails()}
+                        {displayEmployerDetails()}
                     </div>
                 );
             }
