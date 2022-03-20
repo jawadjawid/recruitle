@@ -36,8 +36,8 @@ query {
 `;
 
 const CREATE_JOB = gql`
-  mutation ($title: String!, $companyName: String!, $salary: Int!, $location: String!) {
-    createJob(title: $title, companyName: $companyName, salary: $salary, location: $location) {
+  mutation ($title: String!, $companyName: String!, $salary: Int!, $currency: String!, $location: String!) {
+    createJob(title: $title, companyName: $companyName, salary: $salary, currency: $currency, location: $location) {
       id
     }
   }
