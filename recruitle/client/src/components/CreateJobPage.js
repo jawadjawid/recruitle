@@ -1,33 +1,17 @@
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_JOB } from '../queries/queries';
 import { getUsername, getUsertype } from './api.js';
 import { useNavigate } from 'react-router-dom';
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Paper from '@mui/material/Paper';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SnackBarAlert from './SnackBarAlert';
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://localhost:3000/">
-        Recruitle
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import MenuItem from '@mui/material/MenuItem';
 
 const styles = {
   paperContainer: {
@@ -39,13 +23,42 @@ const styles = {
   }
 };
 
+
+const currencies = [
+  {
+    value: 'USD',
+    label: '$',
+  },
+  {
+    value: 'EUR',
+    label: '€',
+  },
+  {
+    value: 'BTC',
+    label: '฿',
+  },
+  {
+    value: 'JPY',
+    label: '¥',
+  },
+];
+
 const theme = createTheme();
 
 export default function CreateJobPage(props) {
   const navigate = useNavigate();
+
   const [snackBarOpen, setSnackBarOpen] = React.useState(false);
   const [snackBarMsg, setSnackBarMsg] = React.useState("");
   const [severity, setSeverity] = React.useState("success");
+
+  const [currency, setCurrency] = React.useState('USD');
+
+  const [createJob, { data, loading, error }] = useMutation(CREATE_JOB);
+
+  const handleCurrencyChange = (event) => {
+    setCurrency(event.target.value);
+  };
 
   const handleSnackBarClose = (event, reason) => {
     if (reason === 'clickaway')
@@ -55,7 +68,11 @@ export default function CreateJobPage(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert("wow");
+
+    createJob({variables: {
+      title: event.tar
+
+    }});
   };
 
   function formResolver() {
@@ -63,7 +80,6 @@ export default function CreateJobPage(props) {
       navigate(-1);
     } else {
       return (
-        <Paper style={styles.paperContainer}>
           <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
               <CssBaseline />
@@ -72,65 +88,77 @@ export default function CreateJobPage(props) {
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
+                  marginTop: '100px'
                 }}
               >
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main', marginTop: 19 }}>
-                </Avatar>
                 <Typography component="h1" variant="h5">
-                  Sign in
+                  Create Job
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                   <TextField
+                    type="text"
                     margin="normal"
                     required
                     fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
+                    id="title"
+                    label="Job Title"
+                    name="title"
                     autoFocus
                   />
                   <TextField
+                    type="text"
                     margin="normal"
                     required
                     fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
+                    name="location"
+                    label="Location"
+                    id="location"
                   />
-
+                  <Box sx={{display: 'flex', flexDirection: 'row', justifyItems: 'center'}}>
+                    <TextField
+                      margin="normal"
+                      id="currency"
+                      required
+                      select
+                      label="Currency"
+                      value={currency}
+                      onChange={handleCurrencyChange}
+                    >
+                      {currencies.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                    <TextField
+                      type="number"
+                      margin="normal"
+                      required
+                      fullWidth
+                      name="salary"
+                      label={"Salary (" + currency + "/year)"}
+                      id="salary"
+                    />
+                  </Box>
                   <Button
                     type="submit"
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
                   >
-                    Sign In
+                    Post Job
                   </Button>
-                  <Grid container>
-                    <Grid item xs>
-                    </Grid>
-                    <Grid item>
-                      <Link href="/signup" variant="body2">
-                        {"Don't have an account? Sign Up"}
-                      </Link>
-                    </Grid>
-                  </Grid>
                 </Box>
               </Box>
-              <Copyright sx={{ mt: 8, mb: 4 }} />
             </Container>
             <SnackBarAlert open={snackBarOpen} severity={severity} msg={snackBarMsg} handleSnackBarClose={handleSnackBarClose} />
           </ThemeProvider>
-        </Paper>
       );
     }
   }
 
   return (
-    <React.Fragment>
+    <React.Fragment sx={{margin: 1}}>
       {formResolver()}
     </React.Fragment>
   );
