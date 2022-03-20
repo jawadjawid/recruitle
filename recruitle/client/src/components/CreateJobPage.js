@@ -68,11 +68,14 @@ export default function CreateJobPage(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    createJob({variables: {
-      title: event.tar
-
-    }});
+    const data = new FormData(event.currentTarget);
+    console.log(data.get('title'), data.get('location'), currency + data.get('salary'), getUsername());
+    createJob({ variables: {
+      title: data.get('title'),
+      location: data.get('location'),
+      salary: currency + data.get('salary'),
+      companyName: getUsername()
+    }})
   };
 
   function formResolver() {
@@ -106,7 +109,7 @@ export default function CreateJobPage(props) {
                     autoFocus
                   />
                   <TextField
-                    type="text"
+                    type=""
                     margin="normal"
                     required
                     fullWidth
@@ -114,13 +117,14 @@ export default function CreateJobPage(props) {
                     label="Location"
                     id="location"
                   />
-                  <Box sx={{display: 'flex', flexDirection: 'row', justifyItems: 'center'}}>
+                  <Box id="salaryContainer" sx={{display: 'flex', flexDirection: 'row', justifyItems: 'center'}}>
                     <TextField
+                      sx={{width: "100px", paddingRight: "10px"}}
                       margin="normal"
                       id="currency"
                       required
                       select
-                      label="Currency"
+                      label={currency}
                       value={currency}
                       onChange={handleCurrencyChange}
                     >
