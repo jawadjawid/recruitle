@@ -91,7 +91,8 @@ module.exports = {
                     bcrypt.compare(password, user.password, function(err, result) {
                         if (err) return res.status(500).end("error");
                         if (!result) return res.status(401).end("access denied"); 
-                        req.session.username = user._id; 
+                        req.session.username = user.id; 
+                        req.session.userType = 'employer'
                         res.setHeader('Set-Cookie', [cookie.serialize('username', user.id, {
                             path : '/', 
                             maxAge: 60 * 60 * 24 * 7
@@ -106,7 +107,8 @@ module.exports = {
                 bcrypt.compare(password, user.password, function(err, result) {
                     if (err) return res.status(500).end("error");
                     if (!result) return res.status(401).end("access denied"); 
-                    req.session.username = user._id;  
+                    req.session.username = user._id;
+                    req.session.userType = 'applicant'  
                     res.setHeader('Set-Cookie', [cookie.serialize('username', user.id, {
                         path : '/', 
                         maxAge: 60 * 60 * 24 * 7

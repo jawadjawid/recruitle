@@ -42,10 +42,14 @@ app.use('/graphql', graphqlHTTP({
 app.use(function (req, res, next){
   req.username = (req.session.username)? req.session.username : null;
   let username = (req.session.username)? req.session.username : '';
-  res.setHeader('Set-Cookie', cookie.serialize('username', username, {
+  let userType = (req.session.userType)? req.session.userType : '';
+  res.setHeader('Set-Cookie', [cookie.serialize('username', username, {
     path : '/',
     maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
-  }));
+  }), cookie.serialize('userType', userType, {
+    path : '/', 
+    maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
+  })]);
   console.log("HTTPS request", req.username, req.method, req.url, req.body);
   next();
 });

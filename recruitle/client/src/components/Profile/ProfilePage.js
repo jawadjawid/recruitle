@@ -7,13 +7,14 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import SnackBarAlert from '../SnackBarAlert';
 
 import { useQuery } from '@apollo/client';
 import { GET_EMPLOYER, GET_APPLICANT } from '../../queries/queries';
 import { getUsername, getUsertype } from '../api.js';
 import { uploadResume } from './api.js';
 import { useNavigate } from 'react-router-dom';
-
+import { useState } from 'react';
 
 function Copyright(props) {
     return (
@@ -36,9 +37,20 @@ export default function ProfilePage(props) {
     const username = getUsername();
     const userType = getUsertype();
 
-    const { loading, error, data } = useQuery((userType == "applicant" ? GET_APPLICANT : GET_EMPLOYER), {
-        variables: { id: username }
+    const [snackBarOpen, setSnackBarOpen] = useState(false);
+    const [snackBarMsg, setSnackBarMsg] = useState("");
+    const [severity, setSeverity] = useState("success");
+
+    const handleSnackBarClose = (event, reason) => {
+        if (reason === 'clickaway')
+            return;
+        setSnackBarOpen(false);
+    };
+
+    const {loading, error, data} = useQuery((userType == "applicant" ? GET_APPLICANT : GET_EMPLOYER), { 
+        variables: { id: username } 
     });
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -46,11 +58,21 @@ export default function ProfilePage(props) {
         const file = files[0]
         event.target.reset();
         uploadResume(file, function(err, res) {
-            console.log(res);
+            if (err){
+                setSnackBarOpen(true);
+                setSnackBarMsg("Resume upload fail!");
+                setSeverity("error");
+            } 
+            else {
+                setSnackBarOpen(true);
+                setSnackBarMsg("Resume uploaded!");
+                setSeverity("success");
+                setTimeout(function(){window.location.href = '/profile';}, 200);
+            }
         })
     };
 
-    const displayApplicantDetails = () => {   
+    const displayApplicantDetails = () => {  
         if (data && data.applicant) { 
             return (
                 <ThemeProvider theme={theme}>
@@ -65,13 +87,16 @@ export default function ProfilePage(props) {
                     }}
                     >
                     <Typography component="h1" variant="h2">
-                        {data.applicant.firstName} {data.applicant.lastName}
+                        {data.applicant.firstName}
+                    </Typography>
+                    <Typography component="h1" variant="h2">
+                        {data.applicant.lastName}
                     </Typography>
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <img className="email-icon" alt="Email" style={{height:35, width:35}} src="https://cdn0.iconfinder.com/data/icons/apple-apps/100/Apple_Mail-512.png"/>
-                                {data.applicant.email}
+                                  {data.applicant.email}
                             </Grid>
                             <Grid item xs={12}>
                                 <img className="resume-icon" alt="Resume" style={{height:35, width:35}} src="https://www.clipartmax.com/png/small/308-3085721_resume-png-clipart-my-resume-icon-png.png"/>
@@ -93,6 +118,7 @@ export default function ProfilePage(props) {
                     </Box>
                     <Copyright sx={{ mt: 5 }} />
                 </Container>
+                <SnackBarAlert open={snackBarOpen} severity={severity} msg={snackBarMsg} handleSnackBarClose={handleSnackBarClose} />
                 </ThemeProvider>
             );
         }
