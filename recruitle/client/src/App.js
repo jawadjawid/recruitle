@@ -9,7 +9,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import ProfilePage from './components/ProfilePage';
+import ProfilePage from './components/Profile/ProfilePage';
 import SignIn from './components/Auth/SignIn';
 import SignUpPage from './components/Auth/SignUpPage';
 import NavBar from './components/NavBar';
