@@ -9,8 +9,8 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import ProfilePage from './components/ProfilePage';
 import CreateJobPage from './components/CreateJobPage';
+import ProfilePage from './components/Profile/ProfilePage';
 import SignIn from './components/Auth/SignIn';
 import SignUpPage from './components/Auth/SignUpPage';
 import NavBar from './components/NavBar';

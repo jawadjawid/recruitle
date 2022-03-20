@@ -21,6 +21,10 @@ const ApplicantSchema = new Schema({
         type: String,
         required: true
     },
+    resume:{
+        type: Map,
+        required: true
+    }
 });
 
 ApplicantSchema.plugin(uniqueValidator);

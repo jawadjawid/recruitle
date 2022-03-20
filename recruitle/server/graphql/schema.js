@@ -1,4 +1,6 @@
 // package imports
+const graphqljson = require('graphql-type-json');
+const {GraphQLJSON} = graphqljson;
 const graphql = require('graphql');
 const {
   GraphQLObjectType,
@@ -22,6 +24,7 @@ const ApplicantType = new GraphQLObjectType({
     firstName: { type: GraphQLString },
     lastName: { type: GraphQLString },
     email: { type: GraphQLString },
+    resume: { type: GraphQLJSON },
   })
 });
 
