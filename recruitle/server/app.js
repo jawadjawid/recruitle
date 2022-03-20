@@ -9,6 +9,10 @@ const path = require("path");
 const schema = require('./graphql/schema');
 //const schema = buildSchema(require("./graphql/schema.js")());
 const auth = require('./auth');
+const profile = require('./profile');
+var multer  = require('multer');
+var upload = multer({ dest: 'uploads/' });
+
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -36,8 +40,16 @@ app.use('/graphql', graphqlHTTP({
 }));
 
 app.use(function (req, res, next){
-  let cookies = cookie.parse(req.headers.cookie || '');
-  req.username = (cookies.username)? cookies.username : null;
+  req.username = (req.session.username)? req.session.username : null;
+  let username = (req.session.username)? req.session.username : '';
+  let userType = (req.session.userType)? req.session.userType : '';
+  res.setHeader('Set-Cookie', [cookie.serialize('username', username, {
+    path : '/',
+    maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
+  }), cookie.serialize('userType', userType, {
+    path : '/', 
+    maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
+  })]);
   console.log("HTTPS request", req.username, req.method, req.url, req.body);
   next();
 });
@@ -48,7 +60,7 @@ app.use(function (req, res, next){
 });
 
 const isAuthenticated = function(req, res, next) {
-  if (!req.session.username) return res.status(401).end("access denied");
+  if (!req.username) return res.status(401).end("access denied");
   next();
 };
 
@@ -60,6 +72,12 @@ app.post('/signin/', auth.signin);
 
 // curl -X POST -d https://localhost:3000/signout/
 app.get('/signout/', auth.signout);
+
+// upload new resume if authenticated
+app.post('/resumes/', isAuthenticated, upload.single('file'), profile.uploadResume);
+
+// get an resume given id
+app.get('/resumes/:id/', isAuthenticated, profile.getResume);
 
 app.use(express.static(path.join(__dirname, "..", "/client/build")));
 app.get('*', (req, res) => res.sendFile(path.resolve('../client', 'build', 'index.html')));
