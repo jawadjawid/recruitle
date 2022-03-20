@@ -71,6 +71,31 @@ const RootQuery = new GraphQLObjectType({
   }
 });
 
+const Mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    createJob: {
+      type: JobType,
+      args: {
+        title: { type: new GraphQLNonNull(GraphQLString) },
+        companyName: { type: new GraphQLNonNull(GraphQLString) },
+        salary: { type: new GraphQLNonNull(GraphQLInt) },
+        location: { type: new GraphQLNonNull(GraphQLString) }
+      },
+      resolve(parent, args) {
+        let job = new Job({
+          title: args.title,
+          companyName: args.companyName,
+          salary: args.salary,
+          location: args.location
+        });
+        return job.save();
+      }
+    }
+  }
+})
+
 module.exports = new GraphQLSchema({
   query: RootQuery,
+  mutation: Mutation
 });
