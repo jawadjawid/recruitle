@@ -24,15 +24,16 @@ const GET_EMPLOYER = gql`
 `;
 
 const GET_JOBS = gql`
-query {
-  jobs {
-    id
-    title
-    companyName
-    salary
-    location
+  query {
+    jobs {
+      id
+      title
+      location
+      companyName
+      salary
+      currency
+    }
   }
-}
 `;
 
 const CREATE_JOB = gql`
@@ -43,13 +44,4 @@ const CREATE_JOB = gql`
   }
 `;
 
-const GET_BOOKS = gql`
-  query getBooksQuery {
-    books {
-      name
-      id
-    }
-  }
-`;
-
-export { GET_BOOKS, GET_APPLICANT, GET_EMPLOYER, CREATE_JOB, GET_JOBS };
+export {GET_APPLICANT, GET_EMPLOYER, CREATE_JOB, GET_JOBS };
