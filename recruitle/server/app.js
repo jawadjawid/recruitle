@@ -9,6 +9,7 @@ const path = require("path");
 const schema = require('./graphql/schema');
 //const schema = buildSchema(require("./graphql/schema.js")());
 const auth = require('./auth');
+const profile = require('./profile');
 var multer  = require('multer');
 var upload = multer({ dest: 'uploads/' });
 
@@ -26,7 +27,6 @@ app.use(session({
 }));
 
 const mongoose = require("mongoose");
-const applicant = require('./database/models/applicant');
 const db = require('./database/config').mongoURI;
 const MongoDBStore = require("connect-mongodb-session")(session);
 
@@ -40,8 +40,12 @@ app.use('/graphql', graphqlHTTP({
 }));
 
 app.use(function (req, res, next){
-  let cookies = cookie.parse(req.headers.cookie || '');
-  req.username = (cookies.username)? cookies.username : null;
+  req.username = (req.session.username)? req.session.username : null;
+  let username = (req.session.username)? req.session.username : '';
+  res.setHeader('Set-Cookie', cookie.serialize('username', username, {
+    path : '/',
+    maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
+  }));
   console.log("HTTPS request", req.username, req.method, req.url, req.body);
   next();
 });
@@ -66,25 +70,10 @@ app.post('/signin/', auth.signin);
 app.get('/signout/', auth.signout);
 
 // upload new resume if authenticated
-app.post('/resumes/', isAuthenticated, upload.single('file'), function (req, res, next) {
-  let id = req.username;
-  let file = req.file;
-  applicant.updateOne({_id: id}, {$set: {resume: file}}, function(err, raw) {
-    //if (err) return res.status(500).end(err);
-    console.log(raw)
-    return res.json(raw)
-  });
-});
+app.post('/resumes/', isAuthenticated, upload.single('file'), profile.uploadResume);
 
 // get an resume given id
-app.get('/resumes/:id/', isAuthenticated, function (req, res, next) {
-  applicant.findOne({_id: req.params.id}, function(err, app){
-      if (err) return res.status(500).end(err);
-      if (!app) return res.status(404).end("User with id: " + req.params.id + " does not exist");
-      res.setHeader('Content-Type', app.resume.get('mimetype'));
-      res.sendFile(app.resume.get('path'), { root: '.' });
-  }); 
-});
+app.get('/resumes/:id/', isAuthenticated, profile.getResume);
 
 app.use(express.static(path.join(__dirname, "..", "/client/build")));
 app.get('*', (req, res) => res.sendFile(path.resolve('../client', 'build', 'index.html')));
