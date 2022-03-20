@@ -46,6 +46,7 @@ module.exports = {
                         password: hash,
                         firstName: firstName,
                         lastName: lastName,
+                        resume: {"originalname": "No resume on file!"}
                     })
     
                     newApplicant.save(function (err, user) {
