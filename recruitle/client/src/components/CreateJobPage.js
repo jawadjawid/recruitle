@@ -54,7 +54,7 @@ export default function CreateJobPage(props) {
 
   const [currency, setCurrency] = React.useState('USD');
 
-  const [createJob, { data, loading, error }] = useMutation(CREATE_JOB);
+  const [createJob, { data, loading, error }] = useMutation(CREATE_JOB)
 
   const handleCurrencyChange = (event) => {
     setCurrency(event.target.value);
@@ -68,14 +68,26 @@ export default function CreateJobPage(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (document.getElementById('title').value == '' || document.getElementById('location').value == '' || document.getElementById('salary').value == ''){
+      setSnackBarOpen(true);
+      setSnackBarMsg("Missing required field");
+      setSeverity("error");
+      return;
+    }
     const data = new FormData(event.currentTarget);
-    console.log(data.get('title'), data.get('location'), currency + data.get('salary'), getUsername());
     createJob({ variables: {
       title: data.get('title'),
       location: data.get('location'),
-      salary: currency + data.get('salary'),
+      salary: parseInt(data.get('salary')),
+      currency: currency,
       companyName: getUsername()
-    }})
+    }});
+    setSnackBarOpen(true);
+    setSnackBarMsg("Job posted! You will recieve an email for any applications.");
+    setSeverity("success");
+    document.getElementById("title").value = '';
+    document.getElementById("location").value = '';
+    document.getElementById("salary").value = '';
   };
 
   function formResolver() {
