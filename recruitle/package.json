@@ -7,10 +7,5 @@
     "install": "cd client && npm install && cd ../server && npm install"
   },
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "graphql": "^16.3.0",
-    "graphql-type-json": "^0.3.2",
-    "lodash": "^4.17.21"
-  }
+  "license": "ISC"
 }
