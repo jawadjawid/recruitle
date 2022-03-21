@@ -91,9 +91,8 @@ export default function CreateJobPage(props) {
   };
 
   function formResolver() {
-    if (!props.isSignedIn || props.userType == 'applicant') {
-      navigate(-1);
-    } else {
+    if (!props.isSignedIn || props.userType == 'applicant') navigate('/');
+    else {
       return (
           <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
