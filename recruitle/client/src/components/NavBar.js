@@ -23,7 +23,7 @@ export default function NavBar(props) {
         <Nav.Link href="credits">Credits</Nav.Link>
       </Nav>
       );
-    } else {
+    } else if(props.userType == 'applicant'){
       return (  
         <Navbar.Collapse className="justify-content-end">
           <Nav className="me-auto">
@@ -31,6 +31,19 @@ export default function NavBar(props) {
             <Nav.Link href="credits">Credits</Nav.Link>
           </Nav>
           <Nav>
+            <Button className="justify-content-end" variant="text" onClick={signoutUser}> Sign out</Button>
+          </Nav>
+        </Navbar.Collapse>
+        );
+    } else if(props.userType == 'employer'){
+      return (  
+        <Navbar.Collapse className="justify-content-end">
+          <Nav className="me-auto">
+            <Nav.Link href="profile">Profile</Nav.Link>
+            <Nav.Link href="credits">Credits</Nav.Link>
+          </Nav>
+          <Nav>
+            <Nav.Link href="create">Create Job</Nav.Link>
             <Button className="justify-content-end" variant="text" onClick={signoutUser}> Sign out</Button>
           </Nav>
         </Navbar.Collapse>

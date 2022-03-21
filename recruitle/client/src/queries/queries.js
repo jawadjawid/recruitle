@@ -1,15 +1,6 @@
 // import React, { useState } from 'react';
 import { gql } from '@apollo/client';
 
-const GET_BOOKS = gql`
-  query getBooksQuery {
-    books {
-      name
-      id
-    }
-  }
-`;
-
 const GET_APPLICANT = gql`
   query ($id: ID) {
     applicant(id: $id) {
@@ -32,22 +23,33 @@ const GET_EMPLOYER = gql`
   }
 `;
 
-const GET_AUTHORS = gql`
+const GET_JOBS = gql`
+query {
+  jobs {
+    id
+    title
+    companyName
+    salary
+    location
+  }
+}
+`;
+
+const CREATE_JOB = gql`
+  mutation ($title: String!, $companyName: String!, $salary: Int!, $currency: String!, $location: String!) {
+    createJob(title: $title, companyName: $companyName, salary: $salary, currency: $currency, location: $location) {
+      id
+    }
+  }
+`;
+
+const GET_BOOKS = gql`
   query getBooksQuery {
-    authors {
+    books {
       name
       id
     }
   }
 `;
 
-const ADD_BOOK = gql`
-  mutation ($name: String!, $genre: String!, $authorId: ID!) {
-    addBook(name: $name, genre: $genre, authorId: $authorId) {
-      name
-      id
-    }
-  }
-`;
-
-export { GET_BOOKS, GET_APPLICANT, GET_EMPLOYER, GET_AUTHORS, ADD_BOOK };
+export { GET_BOOKS, GET_APPLICANT, GET_EMPLOYER, CREATE_JOB, GET_JOBS };
