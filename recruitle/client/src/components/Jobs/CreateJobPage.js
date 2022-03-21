@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client';
-import { CREATE_JOB } from '../queries/queries';
-import { getUsername, getUsertype } from './api.js';
+import { CREATE_JOB, GET_EMPLOYER } from '../../queries/queries';
+import { getUsername } from '../api.js';
 import { useNavigate } from 'react-router-dom';
 import * as React from 'react';
 import Button from '@mui/material/Button';
@@ -10,7 +10,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import SnackBarAlert from './SnackBarAlert';
+import SnackBarAlert from '../SnackBarAlert';
 import MenuItem from '@mui/material/MenuItem';
 
 const styles = {
@@ -54,7 +54,8 @@ export default function CreateJobPage(props) {
 
   const [currency, setCurrency] = React.useState('USD');
 
-  const [createJob, { data, loading, error }] = useMutation(CREATE_JOB)
+  const {data, loading, error} = useQuery(GET_EMPLOYER, {variables: {id: getUsername()}});
+  const [createJob, {}] = useMutation(CREATE_JOB)
 
   const handleCurrencyChange = (event) => {
     setCurrency(event.target.value);
@@ -74,13 +75,13 @@ export default function CreateJobPage(props) {
       setSeverity("error");
       return;
     }
-    const data = new FormData(event.currentTarget);
+    const formdata = new FormData(event.currentTarget);
     createJob({ variables: {
-      title: data.get('title'),
-      location: data.get('location'),
-      salary: parseInt(data.get('salary')),
+      title: formdata.get('title'),
+      location: formdata.get('location'),
+      salary: parseInt(formdata.get('salary')),
       currency: currency,
-      companyName: getUsername()
+      companyName: data.employer.companyName
     }});
     setSnackBarOpen(true);
     setSnackBarMsg("Job posted! You will recieve an email for any applications.");
