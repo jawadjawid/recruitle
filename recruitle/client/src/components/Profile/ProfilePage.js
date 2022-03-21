@@ -10,8 +10,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SnackBarAlert from '../SnackBarAlert';
 import Editable from "./Editable";
 
-import { useQuery } from '@apollo/client';
-import { GET_EMPLOYER, GET_APPLICANT } from '../../queries/queries';
+import { useQuery, useMutation } from '@apollo/client';
+import { GET_EMPLOYER, GET_APPLICANT, UPDATE_APPLICANT, UPDATE_EMPLOYER } from '../../queries/queries';
 import { getUsername, getUsertype } from '../api.js';
 import { uploadResume } from './api.js';
 import { useNavigate } from 'react-router-dom';
@@ -47,16 +47,17 @@ export default function ProfilePage(props) {
     const [snackBarMsg, setSnackBarMsg] = useState("");
     const [severity, setSeverity] = useState("success");
 
-    const handleSnackBarClose = (event, reason) => {
-        if (reason === 'clickaway')
-            return;
-        setSnackBarOpen(false);
-    };
+    const [updateUserMutation, { data2, loading2, error2 }] = useMutation((userType == "applicant" ? UPDATE_APPLICANT : UPDATE_EMPLOYER))
 
     const {loading, error, data} = useQuery((userType == "applicant" ? GET_APPLICANT : GET_EMPLOYER), { 
         variables: { id: username } 
     });
 
+    const handleSnackBarClose = (event, reason) => {
+        if (reason === 'clickaway')
+            return;
+        setSnackBarOpen(false);
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -80,17 +81,26 @@ export default function ProfilePage(props) {
 
     const handleFirstNameChange = (e) => {
         setFirstName(e.target.value)
+        updateUserMutation({
+            variables: { id: username, firstName: e.target.value},
+        });
     }
 
     const handleLastNameChange = (e) => {
         setLastName(e.target.value)
+        updateUserMutation({
+            variables: { id: username, lastName: e.target.value},
+        });
     }
 
     const handleCompanyNameChange = (e) => {
         setCompanyName(e.target.value)
+        updateUserMutation({
+            variables: { id: username, companyName: e.target.value},
+        });
     }
 
-    const displayApplicantDetails = () => {  
+    const DisplayApplicantDetails = () => {  
         if (data && data.applicant) { 
             return (
                 <ThemeProvider theme={theme}>
@@ -104,6 +114,7 @@ export default function ProfilePage(props) {
                         alignItems: 'center',
                     }}
                     >
+                    <img className="edit-icon" alt="Edit" style={{height:22, width:22}} src="https://upload.wikimedia.org/wikipedia/en/8/8a/OOjs_UI_icon_edit-ltr-progressive.svg"/>
                     <Typography component="h1" variant="h2" sx={{marginBottom: 5}}>
                             <Editable
                                 text={firstName}
@@ -173,7 +184,7 @@ export default function ProfilePage(props) {
         }
     };
 
-    const displayEmployerDetails = () => {  
+    const DisplayEmployerDetails = () => {  
         if (data && data.employer) { 
             return (
                 <ThemeProvider theme={theme}>
@@ -229,13 +240,13 @@ export default function ProfilePage(props) {
             if (userType == "applicant") {
                 return (
                     <div>
-                        {displayApplicantDetails()}
+                        {DisplayApplicantDetails()}
                     </div>
                 );
             } else {
                 return (
                     <div>
-                        {displayEmployerDetails()}
+                        {DisplayEmployerDetails()}
                     </div>
                 );
             }
