@@ -27,6 +27,5 @@ const JobSchema = new Schema({
 });
 
 JobSchema.set('timestamps', true);
-JobSchema.plugin(uniqueValidator);
 
 module.exports = Job = mongoose.model('Job', JobSchema);

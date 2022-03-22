@@ -18,7 +18,7 @@ export default function JobCard(props) {
     }
 
     return(
-        <Card sx={{margin: "20px"}} variant="outlined">
+        <Card sx={{pageBreakInside: "avoid", breakInside: "avoid", marginBottom: "20px"}} variant="outlined">
             <CardContent>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>{props.job.companyName}</Typography>
                 <Typography variant="h5">{props.job.title}</Typography>
