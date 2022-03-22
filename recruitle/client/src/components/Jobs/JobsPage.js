@@ -10,12 +10,14 @@ export default function JobsPage(props) {
     const {data, loading, error} = useQuery(GET_JOBS);
 
     const showJobs = () => {
-        if(!props.isSignedIn) navigate('/');
+        if(!props.isSignedIn || props.userType != 'applicant') navigate('/');
         if (loading) return (<p>No data</p>);
         else return (
             <Box sx={{
+                columnCount: 3,
                 margin: "auto",
-                width: "30%",
+                marginTop: "20px",
+                width: "70%",
             }}>
                 {data.jobs.map(job => (<JobCard job={job}></JobCard>))}
             </Box>
