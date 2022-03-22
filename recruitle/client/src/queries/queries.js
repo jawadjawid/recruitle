@@ -44,4 +44,23 @@ const CREATE_JOB = gql`
   }
 `;
 
-export {GET_APPLICANT, GET_EMPLOYER, CREATE_JOB, GET_JOBS };
+const UPDATE_APPLICANT = gql`
+  mutation ($id: ID!, $firstName: String, $lastName: String) {
+    updateApplicant(id: $id, firstName: $firstName, lastName: $lastName) {
+      id
+      firstName
+      lastName
+    }
+  }
+`;
+
+const UPDATE_EMPLOYER = gql`
+  mutation ($id: ID!, $companyName: String!) {
+    updateEmployer(id: $id, companyName: $companyName) {
+      id
+      companyName
+    }
+  }
+`;
+
+export { GET_APPLICANT, GET_EMPLOYER, CREATE_JOB, GET_JOBS, UPDATE_APPLICANT, UPDATE_EMPLOYER };

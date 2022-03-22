@@ -97,6 +97,38 @@ const Mutation = new GraphQLObjectType({
         });
         return job.save();
       }
+    },
+    updateApplicant: {
+      type: ApplicantType,
+      args: {
+        id: { type: GraphQLID },
+        firstName: { type: GraphQLString },
+        lastName: { type: GraphQLString },
+      },
+      resolve(parent, args) {
+        Applicant.findOne({"_id": args.id}, function(err, applicant) {
+          if(args.firstName !== undefined) {
+            applicant.firstName = args.firstName;
+          }
+          if(args.lastName !== undefined) {
+            applicant.lastName = args.lastName;
+          }
+          return applicant.save();
+        });
+      }
+    }, 
+    updateEmployer: {
+      type: EmployerType,
+      args: {
+        id: { type: GraphQLID },
+        companyName: { type: GraphQLString },
+      },
+      resolve(parent, args) {
+        Employer.findOne({"_id": args.id}, function(err, employer) {
+          employer.companyName = args.companyName;
+          return employer.save();
+        });
+      }
     }
   }
 })
