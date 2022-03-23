@@ -65,9 +65,7 @@ const UPDATE_EMPLOYER = gql`
 
 const APPLICATION_EXISTS = gql`
   query ($applicantId: ID, $jobId: ID) {
-    applicationExists(applicantId: $applicantId, jobId: $jobId) {
-      is
-    }
+    applicationExists(applicantId: $applicantId, jobId: $jobId)
   }
 `;
 
