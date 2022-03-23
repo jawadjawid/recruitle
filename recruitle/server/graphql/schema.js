@@ -5,6 +5,7 @@ const graphql = require('graphql');
 const {
   GraphQLObjectType,
   GraphQLString,
+  GraphQLBoolean,
   GraphQLSchema,
   GraphQLID,
   GraphQLInt,
@@ -16,6 +17,7 @@ const _ = require('lodash');
 const Applicant = require('../database/models/applicant');
 const Employer = require('../database/models/employer');
 const Job = require('../database/models/job');
+const Application = require('../database/models/application');
 
 const ApplicantType = new GraphQLObjectType({
   name: 'Applicant',
@@ -49,6 +51,14 @@ const JobType = new GraphQLObjectType({
   })
 });
 
+const ApplicationType = new GraphQLObjectType({
+  name: 'Application',
+  fields: () => ({
+    applicantId: { type: GraphQLID },
+    jobId: { type: GraphQLID }
+  })
+});
+
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType', 
   fields: {
@@ -69,7 +79,17 @@ const RootQuery = new GraphQLObjectType({
     jobs: {
       type: new GraphQLList(JobType),
       resolve(parent, args) {
-        return Job.find({})
+        return Job.find({});
+      }
+    },
+    applicationExists: {
+      type: GraphQLBoolean,
+      args: {
+        applicantId: {type: GraphQLID},
+        jobId: {type: GraphQLID}
+      },
+      resolve(parent, args) {
+        return Application.exists({applicantId: args.applicantId, jobId: args.jobId});
       }
     }
   }
@@ -81,11 +101,11 @@ const Mutation = new GraphQLObjectType({
     createJob: {
       type: JobType,
       args: {
-        title: { type: new GraphQLNonNull(GraphQLString) },
-        companyName: { type: new GraphQLNonNull(GraphQLString) },
-        salary: { type: new GraphQLNonNull(GraphQLInt) },
-        currency: { type: new GraphQLNonNull(GraphQLString) },
-        location: { type: new GraphQLNonNull(GraphQLString) }
+        title: { type: GraphQLString },
+        companyName: { type: GraphQLString },
+        salary: { type: GraphQLInt },
+        currency: { type: GraphQLString },
+        location: { type: GraphQLString }
       },
       resolve(parent, args) {
         let job = new Job({
