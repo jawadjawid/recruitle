@@ -3,11 +3,13 @@ const Schema = mongoose.Schema;
 
 const ApplicationSchema = new Schema({
     applicantId: {
-        type: {type: mongoose.Schema.Types.ObjectId, ref: 'Applicant'},
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Applicant',
         required: true
     },
     jobId:{
-        type: {type: mongoose.Schema.Types.ObjectId, ref: 'Job'},
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Job',
         required: true
     },
 });
