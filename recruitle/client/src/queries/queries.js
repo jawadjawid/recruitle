@@ -63,4 +63,12 @@ const UPDATE_EMPLOYER = gql`
   }
 `;
 
-export { GET_APPLICANT, GET_EMPLOYER, CREATE_JOB, GET_JOBS, UPDATE_APPLICANT, UPDATE_EMPLOYER };
+const APPLICATION_EXISTS = gql`
+  query ($applicantId: ID, $jobId: ID) {
+    applicationExists(applicantId: $applicantId, jobId: $jobId) {
+      is
+    }
+  }
+`;
+
+export { GET_APPLICANT, GET_EMPLOYER, CREATE_JOB, GET_JOBS, UPDATE_APPLICANT, UPDATE_EMPLOYER, APPLICATION_EXISTS };
