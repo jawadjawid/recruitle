@@ -1,7 +1,9 @@
 const applicant = require('./database/models/applicant');
 const employer = require('./database/models/employer');
 const job = require('./database/models/job')
+const application = require('./database/models/application');
 const nodemailer = require('nodemailer');
+const mongoose = require('mongoose');
 const recruitleAuth = require('./config.js').auth;
 
 module.exports = {
@@ -18,13 +20,19 @@ module.exports = {
                     if (err) return res.status(500).end(err);
                     if (!employer) return res.status(404).end("Employer with name: " + job.companyName + " does not exist");
 
+                    let applicationDoc = new Application({
+                        jobId: mongoose.Types.ObjectId(job._id),
+                        applicantId: mongoose.Types.ObjectId(applicant._id)
+                    });
+                    applicationDoc.save();
+
                     let mailTransporter = nodemailer.createTransport({
                         service: 'gmail',
                         auth: recruitleAuth
                     });
 
                     let mailDetails = {
-                        from: 'recruitlejobs@gmail.com',
+                        from: recruitleAuth.user,
                         to: employer.email,
                         subject: 'Job Application - ' + job.title,
                         text: 'You have recieved an application from ' + applicant.firstName + ' ' + applicant.lastName
