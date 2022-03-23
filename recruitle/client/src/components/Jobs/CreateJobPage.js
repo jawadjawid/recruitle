@@ -12,6 +12,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SnackBarAlert from '../SnackBarAlert';
 import MenuItem from '@mui/material/MenuItem';
+import { SnackbarProvider, useSnackbar } from 'notistack';
 
 const styles = {
   paperContainer: {
@@ -45,34 +46,29 @@ const currencies = [
 
 const theme = createTheme();
 
-export default function CreateJobPage(props) {
+function CreateJobPage(props) {
   const navigate = useNavigate();
-
-  const [snackBarOpen, setSnackBarOpen] = React.useState(false);
-  const [snackBarMsg, setSnackBarMsg] = React.useState("");
-  const [severity, setSeverity] = React.useState("success");
-
   const [currency, setCurrency] = React.useState('USD');
+  const {enqueueSnackbar} = useSnackbar();
+  const {data, loading} = useQuery(GET_EMPLOYER, {variables: {id: getUsername()}});
+  const [createJob, {loading: createLoading, error: createError, data: createData}] = useMutation(CREATE_JOB);
 
-  const {data, loading, error} = useQuery(GET_EMPLOYER, {variables: {id: getUsername()}});
-  const [createJob, {}] = useMutation(CREATE_JOB)
+  if (loading) return (<p>Loading...</p>);
+  if (createLoading) {
+    enqueueSnackbar("Loading...", {variant: 'info'});
+  } else if (createError) {
+    enqueueSnackbar(createError?.message, {variant: 'error'});
+  } else if (createData?.createJob?.id) {
+    enqueueSnackbar("Job posted! You will recieve an email for any applications.", {variant: 'success'});
+  }
 
   const handleCurrencyChange = (event) => {
     setCurrency(event.target.value);
   };
 
-  const handleSnackBarClose = (event, reason) => {
-    if (reason === 'clickaway')
-      return;
-    setSnackBarOpen(false);
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     if (document.getElementById('title').value == '' || document.getElementById('location').value == '' || document.getElementById('salary').value == ''){
-      setSnackBarOpen(true);
-      setSnackBarMsg("Missing required field");
-      setSeverity("error");
       return;
     }
     const formdata = new FormData(event.currentTarget);
@@ -83,9 +79,6 @@ export default function CreateJobPage(props) {
       currency: currency,
       companyName: data.employer.companyName
     }});
-    setSnackBarOpen(true);
-    setSnackBarMsg("Job posted! You will recieve an email for any applications.");
-    setSeverity("success");
     document.getElementById("title").value = '';
     document.getElementById("location").value = '';
     document.getElementById("salary").value = '';
@@ -168,7 +161,6 @@ export default function CreateJobPage(props) {
                 </Box>
               </Box>
             </Container>
-            <SnackBarAlert open={snackBarOpen} severity={severity} msg={snackBarMsg} handleSnackBarClose={handleSnackBarClose} />
           </ThemeProvider>
       );
     }
@@ -180,3 +172,11 @@ export default function CreateJobPage(props) {
     </React.Fragment>
   );
 };
+
+export default function CreateJobPageNotistack(props) {
+  return (
+    <SnackbarProvider maxSnack={3}>
+      <CreateJobPage isSignedIn={props.isSignedIn} userType={props.userType}/>
+    </SnackbarProvider>
+  );
+}

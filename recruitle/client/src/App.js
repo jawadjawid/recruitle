@@ -9,7 +9,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import CreateJobPage from './components/Jobs/CreateJobPage';
+import CreateJobPageNotistack from './components/Jobs/CreateJobPage';
 import JobsPage from "./components/Jobs/JobsPage";
 import ProfilePage from './components/Profile/ProfilePage';
 import SignIn from './components/Auth/SignIn';
@@ -45,7 +45,7 @@ export default function BasicExample() {
           <Route path='/signin' element={<SignIn isSignedIn={isSignedIn} />}/>
           <Route path='/signup' element={<SignUpPage isSignedIn={isSignedIn}/>}/>
           <Route path='/profile' element={<ProfilePage isSignedIn={isSignedIn}/>}/>
-          <Route path='/create' element={<CreateJobPage isSignedIn={isSignedIn} userType={userType}/>}/>
+          <Route path='/create' element={<CreateJobPageNotistack isSignedIn={isSignedIn} userType={userType}/>}/>
           <Route path='/jobs' element={<JobsPage isSignedIn={isSignedIn} userType={userType}/>}/>
           <Route path='/credits' element={<CreditsPage/>}/>
         </Routes>
