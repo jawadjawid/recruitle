@@ -35,6 +35,7 @@ The idea is to create an application similar to Glassdoor/LinkedIn. We want a we
 * Candidates can browse companies
 * User can see their own applications
 * Company can see/edit their own job postings
+* Descriptions for jobs
 
 ## Potential Features
 * Video calling capabilities
