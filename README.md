@@ -28,18 +28,17 @@ The idea is to create an application similar to Glassdoor/LinkedIn. We want a we
 * Employer adds job posting
 * Candidate applies to job posting
 * Employer receives application in email
+* Send emails on job application
 
 ## Final
 * Search filter on job postings
-* Candidate reviews company
 * Candidates can browse companies
 * User can see their own applications
 * Company can see/edit their own job postings
 * Descriptions for jobs
+* Employers can request interview to applicants thru video call
 
 ## Potential Features
-* Video calling capabilities
-* Send emails on sign-up
 * Premium feature maybe
 * Activate emails
 * Password reset
