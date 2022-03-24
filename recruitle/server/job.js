@@ -45,6 +45,8 @@ module.exports = {
                             console.log('Email sent successfully');
                         }
                     });
+
+                    res.status(200).json({message: "Successfully applied."});
                 });
             })
         }); 
