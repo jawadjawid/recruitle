@@ -91,6 +91,14 @@ const RootQuery = new GraphQLObjectType({
       resolve(parent, args) {
         return Application.exists({applicantId: args.applicantId, jobId: args.jobId});
       }
+    },
+    resumeExists: {
+      type: GraphQLBoolean,
+      args: { id: {type: GraphQLID} },
+      async resolve(parent, args) {
+        const applicant = await Applicant.findOne({"_id": args.id});
+        return applicant.resume.get("originalname") != "No resume on file!";
+      }
     }
   }
 });

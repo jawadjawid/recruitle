@@ -56,7 +56,7 @@ function CreateJobPage(props) {
   if (loading) return (<p>Loading...</p>);
   if (createError) {
     reset();
-    enqueueSnackbar("Failed to post job", {variant: 'error'});
+    enqueueSnackbar("Failed to post job.", {variant: 'error'});
   } else if (!createLoading && createData?.createJob?.id) {
     reset();
     enqueueSnackbar("Job posted! You will recieve an email for any applications.", {variant: 'success'});
