@@ -32,7 +32,7 @@ The idea is to create an application similar to Glassdoor/LinkedIn. We want a we
 
 ## Final
 * Search filter on job postings
-* Candidates can browse companies
+* Candidates can browse jobs for specific companies
 * User can see their own applications
 * Company can see/edit their own job postings
 * Descriptions for jobs
