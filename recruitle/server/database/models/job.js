@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const uniqueValidator = require('mongoose-unique-validator');
 
 const JobSchema = new Schema({
     title: {
@@ -27,6 +26,5 @@ const JobSchema = new Schema({
 });
 
 JobSchema.set('timestamps', true);
-JobSchema.plugin(uniqueValidator);
 
 module.exports = Job = mongoose.model('Job', JobSchema);
