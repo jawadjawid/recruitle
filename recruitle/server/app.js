@@ -10,6 +10,7 @@ const schema = require('./graphql/schema');
 //const schema = buildSchema(require("./graphql/schema.js")());
 const auth = require('./auth');
 const profile = require('./profile');
+const job = require('./job');
 var multer  = require('multer');
 var upload = multer({ dest: 'uploads/' });
 
@@ -78,6 +79,8 @@ app.post('/resumes/', isAuthenticated, upload.single('file'), profile.uploadResu
 
 // get an resume given id
 app.get('/resumes/:id/', isAuthenticated, profile.getResume);
+
+app.post('/jobs/apply/', isAuthenticated, job.apply);
 
 app.use(express.static(path.join(__dirname, "..", "/client/build")));
 app.get('*', (req, res) => res.sendFile(path.resolve('../client', 'build', 'index.html')));

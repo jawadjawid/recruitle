@@ -24,15 +24,16 @@ const GET_EMPLOYER = gql`
 `;
 
 const GET_JOBS = gql`
-query {
-  jobs {
-    id
-    title
-    companyName
-    salary
-    location
+  query {
+    jobs {
+      id
+      title
+      location
+      companyName
+      salary
+      currency
+    }
   }
-}
 `;
 
 const CREATE_JOB = gql`
@@ -62,13 +63,16 @@ const UPDATE_EMPLOYER = gql`
   }
 `;
 
-const GET_BOOKS = gql`
-  query getBooksQuery {
-    books {
-      name
-      id
-    }
+const APPLICATION_EXISTS = gql`
+  query ($applicantId: ID, $jobId: ID) {
+    applicationExists(applicantId: $applicantId, jobId: $jobId)
   }
 `;
 
-export { GET_BOOKS, GET_APPLICANT, GET_EMPLOYER, CREATE_JOB, GET_JOBS, UPDATE_APPLICANT, UPDATE_EMPLOYER };
+const RESUME_EXISTS = gql`
+  query ($id: ID) {
+    resumeExists(id: $id)
+  }
+`;
+
+export { GET_APPLICANT, GET_EMPLOYER, CREATE_JOB, GET_JOBS, UPDATE_APPLICANT, UPDATE_EMPLOYER, APPLICATION_EXISTS, RESUME_EXISTS };
