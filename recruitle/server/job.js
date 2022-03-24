@@ -31,18 +31,23 @@ module.exports = {
                         auth: recruitleAuth
                     });
 
-                    let mailDetails = {
+                    let mailOptions = {
                         from: recruitleAuth.user,
                         to: employer.email,
                         subject: 'Job Application - ' + job.title,
-                        text: 'You have recieved an application from ' + applicant.firstName + ' ' + applicant.lastName
+                        text: 'You have recieved an application from ' + applicant.firstName + ' ' + applicant.lastName,
+                        attachments: [{
+                            filename: applicant.resume.get("originalname"),
+                            path: applicant.resume.get("path"),
+                            contentType: applicant.resume.get("mimetype")
+                        }]
                     };
 
-                    mailTransporter.sendMail(mailDetails, function(err, data) {
+                    mailTransporter.sendMail(mailOptions, function(err, data) {
                         if(err) {
-                            console.log('Error Occured');
+                            console.log('Error Occured!');
                         } else {
-                            console.log('Email sent successfully');
+                            console.log('Email sent successfully.');
                         }
                     });
 
