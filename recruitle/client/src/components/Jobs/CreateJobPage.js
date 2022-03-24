@@ -51,14 +51,14 @@ function CreateJobPage(props) {
   const [currency, setCurrency] = React.useState('USD');
   const {enqueueSnackbar} = useSnackbar();
   const {data, loading} = useQuery(GET_EMPLOYER, {variables: {id: getUsername()}});
-  const [createJob, {loading: createLoading, error: createError, data: createData}] = useMutation(CREATE_JOB);
+  const [createJob, {loading: createLoading, error: createError, data: createData, reset}] = useMutation(CREATE_JOB);
 
   if (loading) return (<p>Loading...</p>);
-  if (createLoading) {
-    enqueueSnackbar("Loading...", {variant: 'info'});
-  } else if (createError) {
-    enqueueSnackbar(createError?.message, {variant: 'error'});
-  } else if (createData?.createJob?.id) {
+  if (createError) {
+    reset();
+    enqueueSnackbar("Failed to post job", {variant: 'error'});
+  } else if (!createLoading && createData?.createJob?.id) {
+    reset();
     enqueueSnackbar("Job posted! You will recieve an email for any applications.", {variant: 'success'});
   }
 
