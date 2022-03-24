@@ -38,7 +38,6 @@ export default function ProfilePage(props) {
     const inputRef = useRef();
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [companyName, setCompanyName] = useState("");
 
     const username = getUsername();
     const userType = getUsertype();
@@ -90,13 +89,6 @@ export default function ProfilePage(props) {
         setLastName(e.target.value)
         updateUserMutation({
             variables: { id: username, lastName: e.target.value},
-        });
-    }
-
-    const handleCompanyNameChange = (e) => {
-        setCompanyName(e.target.value)
-        updateUserMutation({
-            variables: { id: username, companyName: e.target.value},
         });
     }
 
@@ -198,24 +190,8 @@ export default function ProfilePage(props) {
                         alignItems: 'center',
                     }}
                     >
-                    <img className="edit-icon" alt="Edit" style={{height:22, width:22}} src="https://upload.wikimedia.org/wikipedia/en/8/8a/OOjs_UI_icon_edit-ltr-progressive.svg"/>
-                    <Typography component="h1" variant="h2" sx={{marginBottom: 5}}>
-                        <Editable
-                                text={companyName}
-                                placeholder={data.employer.companyName}
-                                childRef={inputRef}
-                                type="input"
-                            >
-                                <input
-                                ref={inputRef}
-                                type="text"
-                                name="name"
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-blue-300"
-                                placeholder={data.employer.companyName}
-                                value={companyName}
-                                onChange={handleCompanyNameChange}
-                                />
-                        </Editable>
+                    <Typography component="h1" variant="h2">
+                        {data.employer.companyName}
                     </Typography>
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
