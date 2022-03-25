@@ -8,7 +8,10 @@ import { SnackbarProvider, useSnackbar } from 'notistack';
 
 function JobsPage(props) {
     const navigate = useNavigate();
-    const {data, loading, error} = useQuery(GET_JOBS);
+    const {data, loading, error} = useQuery(GET_JOBS, { 
+        variables: { filter: window.location.href.split("?filter=")[1] } 
+    });
+;
     const {enqueueSnackbar} = useSnackbar();
 
     if (error) {
