@@ -22,7 +22,10 @@ const JobSchema = new Schema({
         type: String,
         required: true
     },
-
+    desc:{
+        type: String,
+        required: true
+    }
 });
 
 JobSchema.set('timestamps', true);

@@ -32,13 +32,14 @@ const GET_JOBS = gql`
       companyName
       salary
       currency
+      desc
     }
   }
 `;
 
 const CREATE_JOB = gql`
-  mutation ($title: String!, $companyName: String!, $salary: Int!, $currency: String!, $location: String!) {
-    createJob(title: $title, companyName: $companyName, salary: $salary, currency: $currency, location: $location) {
+  mutation ($title: String!, $companyName: String!, $salary: Int!, $currency: String!, $location: String!, $desc: String) {
+    createJob(title: $title, companyName: $companyName, salary: $salary, currency: $currency, location: $location, desc: $desc) {
       id
     }
   }
