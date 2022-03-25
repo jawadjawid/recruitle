@@ -78,8 +78,24 @@ const RootQuery = new GraphQLObjectType({
     },
     jobs: {
       type: new GraphQLList(JobType),
+      args: { first: { type: GraphQLInt }},
+      args: { offset: { type: GraphQLInt }},
+      args: { filter: { type: GraphQLString }},
+
+      args: {
+        first: { type: GraphQLInt },
+        offset: { type: GraphQLInt },
+        filter: { type: GraphQLString }
+      },
+
       resolve(parent, args) {
-        return Job.find({});
+        if (args.filter == null) {
+          return Job.find({}).skip(args.offset).limit(args.first);
+        } else {
+          const regex = new RegExp(args.filter, 'i')
+          return Job.find({ $or: [{ title: {$regex: regex} }, { companyName: {$regex: regex} }, { location: {$regex: regex} }] })
+          .skip(args.offset).limit(args.first);
+        }
       }
     },
     applicationExists: {

@@ -24,16 +24,16 @@ const GET_EMPLOYER = gql`
 `;
 
 const GET_JOBS = gql`
-  query {
-    jobs {
+query Jobs($first: Int, $offset: Int, $filter: String) {
+  jobs(first: $first, offset: $offset, filter: $filter) {
       id
       title
       location
       companyName
       salary
       currency
-    }
   }
+}
 `;
 
 const CREATE_JOB = gql`
