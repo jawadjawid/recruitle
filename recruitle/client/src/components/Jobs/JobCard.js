@@ -8,6 +8,7 @@ import {sendApplication} from './api.js'
 import { useQuery } from "@apollo/client";
 import {APPLICATION_EXISTS, RESUME_EXISTS} from '../../queries/queries.js'
 import { getUsername } from "../api.js";
+import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 
 export default function JobCard(props) {
     const {data: application, loading: applicationLoading} = useQuery(APPLICATION_EXISTS, {variables: {applicantId: getUsername(), jobId: props.job.id}});
@@ -40,13 +41,14 @@ export default function JobCard(props) {
     return(
         <Card sx={{pageBreakInside: "avoid", breakInside: "avoid", marginBottom: "20px"}} variant="outlined">
             <CardContent>
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>{props.job.companyName}</Typography>
+                <Typography sx={{ fontSize: 14, mb: 1.5 }} color="text.secondary" gutterBottom>{props.job.companyName}</Typography>
                 <Typography variant="h5">{props.job.title}</Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">{props.job.location}</Typography>
+                <Typography sx={{mb: 1.5}} color="text.secondary"><LocationOnOutlinedIcon fontSize="small"></LocationOnOutlinedIcon>{props.job.location}</Typography>
+                <Typography sx={{mb: 1.5, wordBreak: "break-word"}} style={{whiteSpace: 'pre-line'}} variant="body1">{props.job.desc}</Typography>
                 <Typography variant="body2">{props.job.salary} {props.job.currency}/year</Typography>
             </CardContent>
             <CardActions>
-                <Button onClick={() => {apply()}} disabled={applicationExists()}>Quick Apply</Button>
+                <Button onClick={apply} disabled={applicationExists()}>Quick Apply</Button>
             </CardActions>
         </Card>
     );

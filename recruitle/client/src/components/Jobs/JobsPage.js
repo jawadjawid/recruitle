@@ -20,7 +20,7 @@ function JobsPage(props) {
         if (loading) return (<p>No data</p>);
         else return (
             <Box sx={{
-                columnCount: 3,
+                columnCount: 1,
                 margin: "auto",
                 marginTop: "20px",
                 width: "70%",
