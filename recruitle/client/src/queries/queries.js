@@ -26,11 +26,12 @@ const GET_EMPLOYER = gql`
 const GET_JOBS = gql`
 query Jobs($filter: String) {
   jobs(filter: $filter) {
-    id
-    companyName
-    currency
-    title
-    location
+      id
+      title
+      location
+      companyName
+      salary
+      currency
   }
 }
 `;
