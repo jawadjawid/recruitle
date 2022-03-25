@@ -1,31 +1,31 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
 import Box from '@mui/material/Box';
-import { GET_JOBS } from "../../queries/queries";
+import { GET_JOBS, RESUME_EXISTS } from "../../queries/queries";
+import { getUsername } from "../api.js";
 import JobCard from "./JobCard";
 import { useNavigate } from 'react-router-dom';
 import { SnackbarProvider, useSnackbar } from 'notistack';
 
 function JobsPage(props) {
     const navigate = useNavigate();
-    const {data, loading, error} = useQuery(GET_JOBS);
+    const {data: jobs, loading: jobsLoading, error} = useQuery(GET_JOBS, {variables: {applicantId: getUsername()}});
+    const {data: resume, loading: resumeLoading} = useQuery(RESUME_EXISTS, {variables: {id: getUsername()}});
     const {enqueueSnackbar} = useSnackbar();
 
-    if (error) {
-        enqueueSnackbar("Couldn't fetch jobs", {variant: 'error'});
-    }
+    if (jobsLoading || resumeLoading) return (<p>No data</p>);
+    if (error) enqueueSnackbar("Couldn't fetch jobs", {variant: 'error'});
 
     const showJobs = () => {
-        if(!props.isSignedIn || props.userType != 'applicant') navigate('/');
-        if (loading) return (<p>No data</p>);
-        else return (
+        if(!props.isSignedIn || props.userType == 'employer') navigate('/');
+        return (
             <Box sx={{
                 columnCount: 1,
                 margin: "auto",
                 marginTop: "20px",
                 width: "70%",
             }}>
-                {data.jobs.map(job => (<JobCard job={job} enqueueSnackbar={enqueueSnackbar}></JobCard>))}
+                {jobs.jobs.map(job => (<JobCard job={job} resumeExists={resume.resumeExists} enqueueSnackbar={enqueueSnackbar}></JobCard>))}
             </Box>
         );
     }

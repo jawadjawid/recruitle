@@ -13,6 +13,7 @@ const {
   GraphQLNonNull
 } = graphql;
 const _ = require('lodash');
+const mongoose = require('mongoose');
 // project imports
 const Applicant = require('../database/models/applicant');
 const Employer = require('../database/models/employer');
@@ -48,7 +49,8 @@ const JobType = new GraphQLObjectType({
     salary: { type: GraphQLInt },
     currency: { type: GraphQLString },
     location: { type: GraphQLString },
-    desc: { type: GraphQLString }
+    desc: { type: GraphQLString },
+    applied: { type: GraphQLBoolean }
   })
 });
 
@@ -79,8 +81,24 @@ const RootQuery = new GraphQLObjectType({
     },
     jobs: {
       type: new GraphQLList(JobType),
-      resolve(parent, args) {
-        return Job.find({}).sort({createdAt: -1});
+      args: { applicantId: { type: GraphQLID }},
+      async resolve(parent, args) {
+        const jobs = await Job.find({}).sort({createdAt: -1});
+        console.log("applicantId: " + args.applicantId);
+        const res = jobs.map(async job => {
+          console.log("jobId: " + job.id);
+          let applied = await Application.exists({applicantId: mongoose.Types.ObjectId(args.applicantId), jobId: mongoose.Types.ObjectId(job.id)});
+          return {
+            id: job.id,
+            title: job.title,
+            companyName: job.companyName,
+            salary: job.salary,
+            currency: job.currency,
+            location: job.location,
+            desc: job.desc,
+            applied: applied
+        }});
+        return res;
       }
     },
     applicationExists: {

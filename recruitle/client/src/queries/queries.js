@@ -24,8 +24,8 @@ const GET_EMPLOYER = gql`
 `;
 
 const GET_JOBS = gql`
-  query {
-    jobs {
+  query($applicantId: ID) {
+    jobs(applicantId: $applicantId) {
       id
       title
       location
@@ -33,6 +33,7 @@ const GET_JOBS = gql`
       salary
       currency
       desc
+      applied
     }
   }
 `;

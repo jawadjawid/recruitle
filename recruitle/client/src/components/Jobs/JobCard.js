@@ -5,25 +5,13 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {sendApplication} from './api.js'
-import { useQuery } from "@apollo/client";
-import {APPLICATION_EXISTS, RESUME_EXISTS} from '../../queries/queries.js'
-import { getUsername } from "../api.js";
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 
 export default function JobCard(props) {
-    const {data: application, loading: applicationLoading} = useQuery(APPLICATION_EXISTS, {variables: {applicantId: getUsername(), jobId: props.job.id}});
-    const {data: resume} = useQuery(RESUME_EXISTS, {variables: {id: getUsername()}});
     const [applied, setApplied] = React.useState(false);
-    
-    function applicationExists(){
-        if(!applicationLoading) {
-            return application?.applicationExists || applied;
-        }
-        return false;
-    }
 
     function apply(){
-        if(!resume.resumeExists) {
+        if(!props.resumeExists) {
             props.enqueueSnackbar("Please upload a resume from your profile to quick apply.", {variant: "warning"});
             return;
         }
@@ -48,7 +36,7 @@ export default function JobCard(props) {
                 <Typography variant="body2">{props.job.salary} {props.job.currency}/year</Typography>
             </CardContent>
             <CardActions>
-                <Button onClick={apply} disabled={applicationExists()}>Quick Apply</Button>
+                <Button onClick={apply} disabled={props.job.applied || applied}>Quick Apply</Button>
             </CardActions>
         </Card>
     );
