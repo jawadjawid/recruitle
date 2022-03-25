@@ -4,6 +4,9 @@ module.exports = {
     uploadResume: (req, res, next) => {
         let id = req.username;
         let file = req.file;
+        if(file == null) {
+            return res.end();
+        }
         Applicant.updateOne({_id: id}, {$set: {resume: file}}, function(err, raw) {
             //if (err) return res.status(500).end(err);
             console.log(raw)

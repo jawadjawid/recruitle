@@ -13,6 +13,7 @@ const {
   GraphQLNonNull
 } = graphql;
 const _ = require('lodash');
+const mongoose = require('mongoose');
 // project imports
 const Applicant = require('../database/models/applicant');
 const Employer = require('../database/models/employer');
@@ -47,7 +48,9 @@ const JobType = new GraphQLObjectType({
     companyName: { type: GraphQLString },
     salary: { type: GraphQLInt },
     currency: { type: GraphQLString },
-    location: { type: GraphQLString }
+    location: { type: GraphQLString },
+    desc: { type: GraphQLString },
+    applied: { type: GraphQLBoolean }
   })
 });
 
@@ -78,24 +81,34 @@ const RootQuery = new GraphQLObjectType({
     },
     jobs: {
       type: new GraphQLList(JobType),
-      args: { first: { type: GraphQLInt }},
-      args: { offset: { type: GraphQLInt }},
-      args: { filter: { type: GraphQLString }},
-
       args: {
+        applicantId: { type: GraphQLID },
         first: { type: GraphQLInt },
         offset: { type: GraphQLInt },
         filter: { type: GraphQLString }
       },
-
-      resolve(parent, args) {
+      async resolve(parent, args) {
+        var jobs = null;
         if (args.filter == null) {
-          return Job.find({}).skip(args.offset).limit(args.first);
+          jobs = await Job.find({}).sort({createdAt: -1}).skip(args.offset).limit(args.first);
         } else {
           const regex = new RegExp(args.filter, 'i')
-          return Job.find({ $or: [{ title: {$regex: regex} }, { companyName: {$regex: regex} }, { location: {$regex: regex} }] })
-          .skip(args.offset).limit(args.first);
+          jobs = await Job.find({ $or: [{ title: {$regex: regex} }, { companyName: {$regex: regex} }, { location: {$regex: regex} }] })
+          .sort({createdAt: -1}).skip(args.offset).limit(args.first);
         }
+        const res = jobs.map(async job => {
+          let applied = await Application.exists({applicantId: mongoose.Types.ObjectId(args.applicantId), jobId: mongoose.Types.ObjectId(job.id)});
+          return {
+            id: job.id,
+            title: job.title,
+            companyName: job.companyName,
+            salary: job.salary,
+            currency: job.currency,
+            location: job.location,
+            desc: job.desc,
+            applied: applied
+        }});
+        return res;
       }
     },
     applicationExists: {
@@ -129,7 +142,8 @@ const Mutation = new GraphQLObjectType({
         companyName: { type: GraphQLString },
         salary: { type: GraphQLInt },
         currency: { type: GraphQLString },
-        location: { type: GraphQLString }
+        location: { type: GraphQLString },
+        desc: { type: GraphQLString }
       },
       resolve(parent, args) {
         let job = new Job({
@@ -137,7 +151,8 @@ const Mutation = new GraphQLObjectType({
           companyName: args.companyName,
           salary: args.salary,
           currency: args.currency,
-          location: args.location
+          location: args.location,
+          desc: args.desc
         });
         return job.save();
       }

@@ -24,21 +24,23 @@ const GET_EMPLOYER = gql`
 `;
 
 const GET_JOBS = gql`
-query Jobs($first: Int, $offset: Int, $filter: String) {
-  jobs(first: $first, offset: $offset, filter: $filter) {
-      id
-      title
-      location
-      companyName
-      salary
-      currency
+query Jobs($applicantId: ID, $first: Int, $offset: Int, $filter: String) {
+  jobs(applicantId: $applicantId, first: $first, offset: $offset, filter: $filter) {
+    id
+    title
+    location
+    companyName
+    salary
+    currency
+    desc
+    applied
   }
 }
 `;
 
 const CREATE_JOB = gql`
-  mutation ($title: String!, $companyName: String!, $salary: Int!, $currency: String!, $location: String!) {
-    createJob(title: $title, companyName: $companyName, salary: $salary, currency: $currency, location: $location) {
+  mutation ($title: String!, $companyName: String!, $salary: Int!, $currency: String!, $location: String!, $desc: String) {
+    createJob(title: $title, companyName: $companyName, salary: $salary, currency: $currency, location: $location, desc: $desc) {
       id
     }
   }
