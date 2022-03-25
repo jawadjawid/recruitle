@@ -92,7 +92,7 @@ var config = {
         cert: certificate
 };
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 https.createServer(config, app).listen(PORT, function (err) {
   if (err) console.log(err);
   else console.log("HTTPS server on https://localhost:%s", PORT);
