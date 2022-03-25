@@ -24,8 +24,8 @@ const GET_EMPLOYER = gql`
 `;
 
 const GET_JOBS = gql`
-query Jobs($filter: String) {
-  jobs(filter: $filter) {
+query Jobs($first: Int, $offset: Int, $filter: String) {
+  jobs(first: $first, offset: $offset, filter: $filter) {
       id
       title
       location
