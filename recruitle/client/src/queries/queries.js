@@ -38,6 +38,14 @@ query Jobs($applicantId: ID, $first: Int, $offset: Int, $filter: String) {
 }
 `;
 
+const GET_JOBS_COUNT = gql`
+query JobCount($filter: String) {
+  jobCount(filter: $filter){
+    value
+  }
+}
+`;
+
 const CREATE_JOB = gql`
   mutation ($title: String!, $companyName: String!, $salary: Int!, $currency: String!, $location: String!, $desc: String) {
     createJob(title: $title, companyName: $companyName, salary: $salary, currency: $currency, location: $location, desc: $desc) {
@@ -77,4 +85,12 @@ const RESUME_EXISTS = gql`
   }
 `;
 
-export { GET_APPLICANT, GET_EMPLOYER, CREATE_JOB, GET_JOBS, UPDATE_APPLICANT, UPDATE_EMPLOYER, APPLICATION_EXISTS, RESUME_EXISTS };
+export { GET_APPLICANT,
+    GET_EMPLOYER,
+    CREATE_JOB,
+    GET_JOBS,
+    UPDATE_APPLICANT,
+    UPDATE_EMPLOYER,
+    APPLICATION_EXISTS,
+    RESUME_EXISTS,
+    GET_JOBS_COUNT };

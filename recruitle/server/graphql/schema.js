@@ -40,6 +40,13 @@ const EmployerType = new GraphQLObjectType({
   })
 });
 
+const JobsCount = new GraphQLObjectType({
+  name: 'JobsCount',
+  fields: () => ({
+    value: { type: GraphQLInt },
+  })
+});
+
 const JobType = new GraphQLObjectType({
   name: 'Job',
   fields: () => ({
@@ -79,6 +86,18 @@ const RootQuery = new GraphQLObjectType({
         return Employer.findOne({"_id": args.id})
       }
     },
+    jobCount: {
+      type: JobsCount,
+      args: { filter: { type: GraphQLString }},
+      resolve(parent, args) {
+        if (args.filter == null) {
+          return {"value": Job.countDocuments({})}
+        } else {
+          const regex = new RegExp(args.filter, 'i');
+          return {"value":Job.countDocuments({ $or: [{ title: {$regex: regex} }, { companyName: {$regex: regex} }, { location: {$regex: regex} }, { desc: {$regex: regex} }] })}
+        }
+      }
+    },
     jobs: {
       type: new GraphQLList(JobType),
       args: {
@@ -93,7 +112,7 @@ const RootQuery = new GraphQLObjectType({
           jobs = await Job.find({}).sort({createdAt: -1}).skip(args.offset).limit(args.first);
         } else {
           const regex = new RegExp(args.filter, 'i')
-          jobs = await Job.find({ $or: [{ title: {$regex: regex} }, { companyName: {$regex: regex} }, { location: {$regex: regex} }] })
+          jobs = await Job.find({ $or: [{ title: {$regex: regex} }, { companyName: {$regex: regex} }, { location: {$regex: regex} }, { desc: {$regex: regex} }] })
           .sort({createdAt: -1}).skip(args.offset).limit(args.first);
         }
         const res = jobs.map(async job => {
