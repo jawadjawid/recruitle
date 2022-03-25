@@ -24,18 +24,18 @@ const GET_EMPLOYER = gql`
 `;
 
 const GET_JOBS = gql`
-  query($applicantId: ID) {
-    jobs(applicantId: $applicantId) {
-      id
-      title
-      location
-      companyName
-      salary
-      currency
-      desc
-      applied
-    }
+query Jobs($applicantId: ID, $first: Int, $offset: Int, $filter: String) {
+  jobs(applicantId: $applicantId, first: $first, offset: $offset, filter: $filter) {
+    id
+    title
+    location
+    companyName
+    salary
+    currency
+    desc
+    applied
   }
+}
 `;
 
 const CREATE_JOB = gql`

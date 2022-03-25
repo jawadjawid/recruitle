@@ -9,8 +9,16 @@ import { SnackbarProvider, useSnackbar } from 'notistack';
 
 function JobsPage(props) {
     const navigate = useNavigate();
-    const {data: jobs, loading: jobsLoading, error} = useQuery(GET_JOBS, {variables: {applicantId: getUsername()}});
     const {data: resume, loading: resumeLoading} = useQuery(RESUME_EXISTS, {variables: {id: getUsername()}});
+    const {data: jobs, loading: jobsLoading, error} = useQuery(GET_JOBS, { 
+        variables: { 
+            applicantId: getUsername(),
+            first: 10,
+            offset: 0,
+            filter: window.location.href.split("?filter=")[1],
+         } 
+    });
+;
     const {enqueueSnackbar} = useSnackbar();
 
     if (jobsLoading || resumeLoading) return (<p>No data</p>);

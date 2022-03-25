@@ -81,12 +81,22 @@ const RootQuery = new GraphQLObjectType({
     },
     jobs: {
       type: new GraphQLList(JobType),
-      args: { applicantId: { type: GraphQLID }},
+      args: {
+        applicantId: { type: GraphQLID },
+        first: { type: GraphQLInt },
+        offset: { type: GraphQLInt },
+        filter: { type: GraphQLString }
+      },
       async resolve(parent, args) {
-        const jobs = await Job.find({}).sort({createdAt: -1});
-        console.log("applicantId: " + args.applicantId);
+        var jobs = null;
+        if (args.filter == null) {
+          jobs = await Job.find({}).sort({createdAt: -1}).skip(args.offset).limit(args.first);
+        } else {
+          const regex = new RegExp(args.filter, 'i')
+          jobs = await Job.find({ $or: [{ title: {$regex: regex} }, { companyName: {$regex: regex} }, { location: {$regex: regex} }] })
+          .sort({createdAt: -1}).skip(args.offset).limit(args.first);
+        }
         const res = jobs.map(async job => {
-          console.log("jobId: " + job.id);
           let applied = await Application.exists({applicantId: mongoose.Types.ObjectId(args.applicantId), jobId: mongoose.Types.ObjectId(job.id)});
           return {
             id: job.id,

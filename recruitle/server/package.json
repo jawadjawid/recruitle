@@ -10,8 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "lodash": "^4.17.21",
-    "graphql-type-json": "^0.3.2",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.2",
     "connect-mongodb-session": "^3.1.1",
@@ -20,6 +18,8 @@
     "express-graphql": "^0.12.0",
     "express-session": "^1.17.2",
     "graphql": "^16.3.0",
+    "graphql-type-json": "^0.3.2",
+    "lodash": "^4.17.21",
     "mongoose": "^5.2.1",
     "mongoose-unique-validator": "^2.0.3",
     "multer": "^1.4.4",
