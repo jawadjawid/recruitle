@@ -19,7 +19,7 @@ import CreditsPage from './components/CreditsPage';
 import { getUsername, getUsertype } from './components/api';
 
 const client = new ApolloClient({
-  uri: 'https://localhost:3000/graphql',
+  uri: 'https://recruitle.azurewebsites.net/graphql',
   cache: new InMemoryCache()
 });
 

@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/d4940eb1-d959-4e5b-87c2-a851b8dc4db6/resourceGroups/recruitle/providers/Microsoft.Web/sites/recruitle",
+    "appService.deploySubpath": "."
+}
