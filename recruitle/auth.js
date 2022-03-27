@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const cookie = require('cookie');
 const applicant = require('./database/models/applicant');
 const employer = require('./database/models/employer');
