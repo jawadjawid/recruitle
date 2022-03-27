@@ -12,6 +12,7 @@ Created by: Muhammad Osman Amjad, Ali Al Rawaf, Jawad Jawid
 - Clone repo
 - Navigate to ```recruitle```
 - Run ```docker build -t recruitle .``` and wait for it to finish
+- Run ```docker run -dp 3000:3000 recruitle```
 - Done. App should start running on PORT 3000
 
 ## How to deploy latest version of the app
