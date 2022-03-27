@@ -8,6 +8,15 @@ Created by: Muhammad Osman Amjad, Ali Al Rawaf, Jawad Jawid
 - Run ```npm start```
 - Done. App should start running on PORT 3000
 
+## How to run locally with docker
+- Clone repo
+- Navigate to ```recruitle```
+- Run ```docker build -t recruitle .``` and wait for it to finish
+- Done. App should start running on PORT 3000
+
+## How to deploy latest version of the app
+- Wokring on that rn
+
 ## Description
 The idea is to create an application similar to Glassdoor/LinkedIn. We want a web application that will allows companies to post job postings, let candidates apply to postings, let candidates review companies, let candidates submit their salaries. 
 
