@@ -11,7 +11,7 @@ import {
 } from "react-router-dom";
 import CreateJobPageNotistack from './components/Jobs/CreateJobPage';
 import JobsPageNotistack from "./components/Jobs/JobsPage";
-import ProfilePageNotistack from './components/Profile/ProfilePage';
+import ProfilePage from './components/Profile/ProfilePage';
 import SignIn from './components/Auth/SignIn';
 import SignUpPage from './components/Auth/SignUpPage';
 import NavBar from './components/NavBar';
@@ -44,7 +44,7 @@ export default function BasicExample() {
           <Route path='/' element={<SignIn isSignedIn={isSignedIn} />}/>
           <Route path='/signin' element={<SignIn isSignedIn={isSignedIn} />}/>
           <Route path='/signup' element={<SignUpPage isSignedIn={isSignedIn}/>}/>
-          <Route path='/profile' element={<ProfilePageNotistack isSignedIn={isSignedIn}/>}/>
+          <Route path='/profile' element={<ProfilePage isSignedIn={isSignedIn}/>}/>
           <Route path='/create' element={<CreateJobPageNotistack isSignedIn={isSignedIn} userType={userType}/>}/>
           <Route path='/jobs' element={<JobsPageNotistack isSignedIn={isSignedIn} userType={userType}/>}/>
           <Route path='/credits' element={<CreditsPage/>}/>

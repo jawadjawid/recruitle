@@ -133,15 +133,16 @@ const Mutation = new GraphQLObjectType({
         firstName: { type: GraphQLString },
         lastName: { type: GraphQLString },
       },
-      async resolve(parent, args) {
-        const applicant = await Applicant.findOne({"_id": args.id})
-        if(args.firstName !== undefined) {
-          applicant.firstName = args.firstName;
-        }
-        if(args.lastName !== undefined) {
-          applicant.lastName = args.lastName;
-        }
-        return applicant.save();
+      resolve(parent, args) {
+        Applicant.findOne({"_id": args.id}, function(err, applicant) {
+          if(args.firstName !== undefined) {
+            applicant.firstName = args.firstName;
+          }
+          if(args.lastName !== undefined) {
+            applicant.lastName = args.lastName;
+          }
+          return applicant.save();
+        });
       }
     }, 
     updateEmployer: {
