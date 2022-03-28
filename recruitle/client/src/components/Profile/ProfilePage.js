@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { SnackbarProvider, useSnackbar } from 'notistack';
 import SnackBarAlert from '../SnackBarAlert';
 import Editable from "./Editable";
 
@@ -32,7 +33,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function ProfilePage(props) {
+function ProfilePage(props) {
     const navigate = useNavigate();
 
     const inputRef = useRef();
@@ -46,11 +47,26 @@ export default function ProfilePage(props) {
     const [snackBarMsg, setSnackBarMsg] = useState("");
     const [severity, setSeverity] = useState("success");
 
-    const [updateUserMutation, { data2, loading2, error2 }] = useMutation((userType == "applicant" ? UPDATE_APPLICANT : UPDATE_EMPLOYER))
+    const {enqueueSnackbar} = useSnackbar();
+
+    const [updateUserMutation, { data2, loading2, error2, reset }] = useMutation((userType == "applicant" ? UPDATE_APPLICANT : UPDATE_EMPLOYER))
 
     const {loading, error, data} = useQuery((userType == "applicant" ? GET_APPLICANT : GET_EMPLOYER), { 
         variables: { id: username } 
     });
+
+    if (loading) return (<p>Loading...</p>);
+    if (loading2) {
+        enqueueSnackbar("loading!", {variant: 'info'});
+    }
+    if (error2) {
+        //reset();
+        enqueueSnackbar("Failed to change name.", {variant: 'error'});
+    } else if (!loading2 && data2?.updateApplicant?.id) {
+        console.log("come here???")
+        //reset();
+        enqueueSnackbar("Name updated!", {variant: 'success'});
+    }
 
     const handleSnackBarClose = (event, reason) => {
         if (reason === 'clickaway')
@@ -113,13 +129,13 @@ export default function ProfilePage(props) {
                                 placeholder={data.applicant.firstName}
                                 childRef={inputRef}
                                 type="input"
+                                mutation={updateUserMutation}
                             >
                                 <input
                                 ref={inputRef}
                                 type="text"
                                 name="name"
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-blue-300"
-                                placeholder={data.applicant.firstName}
                                 value={firstName}
                                 onChange={handleFirstNameChange}
                                 />
@@ -138,7 +154,6 @@ export default function ProfilePage(props) {
                                 type="text"
                                 name="lastName"
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-blue-300"
-                                placeholder={data.applicant.lastName}
                                 value={lastName}
                                 onChange={handleLastNameChange}
                                 />
@@ -235,3 +250,11 @@ export default function ProfilePage(props) {
         </React.Fragment>
     );
 }
+
+export default function ProfilePageNotistack(props) {
+    return (
+      <SnackbarProvider maxSnack={3}>
+        <ProfilePage isSignedIn={props.isSignedIn}/>
+      </SnackbarProvider>
+    );
+  }
