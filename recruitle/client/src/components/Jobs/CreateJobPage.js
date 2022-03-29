@@ -74,12 +74,14 @@ function CreateJobPage(props) {
     const formdata = new FormData(event.currentTarget);
     createJob({ variables: {
       title: formdata.get('title'),
+      desc: formdata.get('desc'),
       location: formdata.get('location'),
       salary: parseInt(formdata.get('salary')),
       currency: currency,
       companyName: data.employer.companyName
     }});
     document.getElementById("title").value = '';
+    document.getElementById("desc").value = '';
     document.getElementById("location").value = '';
     document.getElementById("salary").value = '';
   };
@@ -114,7 +116,18 @@ function CreateJobPage(props) {
                     autoFocus
                   />
                   <TextField
-                    type=""
+                    type="text"
+                    margin="normal"
+                    required
+                    fullWidth
+                    multiline
+                    id="desc"
+                    label="Job Description"
+                    name="desc"
+                    inputProps={{ maxLength: 320 }}
+                  />
+                  <TextField
+                    type="text"
                     margin="normal"
                     required
                     fullWidth

@@ -13,6 +13,7 @@ const {
   GraphQLNonNull
 } = graphql;
 const _ = require('lodash');
+const mongoose = require('mongoose');
 // project imports
 const Applicant = require('../database/models/applicant');
 const Employer = require('../database/models/employer');
@@ -39,6 +40,13 @@ const EmployerType = new GraphQLObjectType({
   })
 });
 
+const JobsCount = new GraphQLObjectType({
+  name: 'JobsCount',
+  fields: () => ({
+    value: { type: GraphQLInt },
+  })
+});
+
 const JobType = new GraphQLObjectType({
   name: 'Job',
   fields: () => ({
@@ -47,7 +55,9 @@ const JobType = new GraphQLObjectType({
     companyName: { type: GraphQLString },
     salary: { type: GraphQLInt },
     currency: { type: GraphQLString },
-    location: { type: GraphQLString }
+    location: { type: GraphQLString },
+    desc: { type: GraphQLString },
+    applied: { type: GraphQLBoolean }
   })
 });
 
@@ -76,10 +86,48 @@ const RootQuery = new GraphQLObjectType({
         return Employer.findOne({"_id": args.id})
       }
     },
+    jobCount: {
+      type: JobsCount,
+      args: { filter: { type: GraphQLString }},
+      resolve(parent, args) {
+        if (args.filter == null) {
+          return {"value": Job.countDocuments({})}
+        } else {
+          const regex = new RegExp(args.filter, 'i');
+          return {"value":Job.countDocuments({ $or: [{ title: {$regex: regex} }, { companyName: {$regex: regex} }, { location: {$regex: regex} }, { desc: {$regex: regex} }] })}
+        }
+      }
+    },
     jobs: {
       type: new GraphQLList(JobType),
-      resolve(parent, args) {
-        return Job.find({});
+      args: {
+        applicantId: { type: GraphQLID },
+        first: { type: GraphQLInt },
+        offset: { type: GraphQLInt },
+        filter: { type: GraphQLString }
+      },
+      async resolve(parent, args) {
+        var jobs = null;
+        if (args.filter == null) {
+          jobs = await Job.find({}).sort({createdAt: -1}).skip(args.offset).limit(args.first);
+        } else {
+          const regex = new RegExp(args.filter, 'i')
+          jobs = await Job.find({ $or: [{ title: {$regex: regex} }, { companyName: {$regex: regex} }, { location: {$regex: regex} }, { desc: {$regex: regex} }] })
+          .sort({createdAt: -1}).skip(args.offset).limit(args.first);
+        }
+        const res = jobs.map(async job => {
+          let applied = await Application.exists({applicantId: mongoose.Types.ObjectId(args.applicantId), jobId: mongoose.Types.ObjectId(job.id)});
+          return {
+            id: job.id,
+            title: job.title,
+            companyName: job.companyName,
+            salary: job.salary,
+            currency: job.currency,
+            location: job.location,
+            desc: job.desc,
+            applied: applied
+        }});
+        return res;
       }
     },
     applicationExists: {
@@ -113,7 +161,8 @@ const Mutation = new GraphQLObjectType({
         companyName: { type: GraphQLString },
         salary: { type: GraphQLInt },
         currency: { type: GraphQLString },
-        location: { type: GraphQLString }
+        location: { type: GraphQLString },
+        desc: { type: GraphQLString }
       },
       resolve(parent, args) {
         let job = new Job({
@@ -121,7 +170,8 @@ const Mutation = new GraphQLObjectType({
           companyName: args.companyName,
           salary: args.salary,
           currency: args.currency,
-          location: args.location
+          location: args.location,
+          desc: args.desc
         });
         return job.save();
       }
