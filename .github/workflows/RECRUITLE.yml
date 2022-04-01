@@ -21,7 +21,7 @@ jobs:
     if: github.event_name == 'push'
     defaults:
       run:
-        working-directory: frontend
+        working-directory: recruitle
 
     steps:
       - uses: actions/checkout@v2
