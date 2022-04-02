@@ -28,11 +28,11 @@ module.exports = {
 
                     let mailTransporter = nodemailer.createTransport({
                         service: 'gmail',
-                        auth: recruitleAuth
+                        auth: (process.env.EMAIL_USER && {user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASSWORD}) || recruitleAuth
                     });
 
                     let mailOptions = {
-                        from: recruitleAuth.user,
+                        from: process.env.EMAIL_USER || recruitleAuth.user,
                         to: employer.email,
                         subject: 'Job Application - ' + job.title,
                         text: 'You have recieved an application from ' + applicant.firstName + ' ' + applicant.lastName,
@@ -46,6 +46,7 @@ module.exports = {
                     mailTransporter.sendMail(mailOptions, function(err, data) {
                         if(err) {
                             console.log('Error Occured!');
+                            console.log(err);
                         } else {
                             console.log('Email sent successfully.');
                         }
