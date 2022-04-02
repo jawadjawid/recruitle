@@ -45,7 +45,7 @@ export default function NavBar(props) {
             {isJobsPage && <Form onSubmit={search} className="d-flex">
           <FormControl
             type="search"
-            placeholder="Search s"
+            placeholder="Search heys"
             className="me-2"
             aria-label="Search"
           />
