@@ -1,11 +1,9 @@
-name: Publish React Skeleton to GHCR
+name: Publish App
 
 on:
   push:
-    # Only run this workflow if it is a commit to master.
     branches:
       - main
-    # Only run this workflow if the commit has modified files from frontend
     paths:
       - recruitle/**
 
@@ -14,8 +12,6 @@ env:
   IMAGE_NAME: recruitle-jawadjawid
 
 jobs:
-  # Push image to GitHub Packages.
-  # See also https://docs.docker.com/docker-hub/builds/
   push:
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
