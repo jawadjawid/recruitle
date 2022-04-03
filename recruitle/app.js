@@ -28,7 +28,7 @@ app.use(session({
 }));
 
 const mongoose = require("mongoose");
-const db = require('./database/config').mongoURI;
+const db = process.env.DB || require('./database/config').mongoURI;
 const MongoDBStore = require("connect-mongodb-session")(session);
 
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
