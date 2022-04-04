@@ -63,10 +63,15 @@ export default function ProfilePage(props) {
         const files = event.target.resume_url.files;
         const file = files[0]
         event.target.reset();
+        if (file == null) {
+            setSnackBarOpen(true);
+            setSnackBarMsg("Resume upload fail. Ensure you've attached a resume!");
+            setSeverity("error");
+        }
         uploadResume(file, function(err, res) {
             if (err){
                 setSnackBarOpen(true);
-                setSnackBarMsg("Resume upload fail!");
+                setSnackBarMsg("Resume upload fail. Ensure you've attached a resume!");
                 setSeverity("error");
             } 
             else {
