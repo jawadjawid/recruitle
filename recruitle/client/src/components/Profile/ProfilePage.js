@@ -128,7 +128,7 @@ export default function ProfilePage(props) {
                                 name="name"
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-blue-300"
                                 placeholder={data.applicant.firstName}
-                                value={firstName}
+                                value={firstName || data.applicant.firstName}
                                 onChange={handleFirstNameChange}
                                 />
                         </Editable>
@@ -147,7 +147,7 @@ export default function ProfilePage(props) {
                                 name="lastName"
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-blue-300"
                                 placeholder={data.applicant.lastName}
-                                value={lastName}
+                                value={lastName ||data.applicant.lastName}
                                 onChange={handleLastNameChange}
                                 />
                         </Editable>
