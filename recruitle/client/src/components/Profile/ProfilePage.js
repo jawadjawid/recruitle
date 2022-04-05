@@ -9,6 +9,9 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SnackBarAlert from '../SnackBarAlert';
 import Editable from "./Editable";
+import ContactPageIcon from '@mui/icons-material/ContactPage';
+import EmailIcon from '@mui/icons-material/Email';
+import EditIcon from '@mui/icons-material/Edit';
 
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_EMPLOYER, GET_APPLICANT, UPDATE_APPLICANT, UPDATE_EMPLOYER } from '../../queries/queries';
@@ -111,7 +114,7 @@ export default function ProfilePage(props) {
                         alignItems: 'center',
                     }}
                     >
-                    <img className="edit-icon" alt="Edit" style={{height:22, width:22}} src="https://upload.wikimedia.org/wikipedia/en/8/8a/OOjs_UI_icon_edit-ltr-progressive.svg"/>
+                    <EditIcon color="primary" fontSize="large"/>
                     <Typography component="h1" variant="h2" sx={{marginBottom: 5}}>
                             <Editable
                                 text={firstName}
@@ -130,7 +133,7 @@ export default function ProfilePage(props) {
                                 />
                         </Editable>
                     </Typography>
-                    <img className="edit-icon" alt="Edit" style={{height:22, width:22}} src="https://upload.wikimedia.org/wikipedia/en/8/8a/OOjs_UI_icon_edit-ltr-progressive.svg"/>
+                    <EditIcon color="primary" fontSize="large"/>
                     <Typography component="h1" variant="h2">
                         <Editable
                                 text={lastName}
@@ -152,11 +155,11 @@ export default function ProfilePage(props) {
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 6 }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
-                                <img className="email-icon" alt="Email" style={{height:35, width:35}} src="https://cdn0.iconfinder.com/data/icons/apple-apps/100/Apple_Mail-512.png"/>
-                                  {data.applicant.email}
+                                <EmailIcon color="primary" fontSize="large"/>
+                                {data.applicant.email}
                             </Grid>
                             <Grid item xs={12}>
-                                <img className="resume-icon" alt="Resume" style={{height:35, width:35}} src="https://www.clipartmax.com/png/small/308-3085721_resume-png-clipart-my-resume-icon-png.png"/>
+                                <ContactPageIcon color="primary" fontSize="large"/>
                                 {data.applicant.resume.originalname}
                             </Grid>
                             <Grid item xs={12}>
@@ -201,8 +204,8 @@ export default function ProfilePage(props) {
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
-                                <img className="email-icon" alt="Email" style={{height:35, width:35}} src="https://cdn0.iconfinder.com/data/icons/apple-apps/100/Apple_Mail-512.png"/>
-                                  {data.employer.email}
+                                <EmailIcon color="primary" fontSize="large"/>
+                                {data.employer.email}
                             </Grid>
                         </Grid>
                     </Box>
