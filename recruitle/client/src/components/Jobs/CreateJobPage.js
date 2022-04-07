@@ -59,7 +59,7 @@ function CreateJobPage(props) {
     enqueueSnackbar("Failed to post job.", {variant: 'error'});
   } else if (!createLoading && createData?.createJob?.id) {
     reset();
-    enqueueSnackbar("Job posted! You will recieve an email for any applications.", {variant: 'success'});
+    enqueueSnackbar("Job posted! You will receive an email for any applications.", {variant: 'success'});
   }
 
   const handleCurrencyChange = (event) => {
