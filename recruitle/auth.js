@@ -98,13 +98,11 @@ module.exports = {
                             maxAge: 60 * 60 * 24 * 7,
                             secure: true,
                             sameSite: true,
-                            domain: "recruitle.me"
                         }), cookie.serialize('userType', 'employer', {
                             path : '/', 
                             maxAge: 60 * 60 * 24 * 7,
                             secure: true,
                             sameSite: true,
-                            domain: "recruitle.me"
                         })]);
                         return res.json(user);
                     })
