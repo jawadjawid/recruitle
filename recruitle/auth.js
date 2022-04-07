@@ -95,10 +95,14 @@ module.exports = {
                         req.session.userType = 'employer'
                         res.setHeader('Set-Cookie', [cookie.serialize('username', user.id, {
                             path : '/', 
-                            maxAge: 60 * 60 * 24 * 7
+                            maxAge: 60 * 60 * 24 * 7,
+                            secure: true,
+                            sameSite: true,
                         }), cookie.serialize('userType', 'employer', {
                             path : '/', 
-                            maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
+                            maxAge: 60 * 60 * 24 * 7,
+                            secure: true,
+                            sameSite: true,
                         })]);
                         return res.json(user);
                     })
