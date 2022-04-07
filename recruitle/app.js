@@ -25,6 +25,7 @@ app.use(session({
     secret: 'please change this secret',
     resave: false,
     saveUninitialized: true,
+    proxy: true,
 }));
 
 const mongoose = require("mongoose");
