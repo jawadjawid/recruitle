@@ -130,6 +130,27 @@ const RootQuery = new GraphQLObjectType({
         return res;
       }
     },
+    postings: {
+      type: new GraphQLList(JobType),
+      args: {
+        companyName: { type: GraphQLString }
+      },
+      async resolve(parent, args) {
+        var jobs = null;
+        jobs = await Job.find({"companyName": args.companyName}).sort({createdAt: -1});
+        const res = jobs.map(async job => {
+          return {
+            id: job.id,
+            title: job.title,
+            companyName: job.companyName,
+            salary: job.salary,
+            currency: job.currency,
+            location: job.location,
+            desc: job.desc
+        }});
+        return res;
+      }
+    },
     applications: {
       type: new GraphQLList(JobType),
       args: {
@@ -137,7 +158,7 @@ const RootQuery = new GraphQLObjectType({
       },
       async resolve(parent, args) {
         var apps = null;
-        apps = await Application.find({"applicantId": args.applicantId}).populate("jobId");
+        apps = await Application.find({"applicantId": args.applicantId}).sort({createdAt: -1}).populate("jobId");
         const res = apps.map(async app => {
           return {
             id: app.jobId.id,
