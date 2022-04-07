@@ -25,12 +25,10 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     proxy: true,
-    httpOnly: true,
-    secure: true,
-    sameSite: true,
     cookie: {
       secure: true,
       sameSite: true,
+      domain: "recruitle.me"
     },
 }));
 
@@ -58,11 +56,13 @@ app.use(function (req, res, next){
     maxAge: 60 * 60 * 24 * 7,
     secure: true,
     sameSite: true,
+    domain: "recruitle.me"
   }), cookie.serialize('userType', userType, {
     path : '/', 
     maxAge: 60 * 60 * 24 * 7,
     secure: true,
     sameSite: true,
+    domain: "recruitle.me"
   })]);
   console.log("HTTPS request", req.username, req.method, req.url, req.body);
   next();
