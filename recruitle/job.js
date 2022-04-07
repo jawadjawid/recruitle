@@ -4,7 +4,6 @@ const job = require('./database/models/job')
 const application = require('./database/models/application');
 const nodemailer = require('nodemailer');
 const mongoose = require('mongoose');
-const recruitleAuth = require('./config.js').auth;
 
 module.exports = {
     apply: (req, res, next) => {
@@ -28,11 +27,11 @@ module.exports = {
 
                     let mailTransporter = nodemailer.createTransport({
                         service: 'gmail',
-                        auth: (process.env.EMAIL_USER && {user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASSWORD}) || recruitleAuth
+                        auth: (process.env.EMAIL_USER && {user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASSWORD}) || require('./config.js').auth
                     });
 
                     let mailOptions = {
-                        from: process.env.EMAIL_USER || recruitleAuth.user,
+                        from: process.env.EMAIL_USER || require('./config.js').auth.user,
                         to: employer.email,
                         subject: 'Job Application - ' + job.title,
                         text: 'You have recieved an application from ' + applicant.firstName + ' ' + applicant.lastName,
