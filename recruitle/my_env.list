@@ -1,0 +1,6 @@
+DB=mongodb+srv://jawad:jawad@cluster0.r6ob1.azure.mongodb.net/Recruitle?retryWrites=true&w=majority
+EMAIL_USER=recruitlejobs@gmail.com
+EMAIL_PASSWORD=recruitme123
+PORT=3000
+URL=recruitle.me
+SESS=pleasechangethissecretjawad

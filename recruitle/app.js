@@ -14,7 +14,6 @@ const job = require('./job');
 var multer  = require('multer');
 var upload = multer({ dest: 'uploads/' });
 
-
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
@@ -22,10 +21,12 @@ const cookie = require('cookie');
 
 const session = require('express-session');
 app.use(session({
-    secret: 'please change this secret',
+    secret: process.env.SESS || 'please change this secret',
     resave: false,
     saveUninitialized: true,
     proxy: true,
+    httpOnly: true,
+    secure: true,
 }));
 
 const mongoose = require("mongoose");

@@ -19,7 +19,7 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://localhost:3000/">
+      <Link color="inherit" href={process.env.URL || "https://localhost:3000/"}>
       Recruitle
       </Link>{' '}
       {new Date().getFullYear()}

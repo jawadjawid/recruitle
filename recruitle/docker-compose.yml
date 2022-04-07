@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  recruitle:
+    image: ghcr.io/utscc09/recruitle-jawadjawid:main
+    container_name: recruitle
+    restart: always
+    env_file:
+    - ./my_env.list
+    ports:
+      - "3000:3000"
