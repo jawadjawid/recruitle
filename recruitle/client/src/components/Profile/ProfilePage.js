@@ -175,6 +175,9 @@ export default function ProfilePage(props) {
                             Upload Resume
                         </Button>
                     </Box>
+                    <Typography component="h1" variant="h2" sx={{marginTop:5, width:"max-content"}}>
+                        Your Job Applications
+                    </Typography>
                     </Box>
                     <Copyright sx={{ mt: 5 }} />
                 </Container>
@@ -209,6 +212,9 @@ export default function ProfilePage(props) {
                             </Grid>
                         </Grid>
                     </Box>
+                    <Typography component="h1" variant="h2" sx={{marginTop:5, width:"max-content"}}>
+                        Your Job Postings
+                    </Typography>
                     </Box>
                     <Copyright sx={{ mt: 5 }} />
                 </Container>
