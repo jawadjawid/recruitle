@@ -13,6 +13,19 @@ const GET_APPLICANT = gql`
   }
 `;
 
+const GET_APPLICATIONS = gql`
+  query ($applicantId: ID) {
+    applications(id: $applicantId) {
+      title
+      companyName
+      salary
+      currency
+      location
+      desc
+    }
+  }
+`;
+
 const GET_EMPLOYER = gql`
   query ($id: ID) {
     employer(id: $id) {
@@ -85,7 +98,8 @@ const RESUME_EXISTS = gql`
   }
 `;
 
-export { GET_APPLICANT,
+export { GET_APPLICANT, 
+    GET_APPLICATIONS,
     GET_EMPLOYER,
     CREATE_JOB,
     GET_JOBS,
