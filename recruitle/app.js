@@ -55,10 +55,14 @@ app.use(function (req, res, next){
   let userType = (req.session.userType)? req.session.userType : '';
   res.setHeader('Set-Cookie', [cookie.serialize('username', username, {
     path : '/',
-    maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
+    maxAge: 60 * 60 * 24 * 7,
+    secure: true,
+    sameSite: true,
   }), cookie.serialize('userType', userType, {
     path : '/', 
-    maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
+    maxAge: 60 * 60 * 24 * 7,
+    secure: true,
+    sameSite: true,
   })]);
   console.log("HTTPS request", req.username, req.method, req.url, req.body);
   next();
