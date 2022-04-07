@@ -46,6 +46,7 @@ jobs:
 
   build:
     name: Build
+    needs: push
     runs-on: ubuntu-latest
     steps:
     - name: executing remote ssh commands using password
