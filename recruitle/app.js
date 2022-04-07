@@ -27,6 +27,11 @@ app.use(session({
     proxy: true,
     httpOnly: true,
     secure: true,
+    sameSite: true,
+    cookie: {
+      secure: true,
+      sameSite: true,
+    },
 }));
 
 const mongoose = require("mongoose");
