@@ -34,6 +34,8 @@ app.use(session({
     },
 }));
 
+app.set('trust proxy', 1);
+
 const mongoose = require("mongoose");
 const db = process.env.DB || require('./database/config').mongoURI;
 const MongoDBStore = require("connect-mongodb-session")(session);
