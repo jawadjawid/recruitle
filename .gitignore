@@ -11,3 +11,4 @@ recruitle/db/users.db
 recruitle/config.js
 recruitle/.vscode/settings.json
 recruitle/database/config.js
+recruitle/my_env.list
