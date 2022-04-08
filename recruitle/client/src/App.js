@@ -17,6 +17,7 @@ import SignUpPage from './components/Auth/SignUpPage';
 import NavBar from './components/NavBar';
 import CreditsPage from './components/CreditsPage';
 import { getUsername, getUsertype } from './components/api';
+import ListApplicantsPage from "./components/Profile/ListApplicantsPage";
 
 const client = new ApolloClient({
   uri: '/graphql',
@@ -47,6 +48,7 @@ export default function BasicExample() {
           <Route path='/profile' element={<ProfilePage isSignedIn={isSignedIn} userType={userType}/>}/>
           <Route path='/create' element={<CreateJobPageNotistack isSignedIn={isSignedIn} userType={userType}/>}/>
           <Route path='/jobs' element={<JobsPageNotistack isSignedIn={isSignedIn} userType={userType}/>}/>
+          <Route path='/applicants' element={<ListApplicantsPage isSignedIn={isSignedIn} />} />
           <Route path='/credits' element={<CreditsPage/>}/>
         </Routes>
       </Router>
