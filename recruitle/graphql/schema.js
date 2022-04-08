@@ -40,8 +40,8 @@ const EmployerType = new GraphQLObjectType({
   })
 });
 
-const JobsCount = new GraphQLObjectType({
-  name: 'JobsCount',
+const Count = new GraphQLObjectType({
+  name: 'Count',
   fields: () => ({
     value: { type: GraphQLInt },
   })
@@ -87,7 +87,7 @@ const RootQuery = new GraphQLObjectType({
       }
     },
     jobCount: {
-      type: JobsCount,
+      type: Count,
       args: { filter: { type: GraphQLString }},
       resolve(parent, args) {
         if (args.filter == null) {
@@ -155,7 +155,7 @@ const RootQuery = new GraphQLObjectType({
       }
     },
     postingsCount: {
-      type: JobsCount,
+      type: Count,
       args: {
         companyId: { type: GraphQLID }
       },
@@ -203,7 +203,7 @@ const RootQuery = new GraphQLObjectType({
       }
     },
     applicationsCount: {
-      type: JobsCount,
+      type: Count,
       args: {
         applicantId: { type: GraphQLID }
       },
@@ -229,6 +229,27 @@ const RootQuery = new GraphQLObjectType({
     applicants: {
       type: new GraphQLList(ApplicantType),
       args: {
+        jobId: { type: GraphQLID },
+        first: { type: GraphQLInt },
+        offset: { type: GraphQLInt }
+      },
+      async resolve(parent, args) {
+        var apps = null;
+        apps = await Application.find({"jobId": args.jobId}).sort({createdAt: -1}).skip(args.offset).limit(args.first).populate("applicantId");
+        const res = apps.map(async app => {
+          return {
+            id: app.applicantId.id,
+            firstName: app.applicantId.firstName,
+            lastName: app.applicantId.lastName,
+            email: app.applicantId.email,
+            resume: app.applicantId.resume,
+        }});
+        return res;
+      }
+    },
+    applicantsCount: {
+      type: Count,
+      args: {
         jobId: { type: GraphQLID }
       },
       async resolve(parent, args) {
@@ -242,7 +263,10 @@ const RootQuery = new GraphQLObjectType({
             email: app.applicantId.email,
             resume: app.applicantId.resume,
         }});
-        return res;
+        if (apps != null) {
+          return {value: res.length};
+        } 
+        return {value: 0}
       }
     },
     applicationExists: {

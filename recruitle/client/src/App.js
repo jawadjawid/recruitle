@@ -48,7 +48,7 @@ export default function BasicExample() {
           <Route path='/profile' element={<ProfilePage isSignedIn={isSignedIn} userType={userType}/>}/>
           <Route path='/create' element={<CreateJobPageNotistack isSignedIn={isSignedIn} userType={userType}/>}/>
           <Route path='/jobs' element={<JobsPageNotistack isSignedIn={isSignedIn} userType={userType}/>}/>
-          <Route path='/applicants' element={<ListApplicantsPage isSignedIn={isSignedIn} />} />
+          <Route path='/applicants/:jobId' element={<ListApplicantsPage isSignedIn={isSignedIn} />} />
           <Route path='/credits' element={<CreditsPage/>}/>
         </Routes>
       </Router>
