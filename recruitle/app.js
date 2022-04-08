@@ -11,6 +11,7 @@ const schema = require('./graphql/schema');
 const auth = require('./auth');
 const profile = require('./profile');
 const job = require('./job');
+const room = require('./room');
 var multer  = require('multer');
 var upload = multer({ dest: 'uploads/' });
 
@@ -81,6 +82,8 @@ app.post('/resumes/', isAuthenticated, upload.single('file'), profile.uploadResu
 app.get('/resumes/:id/', isAuthenticated, profile.getResume);
 
 app.post('/jobs/apply/', isAuthenticated, job.apply);
+
+app.post('/join-room/', isAuthenticated, room.join);
 
 app.use(express.static(path.join(__dirname, ".", "/client/build")));
 app.get('*', (req, res) => res.sendFile(path.resolve('./client', 'build', 'index.html')));
