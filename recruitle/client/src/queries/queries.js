@@ -26,8 +26,8 @@ const GET_APPLICANTS = gql`
 `;
 
 const GET_APPLICATIONS = gql`
-  query ($applicantId: ID) {
-    applications(id: $applicantId) {
+  query ($applicantId: ID, $first: Int, $offset: Int) {
+    applications(applicantId: $applicantId, first: $first, offset: $offset) {
       id
       title
       companyName
@@ -37,6 +37,14 @@ const GET_APPLICATIONS = gql`
       desc
     }
   }
+`;
+
+const GET_APPLICATIONS_COUNT = gql`
+query ($applicantId: ID) {
+  applicationsCount(applicantId: $applicantId) {
+    value
+  }
+}
 `;
 
 const GET_POSTINGS = gql`
@@ -128,6 +136,7 @@ const RESUME_EXISTS = gql`
 export { GET_APPLICANT, 
     GET_APPLICANTS,
     GET_APPLICATIONS,
+    GET_APPLICATIONS_COUNT,
     GET_EMPLOYER,
     GET_POSTINGS,
     CREATE_JOB,
