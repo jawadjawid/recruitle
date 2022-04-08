@@ -7,6 +7,9 @@ function resolveSignupError(error){
     if (!error.errors)
         return "Error signing up"
     errors = error.errors
+    console.log("jawad")
+
+    console.log(errors)
     if(errors.firstName)
         return errors.firstName.message;
     else if(errors.lastName)
@@ -15,25 +18,21 @@ function resolveSignupError(error){
         return errors.password.message;
     else if(errors.email)
         return errors.email.message;
-    else if(errors.companyName)
+    else if(errors.companyName){
+        console.log("hssdsdaere")
         return errors.companyName.message;
+
+    }
 }
 
-function signinCallBack (err, result) {
-    if (err) return res.status(500).end("error");
-    if (!result) return res.status(401).end("access denied"); 
-    // req.session.email = result.email;  
-    res.setHeader('Set-Cookie', cookie.serialize('username', user.id, {
-        path : '/', 
-        maxAge: 60 * 60 * 24 * 7
-    }));
-    return user;
-}
+const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*.()-+?><])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
 module.exports = {
     signup: (req, res, next) => {
         let email = req.body.email;
         let password = req.body.password;
+        if(!passwordRegex.test(password))
+            return res.status(500).end("Password must be of at least legth 8, and should contain a special symbol, upper and lower case letters and a number");
 
         bcrypt.genSalt(10, function(err, salt) {
             bcrypt.hash(password, salt, function(err, hash) {
@@ -51,7 +50,8 @@ module.exports = {
     
                     newApplicant.save(function (err, user) {
                         if (err) {
-                            err = resolveSignupError(err).split("Path")[1];
+                            resolvedMsg = resolveSignupError(err);
+                            err = resolvedMsg.includes("Path") ? resolvedMsg.split("Path")[1] : resolvedMsg;
                             return res.status(500).end(err);
                         };
                         return res.status(200).json({user});
@@ -67,7 +67,8 @@ module.exports = {
     
                     newEmployer.save(function (err, employer) {
                         if (err) {
-                            err = resolveSignupError(err).split("Path")[1];
+                            resolvedMsg = resolveSignupError(err);
+                            err = resolvedMsg.includes("Path") ? resolvedMsg.split("Path")[1] : resolvedMsg;
                             return res.status(500).end(err);
                         };
                         return res.status(200).json({employer});

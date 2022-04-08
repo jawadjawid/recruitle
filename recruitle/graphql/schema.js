@@ -93,7 +93,7 @@ const RootQuery = new GraphQLObjectType({
         if (args.filter == null) {
           return {"value": Job.countDocuments({})}
         } else {
-          const regex = new RegExp(args.filter, 'i');
+          const regex = new RegExp(args.filter.replaceAll('+', ' '), 'i');
           return {"value":Job.countDocuments({ $or: [{ title: {$regex: regex} }, { companyName: {$regex: regex} }, { location: {$regex: regex} }, { desc: {$regex: regex} }] })}
         }
       }
@@ -111,7 +111,7 @@ const RootQuery = new GraphQLObjectType({
         if (args.filter == null) {
           jobs = await Job.find({}).sort({createdAt: -1}).skip(args.offset).limit(args.first);
         } else {
-          const regex = new RegExp(args.filter, 'i')
+          const regex = new RegExp(args.filter.replaceAll('+', ' '), 'i');
           jobs = await Job.find({ $or: [{ title: {$regex: regex} }, { companyName: {$regex: regex} }, { location: {$regex: regex} }, { desc: {$regex: regex} }] })
           .sort({createdAt: -1}).skip(args.offset).limit(args.first);
         }
