@@ -21,7 +21,7 @@ https://recruitle.me/
 
 ![image](https://user-images.githubusercontent.com/54965155/162344149-f89f8c26-eeb5-40c7-b9c6-a125e62a8171.png)
 
-Instead of having seperate frontend and backend applications, we decided to go with a single express app that serves the frontend statically from the client/build folder (in app.js)
+Instead of having separate frontend and backend applications, we decided to go with a single express app that serves the frontend statically from the client/build folder (in app.js)
 
 ![image](https://user-images.githubusercontent.com/54965155/162347111-0d2db39a-34a9-4fed-8afb-5d0503e33472.png)
 
@@ -35,22 +35,22 @@ The image is built using the Dockerfile above after every push to main that chan
 
 ![image](https://user-images.githubusercontent.com/54965155/162346036-09750e79-fa22-4ceb-901c-8e4219f051fd.png)
 
-We decided to user docker-compose for simlicity, espcially that we wanted pass an env variables file and specify the ports mapping. As we can see on the last line of the image above, the deployment part of the github worlkflow simply pulls all the images in the dockercompose file (one image) and runs docker compose up on it.
+We decided to use docker-compose for simplicity, especially because we wanted to pass an env variables file and specify the ports mapping. As we can see on the last line of the image above, the deployment part of the github workflow simply pulls all the images in the dockercompose file (one image) and runs docker compose up on it.
 
-![image](https://user-images.githubusercontent.com/54965155/162346468-e75348ea-6861-4a74-8881-7a4d2738c0cc.png) We can see how the docker compose forwards port 3000 of the container to port 3000 of the VM server. So after deployemnt, the express app is accsesable on port 3000 of the VM, and all we need to do is proxy it to the outside world.
+![image](https://user-images.githubusercontent.com/54965155/162346468-e75348ea-6861-4a74-8881-7a4d2738c0cc.png) We can see how the docker compose forwards port 3000 of the container to port 3000 of the VM server. So after deployemnt, the express app is accessable on port 3000 of the VM, and all we need to do is proxy it to the outside world.
 
-Thats the strcture of the VM. It contains regural NGINX files and some certificate files for https. On top of that it contains a secret file that stores the values of all the env variables (db, email connection, twillo, etc..), and also the docker compose files that is used to run the container.
+Thats the structure of the VM. It contains regular NGINX files and some certificate files for https. On top of that it contains a secret file that stores the values of all the env variables (db, email connection, twillo, etc..), and also the docker compose files that is used to run the container.
 
 ![image](https://user-images.githubusercontent.com/54965155/162346312-00a38380-807b-44ac-92c8-ba0a05f37c92.png)
 
-As mentioned earlier, the app is served on an NGINX DigitalOcean Ubuntu machine. The VM runs NGINX naitevly as opposed to in a container. So at any given time there is only one container running, which is the express app serving react files. The container runs on PORT 3000 of the digital ocean vm, and then NGINX proxies that to port 80 of that vm.
+As mentioned earlier, the app is served on an NGINX DigitalOcean Ubuntu machine. The VM runs NGINX natively as opposed to in a container. So at any given time there is only one container running, which is the express app serving react files. The container runs on PORT 3000 of the digital ocean vm, and then NGINX proxies that to port 80 of that vm.
 
 ![image](https://user-images.githubusercontent.com/54965155/162349279-89990694-cc33-4b86-a615-bf6fd3002ca8.png)
 
-So this NGINX config file is a standard one that maps port 80 of the VM to the express app, and the second flag is to to assure the express app that the connection is secure.
+So this NGINX config file is a standard one that maps port 80 of the VM to the express app, and the second flag is to ensure in the express app that the connection is secure.
 
 ### Domain and HTTPS
-We use namecheap to get a domain, and used thesse steps to acquire an automatically renwable https certifacte https://certbot.eff.org/instructions?ws=nginx&os=ubuntubionic
+We use namecheap to get a domain, and used these steps to acquire an automatically renewable https certifacte https://certbot.eff.org/instructions?ws=nginx&os=ubuntubionic
 
 ## Maintenance
 
@@ -60,9 +60,9 @@ We use namecheap to get a domain, and used thesse steps to acquire an automatica
 
 **Task:** What is the top 3 most challenging things that you have learned/developed for you app? Please restrict your answer to only three items. 
 
-1. Deployment
-2.
-3. 
+1. Deployment. This was definitely one of the most challenging parts of this project as it involved lots of research, learning, understanding and experimentation.
+2. GraphQL or React Maybe?
+3. Video calling??
 
 ## Contributions
 
@@ -72,6 +72,13 @@ We use namecheap to get a domain, and used thesse steps to acquire an automatica
 - SignIn and SignUp pages
 - Search and pagination
 - Deployment, and security
+
+### Muhammad Osman Amjad
+- Setting up the backend to work with graphql
+- Show a user's personal info on profile page
+- Show an applicant's applications on their profile page
+- Show an employer's job postings on their profile page
+- Allow employer to see applicants for each job posting
 
 # One more thing? 
 
