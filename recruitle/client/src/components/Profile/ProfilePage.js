@@ -75,7 +75,11 @@ export default function ProfilePage(props) {
     //const {enqueueSnackbar} = useSnackbar();
 
     if (appsLoading || appsCountLoading || loading2 || loading ) return (<p>No data</p>);
-    
+    if (error) {
+        setSnackBarOpen(true);
+        setSnackBarMsg("Failed to load user profile data.");
+        setSeverity("error");
+    }
     let pages = [];
     if (appsCountData) {
         for (let number = 1; number <= Math.ceil(appsCountData.applicationsCount.value/5); number++) {
