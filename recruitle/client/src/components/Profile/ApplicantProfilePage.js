@@ -69,7 +69,6 @@ export default function ApplicantProfilePage(props) {
         variables: {applicantId: getUsername()}
     });
 
-    if (appsLoading || appsCountLoading || updateLoading || applicantLoading ) return (<p>No data</p>);
     if (error) {
         setSnackBarOpen(true);
         setSnackBarMsg("Failed to load user profile data.");
@@ -136,97 +135,99 @@ export default function ApplicantProfilePage(props) {
     }
 
     const DisplayApplicantDetails = () => {  
-        return (
-            <ThemeProvider theme={theme}>
-            <Container component="main">
-                <CssBaseline />
-                <Box
-                sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
-                >
-                <EditIcon color="primary" fontSize="large"/>
-                <Typography component="h1" variant="h2" sx={{marginBottom: 5}}>
+        if (appsData && appsCountData && applicantData) {
+            return (
+                <ThemeProvider theme={theme}>
+                <Container component="main">
+                    <CssBaseline />
+                    <Box
+                    sx={{
+                        marginTop: 8,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                    >
+                    <EditIcon color="primary" fontSize="large"/>
+                    <Typography component="h1" variant="h2" sx={{marginBottom: 5}}>
+                            <Editable
+                                text={firstName}
+                                placeholder={applicantData.applicant.firstName}
+                                childRef={inputRef}
+                                type="input"
+                            >
+                                <input
+                                ref={inputRef}
+                                type="text"
+                                name="name"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-blue-300"
+                                placeholder={applicantData.applicant.firstName}
+                                value={firstName || applicantData.applicant.firstName}
+                                onChange={handleFirstNameChange}
+                                />
+                        </Editable>
+                    </Typography>
+                    <EditIcon color="primary" fontSize="large"/>
+                    <Typography component="h1" variant="h2">
                         <Editable
-                            text={firstName}
-                            placeholder={applicantData.applicant.firstName}
-                            childRef={inputRef}
-                            type="input"
-                        >
-                            <input
-                            ref={inputRef}
-                            type="text"
-                            name="name"
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-blue-300"
-                            placeholder={applicantData.applicant.firstName}
-                            value={firstName || applicantData.applicant.firstName}
-                            onChange={handleFirstNameChange}
-                            />
-                    </Editable>
-                </Typography>
-                <EditIcon color="primary" fontSize="large"/>
-                <Typography component="h1" variant="h2">
-                    <Editable
-                            text={lastName}
-                            placeholder={applicantData.applicant.lastName}
-                            childRef={inputRef}
-                            type="input"
-                        >
-                            <input
-                            ref={inputRef}
-                            type="text"
-                            name="lastName"
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-blue-300"
-                            placeholder={applicantData.applicant.lastName}
-                            value={lastName ||applicantData.applicant.lastName}
-                            onChange={handleLastNameChange}
-                            />
-                    </Editable>
-                </Typography>
-                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 6 }}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <EmailIcon color="primary" fontSize="large"/>
-                            {applicantData.applicant.email}
+                                text={lastName}
+                                placeholder={applicantData.applicant.lastName}
+                                childRef={inputRef}
+                                type="input"
+                            >
+                                <input
+                                ref={inputRef}
+                                type="text"
+                                name="lastName"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-blue-300"
+                                placeholder={applicantData.applicant.lastName}
+                                value={lastName ||applicantData.applicant.lastName}
+                                onChange={handleLastNameChange}
+                                />
+                        </Editable>
+                    </Typography>
+                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 6 }}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <EmailIcon color="primary" fontSize="large"/>
+                                {applicantData.applicant.email}
+                            </Grid>
+                            <Grid item xs={12}>
+                                <ContactPageIcon color="primary" fontSize="large"/>
+                                {applicantData.applicant.resume.originalname}
+                            </Grid>
+                            <Grid item xs={12}>
+                                <input type="file" id="resume_url" name="resume_irl" accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf" required/>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                            <ContactPageIcon color="primary" fontSize="large"/>
-                            {applicantData.applicant.resume.originalname}
-                        </Grid>
-                        <Grid item xs={12}>
-                            <input type="file" id="resume_url" name="resume_irl" accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf" required/>
-                        </Grid>
-                    </Grid>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                        >
-                        Upload Resume
-                    </Button>
-                </Box>
-                <Typography component="h1" variant="h2" sx={{marginTop:5, width:"max-content"}}>
-                    Your Job Applications
-                </Typography>
-                <Box sx={{
-                    columnCount: 1,
-                    margin: "auto",
-                    marginTop: "20px",
-                    width: "100%",
-                }}>
-                    {appsData.applications.map(app => (<ApplicationCard app={app}></ApplicationCard>))}
-                    <Pagination style={{justifyContent:'center'}}>{pages}</Pagination>
-                </Box>
-                </Box>
-                <Copyright sx={{ mt: 5 }} />
-            </Container>
-            <SnackBarAlert open={snackBarOpen} severity={severity} msg={snackBarMsg} handleSnackBarClose={handleSnackBarClose} />
-            </ThemeProvider>
-        );
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                            >
+                            Upload Resume
+                        </Button>
+                    </Box>
+                    <Typography component="h1" variant="h2" sx={{marginTop:5, width:"max-content"}}>
+                        Your Job Applications
+                    </Typography>
+                    <Box sx={{
+                        columnCount: 1,
+                        margin: "auto",
+                        marginTop: "20px",
+                        width: "100%",
+                    }}>
+                        {appsData.applications.map(app => (<ApplicationCard app={app}></ApplicationCard>))}
+                        <Pagination style={{justifyContent:'center'}}>{pages}</Pagination>
+                    </Box>
+                    </Box>
+                    <Copyright sx={{ mt: 5 }} />
+                </Container>
+                <SnackBarAlert open={snackBarOpen} severity={severity} msg={snackBarMsg} handleSnackBarClose={handleSnackBarClose} />
+                </ThemeProvider>
+            );
+        }
     };
 
     function authResolver(){
