@@ -149,6 +149,34 @@ const RESUME_EXISTS = gql`
   }
 `;
 
+const REQUEST_INTERVIEW = gql`
+  mutation ($employerId: ID!, $applicantId: ID!, $jobId: ID!, $date: String!) {
+    requestInterview(employerId: $employerId, applicantId: $applicantId, jobId: $jobId, date: $date) {
+      id
+    }
+  }
+`;
+
+const GET_INTERVIEWS = gql`
+  query($id: ID!) {
+    interviews(id: $id) {
+      id
+      employerId {
+        companyName
+      }
+      applicantId {
+        firstName
+        lastName
+      }
+      jobId {
+        title
+      }
+      roomName
+      date
+    }
+  }
+`;
+
 export { GET_APPLICANT, 
     GET_APPLICANTS,
     GET_APPLICANTS_COUNT,
@@ -163,4 +191,6 @@ export { GET_APPLICANT,
     UPDATE_EMPLOYER,
     APPLICATION_EXISTS,
     RESUME_EXISTS,
-    GET_JOBS_COUNT };
+    GET_JOBS_COUNT,
+    REQUEST_INTERVIEW,
+    GET_INTERVIEWS };

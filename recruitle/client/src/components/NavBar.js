@@ -38,6 +38,7 @@ export default function NavBar(props) {
         <Navbar.Collapse className="justify-content-end">
           <Nav className="me-auto">
             <Nav.Link href="jobs">Jobs</Nav.Link>
+            <Nav.Link href="interviews">Interviews</Nav.Link>
             <Nav.Link href="profile">Profile</Nav.Link>
             <Nav.Link href="credits">Credits</Nav.Link>
           </Nav>
@@ -59,6 +60,7 @@ export default function NavBar(props) {
       return (  
         <Navbar.Collapse className="justify-content-end">
           <Nav className="me-auto">
+            <Nav.Link href="interviews">Interviews</Nav.Link>
             <Nav.Link href="profile">Profile</Nav.Link>
             <Nav.Link href="credits">Credits</Nav.Link>
           </Nav>
