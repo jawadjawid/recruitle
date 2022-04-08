@@ -133,11 +133,14 @@ const RootQuery = new GraphQLObjectType({
     postings: {
       type: new GraphQLList(JobType),
       args: {
-        companyName: { type: GraphQLString }
+        companyId: { type: GraphQLID },
+        first: { type: GraphQLInt },
+        offset: { type: GraphQLInt }
       },
       async resolve(parent, args) {
+        const employer = await Employer.findOne({"_id": args.companyId});
         var jobs = null;
-        jobs = await Job.find({"companyName": args.companyName}).sort({createdAt: -1});
+        jobs = await Job.find({"companyName": employer.companyName}).sort({createdAt: -1}).skip(args.offset).limit(args.first);
         const res = jobs.map(async job => {
           return {
             id: job.id,
@@ -149,6 +152,31 @@ const RootQuery = new GraphQLObjectType({
             desc: job.desc
         }});
         return res;
+      }
+    },
+    postingsCount: {
+      type: JobsCount,
+      args: {
+        companyId: { type: GraphQLID }
+      },
+      async resolve(parent, args) {
+        const employer = await Employer.findOne({"_id": args.companyId});
+        var jobs = null;
+        jobs = await Job.find({"companyName": employer.companyName}).sort({createdAt: -1});
+        const res = jobs.map(async job => {
+          return {
+            id: job.id,
+            title: job.title,
+            companyName: job.companyName,
+            salary: job.salary,
+            currency: job.currency,
+            location: job.location,
+            desc: job.desc
+        }});
+        if (jobs != null) {
+          return {value: res.length};
+        } 
+        return {value: 0}
       }
     },
     applications: {

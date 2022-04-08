@@ -218,7 +218,7 @@ export default function ApplicantProfilePage(props) {
                         marginTop: "20px",
                         width: "100%",
                     }}>
-                        {appsData.applications.map(app => (<ApplicationCard app={app}></ApplicationCard>))}
+                        {appsData.applications.map(app => (<ApplicationCard app={app} hideApplicants={true}></ApplicationCard>))}
                         <Pagination style={{justifyContent:'center'}}>{pages}</Pagination>
                     </Box>
                     </Box>

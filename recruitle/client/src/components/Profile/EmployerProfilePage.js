@@ -11,7 +11,7 @@ import ApplicationCard from "./ApplicationCard";
 import Pagination from 'react-bootstrap/Pagination';
 
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_EMPLOYER, UPDATE_EMPLOYER, GET_APPLICANTS, GET_POSTINGS } from '../../queries/queries';
+import { GET_EMPLOYER, UPDATE_EMPLOYER, GET_APPLICANTS, GET_POSTINGS, GET_POSTINGS_COUNT } from '../../queries/queries';
 import { getUsername} from '../api.js';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -47,26 +47,37 @@ export default function EmployerProfilePage(props) {
         variables: { id: username } 
     });
 
-    if (updateLoading || employerLoading ) return (<p>No data</p>);
+    const {data: postingsData, loading: postingsLoading} = useQuery(GET_POSTINGS, {
+        variables: {
+            companyId: username,
+            first: 5,
+            offset: (activePage - 1) * 5,
+        }
+    });
+
+    const {data: postingsCountData, loading: postingsCountLoading} = useQuery(GET_POSTINGS_COUNT, {
+        variables: {companyId: username}
+    });
+
     if (error) {
         setSnackBarOpen(true);
         setSnackBarMsg("Failed to load user profile data.");
         setSeverity("error");
     }
-    // let pages = [];
-    // if (appsCountData) {
-    //     for (let number = 1; number <= Math.ceil(appsCountData.applicationsCount.value/5); number++) {
-    //         pages.push(
-    //             <Pagination.Item key={number} active={number === activePage} onClick={navPage}>
-    //                 {number}
-    //             </Pagination.Item>,
-    //         );
-    //     }
-    // }
+    let pages = [];
+    if (postingsCountData) {
+        for (let number = 1; number <= Math.ceil(postingsCountData.postingsCount.value/5); number++) {
+            pages.push(
+                <Pagination.Item key={number} active={number === activePage} onClick={navPage}>
+                    {number}
+                </Pagination.Item>,
+            );
+        }
+    }
     
-    // function navPage(e){ 
-    //     setActivePage(parseInt(e.currentTarget.text));
-    // };
+    function navPage(e){ 
+        setActivePage(parseInt(e.currentTarget.text));
+    };
 
     const handleSnackBarClose = (event, reason) => {
         if (reason === 'clickaway')
@@ -75,7 +86,7 @@ export default function EmployerProfilePage(props) {
     };
 
     const DisplayEmployerDetails = () => {  
-        if (employerData && employerData.employer) { 
+        if (employerData && employerData.employer && postingsData) { 
             return (
                 <ThemeProvider theme={theme}>
                 <Container component="main">
@@ -102,6 +113,15 @@ export default function EmployerProfilePage(props) {
                     <Typography component="h1" variant="h2" sx={{marginTop:5, width:"max-content"}}>
                         Your Job Postings
                     </Typography>
+                    <Box sx={{
+                        columnCount: 1,
+                        margin: "auto",
+                        marginTop: "20px",
+                        width: "100%",
+                    }}>
+                        {postingsData.postings.map(app => (<ApplicationCard app={app} hideApplicants={false}></ApplicationCard>))}
+                        <Pagination style={{justifyContent:'center'}}>{pages}</Pagination>
+                    </Box>
                     </Box>
                     <Copyright sx={{ mt: 5 }} />
                 </Container>
