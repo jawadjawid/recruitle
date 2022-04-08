@@ -40,16 +40,16 @@ const GET_APPLICATIONS = gql`
 `;
 
 const GET_APPLICATIONS_COUNT = gql`
-query ($applicantId: ID) {
-  applicationsCount(applicantId: $applicantId) {
-    value
+  query ($applicantId: ID) {
+    applicationsCount(applicantId: $applicantId) {
+      value
+    }
   }
-}
 `;
 
 const GET_POSTINGS = gql`
-  query ($companyName: String) {
-    applications(companyName: $companyName) {
+  query ($companyId: ID, $first: Int, $offset: Int) {
+    postings(companyId: $companyId, first: $first, offset: $offset) {
       id
       title
       companyName
@@ -57,6 +57,14 @@ const GET_POSTINGS = gql`
       currency
       location
       desc
+    }
+  }
+`;
+
+const GET_POSTINGS_COUNT = gql`
+  query ($companyId: ID) {
+    postingsCount(companyId: $companyId) {
+      value
     }
   }
 `;
@@ -72,26 +80,26 @@ const GET_EMPLOYER = gql`
 `;
 
 const GET_JOBS = gql`
-query Jobs($applicantId: ID, $first: Int, $offset: Int, $filter: String) {
-  jobs(applicantId: $applicantId, first: $first, offset: $offset, filter: $filter) {
-    id
-    title
-    location
-    companyName
-    salary
-    currency
-    desc
-    applied
+  query Jobs($applicantId: ID, $first: Int, $offset: Int, $filter: String) {
+    jobs(applicantId: $applicantId, first: $first, offset: $offset, filter: $filter) {
+      id
+      title
+      location
+      companyName
+      salary
+      currency
+      desc
+      applied
+    }
   }
-}
 `;
 
 const GET_JOBS_COUNT = gql`
-query JobCount($filter: String) {
-  jobCount(filter: $filter){
-    value
+  query JobCount($filter: String) {
+    jobCount(filter: $filter){
+      value
+    }
   }
-}
 `;
 
 const CREATE_JOB = gql`
@@ -139,6 +147,7 @@ export { GET_APPLICANT,
     GET_APPLICATIONS_COUNT,
     GET_EMPLOYER,
     GET_POSTINGS,
+    GET_POSTINGS_COUNT,
     CREATE_JOB,
     GET_JOBS,
     UPDATE_APPLICANT,
