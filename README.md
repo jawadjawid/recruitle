@@ -11,7 +11,15 @@ https://recruitle.me/
 
 ## Project Description
 
-**Task:** Provide a detailed description of your app
+Our motivation for this app was to make it easier for applicants to apply to jobs, and make it easier for recruiters to schedule interviews with applicants. 
+Overall our applications main features are to create jobs, see your job postings, see applicants to your jobs, schedule interviews with applicants, allow applicants to apply to jobs, and allow applicants to see their job applications. Below, we will explain the workflow of our application.
+
+On the landing page of our application, the user is prompted to sign in. If they don't have an account, they can visit the sign-up page and sign up as either 
+an applicant or as an employer. Once a user is signed up, they are redirected to the sign-in page where they can sign in with their email and password.
+Upon successfully signing in, the user will be redirected to their own profile page.
+
+If the user who signed in is an applicant, their profile page will include their first and last name, email, and their resume on file (if they've attached one).
+
 
 ## Development
 
