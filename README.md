@@ -84,7 +84,29 @@ Node/Express/MongoDB for backend, React on frontend, and GraphQL for data exchan
 
 ## Deployment
 
-**Task:** Explain how you have deployed your application. 
+Instead of having seperate frontend and backend applications, we decided to go with a single express app that serves the frontend statically from the client/build folder.
+
+![image](https://user-images.githubusercontent.com/54965155/162344149-f89f8c26-eeb5-40c7-b9c6-a125e62a8171.png)
+
+For production, the Dockerfile creates the image by simply installing the dependencies of both the front and the back end, then it builds the frontend and runs the express app, which is now ready to serve the built react files https://github.com/UTSCC09/project-crazy-arabs/blob/main/recruitle/app.js#L95.
+
+![image](https://user-images.githubusercontent.com/54965155/162343764-1b2af548-6c2f-40cf-98d1-f77c38784aa6.png)
+
+The image is built using the Dockerfile above after every push to main that changes relavant files. After the image is built, it's pushed to github registry, and after that another workflow runs which deploys the changes on the server.
+
+![image](https://user-images.githubusercontent.com/54965155/162346036-09750e79-fa22-4ceb-901c-8e4219f051fd.png)
+
+
+The app is served on an NGINX DigitalOcean Ubuntu machine. The VM runs NGINX naitevly as opposed to in a container. So at any given time there is only one container running, which is the express app serving react files. The container runs on PORT 3000 of the digital ocean vm, adn then NGINX proxies that to port 80 of that vm.
+![image](https://user-images.githubusercontent.com/54965155/162346468-e75348ea-6861-4a74-8881-7a4d2738c0cc.png) we can see how the docker compose forwards port 3000 of the container to port 3000 of the VM server. So after deployemnt the express app is accsesable on port 3000 of the VM, and all we need to do is proxy it to the outside world.
+
+![image](https://user-images.githubusercontent.com/54965155/162346661-f4646f21-50ac-4bcc-b884-9a254dade5d5.png)
+
+
+
+
+![image](https://user-images.githubusercontent.com/54965155/162346312-00a38380-807b-44ac-92c8-ba0a05f37c92.png)
+
 
 ## Maintenance
 
