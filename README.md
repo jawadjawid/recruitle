@@ -3,7 +3,7 @@ Created by: Muhammad Osman Amjad, Ali Al Rawaf, Jawad Jawid
 
 ## Project URL
 
-http://recruitle.me
+https://recruitle.me/
 
 ## Project Video URL 
 
