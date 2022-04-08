@@ -77,23 +77,6 @@ We use namecheap to get a domain, and used thesse steps to acquire an automatica
 
 **Task:** Any additional comment you want to share with the course staff? 
 
-## How to run
-- Clone repo
-- Navigate to ```recruitle```
-- Run ```npm install``` and wait for it to finish
-- Run ```npm start```
-- Done. App should start running on PORT 3000
-
-## How to run locally with docker
-- Clone repo
-- Navigate to ```recruitle```
-- Run ```docker build -t recruitle .``` and wait for it to finish
-- Run ```docker run -dp 3000:3000 recruitle```
-- Done. App should start running on PORT 3000
-
-## How to deploy latest version of the app
-- Wokring on that rn
-
 ## Description
 The idea is to create an application similar to Glassdoor/LinkedIn. We want a web application that will allows companies to post job postings, let candidates apply to postings, let candidates review companies, let candidates submit their salaries. 
 
@@ -139,6 +122,3 @@ Node/Express/MongoDB for backend, React on frontend, and GraphQL for data exchan
 * Setting up the front-end from scratch
 * Managing different user roles (candidates vs employers)
 * Implementing all features on time!
-
-
-
