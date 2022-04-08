@@ -26,9 +26,8 @@ app.use(session({
     saveUninitialized: true,
     proxy: true,
     cookie: {
-      secure: true,
+      secure: process.env.PROD || false,
       sameSite: true,
-      domain: "recruitle.me"
     },
 }));
 
@@ -96,18 +95,7 @@ app.post('/jobs/apply/', isAuthenticated, job.apply);
 app.use(express.static(path.join(__dirname, ".", "/client/build")));
 app.get('*', (req, res) => res.sendFile(path.resolve('./client', 'build', 'index.html')));
 
-var privateKey = fs.readFileSync( 'server.key' );
-var certificate = fs.readFileSync( 'server.crt' );
-var config = {
-        key: privateKey,
-        cert: certificate
-};
-
 const port = process.env.PORT || 3000;
-// https.createServer(config, app).listen(PORT, function (err) {
-//   if (err) console.log(err);
-//   else console.log("HTTPS server on https://localhost:%s", PORT);
-// });
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
