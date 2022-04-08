@@ -19,6 +19,7 @@ an applicant or as an employer. Once a user is signed up, they are redirected to
 Upon successfully signing in, the user will be redirected to their own profile page.
 
 If the user who signed in is an applicant, their profile page will include their first and last name, email, and their resume on file (if they've attached one).
+It will also include a paginated list of their job applications (jobs they've applied to). An applicant is also able to modify their first or last name from the profile page. They can also upload a resume from the profile page. If they've already uploaded a resume and try to upload another one, the resume on file will be replaced by the new resume. An applicant is also able to click on the Jobs section from the navigation bar, and they will be redirected to the Jobs page. On the jobs page, an applicant will see a paginated list of jobs with the associated company, location, salary, and job description. They can filter for specific jobs or companies using the search bar. They can apply for a job by clicking "Quick Apply" and their information along with their resume will be emailed to the company who made that job posting. If the applicant does not have a resume on file, they will not be able to apply for jobs and they will be prompted to attach a resume from their profile page. This is the workflow in the point of view of an applicant. 
 
 
 ## Development
