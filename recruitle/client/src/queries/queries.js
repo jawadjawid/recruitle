@@ -14,13 +14,21 @@ const GET_APPLICANT = gql`
 `;
 
 const GET_APPLICANTS = gql`
-  query ($jobId: ID) {
-    applicants(jobId: $jobId) {
+  query ($jobId: ID, $first: Int, $offset: Int) {
+    applicants(jobId: $jobId, first: $first, offset: $offset) {
       id
       firstName
       lastName
       email
       resume
+    }
+  }
+`;
+
+const GET_APPLICANTS_COUNT = gql`
+  query ($jobId: ID) {
+    applicantsCount(jobId: $jobId) {
+      value
     }
   }
 `;
@@ -143,11 +151,12 @@ const RESUME_EXISTS = gql`
 
 export { GET_APPLICANT, 
     GET_APPLICANTS,
+    GET_APPLICANTS_COUNT,
     GET_APPLICATIONS,
     GET_APPLICATIONS_COUNT,
-    GET_EMPLOYER,
     GET_POSTINGS,
     GET_POSTINGS_COUNT,
+    GET_EMPLOYER,
     CREATE_JOB,
     GET_JOBS,
     UPDATE_APPLICANT,
