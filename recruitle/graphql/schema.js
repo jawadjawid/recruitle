@@ -130,6 +130,93 @@ const RootQuery = new GraphQLObjectType({
         return res;
       }
     },
+    postings: {
+      type: new GraphQLList(JobType),
+      args: {
+        companyName: { type: GraphQLString }
+      },
+      async resolve(parent, args) {
+        var jobs = null;
+        jobs = await Job.find({"companyName": args.companyName}).sort({createdAt: -1});
+        const res = jobs.map(async job => {
+          return {
+            id: job.id,
+            title: job.title,
+            companyName: job.companyName,
+            salary: job.salary,
+            currency: job.currency,
+            location: job.location,
+            desc: job.desc
+        }});
+        return res;
+      }
+    },
+    applications: {
+      type: new GraphQLList(JobType),
+      args: {
+        applicantId: { type: GraphQLID },
+        first: { type: GraphQLInt },
+        offset: { type: GraphQLInt }
+      },
+      async resolve(parent, args) {
+        var apps = null;
+        apps = await Application.find({"applicantId": args.applicantId}).sort({createdAt: -1}).skip(args.offset).limit(args.first).populate("jobId");
+        const res = apps.map(async app => {
+          return {
+            id: app.jobId.id,
+            title: app.jobId.title,
+            companyName: app.jobId.companyName,
+            salary: app.jobId.salary,
+            currency: app.jobId.currency,
+            location: app.jobId.location,
+            desc: app.jobId.desc
+        }});
+        return res;
+      }
+    },
+    applicationsCount: {
+      type: JobsCount,
+      args: {
+        applicantId: { type: GraphQLID }
+      },
+      async resolve(parent, args) {
+        var apps = null;
+        apps = await Application.find({"applicantId": args.applicantId}).sort({createdAt: -1}).populate("jobId");
+        const res = apps.map(async app => {
+          return {
+            id: app.jobId.id,
+            title: app.jobId.title,
+            companyName: app.jobId.companyName,
+            salary: app.jobId.salary,
+            currency: app.jobId.currency,
+            location: app.jobId.location,
+            desc: app.jobId.desc
+        }});
+        if (apps != null) {
+          return {value: res.length};
+        } 
+        return {value: 0}
+      }
+    },
+    applicants: {
+      type: new GraphQLList(ApplicantType),
+      args: {
+        jobId: { type: GraphQLID }
+      },
+      async resolve(parent, args) {
+        var apps = null;
+        apps = await Application.find({"jobId": args.jobId}).sort({createdAt: -1}).populate("applicantId");
+        const res = apps.map(async app => {
+          return {
+            id: app.applicantId.id,
+            firstName: app.applicantId.firstName,
+            lastName: app.applicantId.lastName,
+            email: app.applicantId.email,
+            resume: app.applicantId.resume,
+        }});
+        return res;
+      }
+    },
     applicationExists: {
       type: GraphQLBoolean,
       args: {

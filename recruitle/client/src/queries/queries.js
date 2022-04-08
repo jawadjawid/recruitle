@@ -13,6 +13,54 @@ const GET_APPLICANT = gql`
   }
 `;
 
+const GET_APPLICANTS = gql`
+  query ($id: ID) {
+    applicants(id: $id) {
+      id
+      firstName
+      lastName
+      email
+      resume
+    }
+  }
+`;
+
+const GET_APPLICATIONS = gql`
+  query ($applicantId: ID, $first: Int, $offset: Int) {
+    applications(applicantId: $applicantId, first: $first, offset: $offset) {
+      id
+      title
+      companyName
+      salary
+      currency
+      location
+      desc
+    }
+  }
+`;
+
+const GET_APPLICATIONS_COUNT = gql`
+query ($applicantId: ID) {
+  applicationsCount(applicantId: $applicantId) {
+    value
+  }
+}
+`;
+
+const GET_POSTINGS = gql`
+  query ($companyName: String) {
+    applications(companyName: $companyName) {
+      id
+      title
+      companyName
+      salary
+      currency
+      location
+      desc
+    }
+  }
+`;
+
 const GET_EMPLOYER = gql`
   query ($id: ID) {
     employer(id: $id) {
@@ -85,8 +133,12 @@ const RESUME_EXISTS = gql`
   }
 `;
 
-export { GET_APPLICANT,
+export { GET_APPLICANT, 
+    GET_APPLICANTS,
+    GET_APPLICATIONS,
+    GET_APPLICATIONS_COUNT,
     GET_EMPLOYER,
+    GET_POSTINGS,
     CREATE_JOB,
     GET_JOBS,
     UPDATE_APPLICANT,
