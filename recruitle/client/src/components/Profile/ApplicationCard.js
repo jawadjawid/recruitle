@@ -5,10 +5,18 @@ import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import { useNavigate } from 'react-router-dom';
+import ListApplicantsPage from './ListApplicantsPage'
+import Link from '@mui/material/Link';
 
 export default function ApplicationCard(props) {
-    function apply(){
-        console.log("hi")
+    const navigate = useNavigate();
+
+    function showApplicants(jobId){
+        //navigate("/applicants");
+        // return (
+        //     <ListApplicantsPage isSignedIn={props.isSignedIn} jobId={jobId}/>
+        // );
     }
 
     return(
@@ -20,9 +28,12 @@ export default function ApplicationCard(props) {
                 <Typography sx={{mb: 1.5, wordBreak: "break-word"}} style={{whiteSpace: 'pre-line'}} variant="body1">{props.app.desc}</Typography>
                 <Typography variant="body2">{props.app.salary} {props.app.currency}/year</Typography>
             </CardContent>
-            <CardActions>
-                <Button onClick={apply} hidden={props.hideApplicants}>See Applicants</Button>
-            </CardActions>
+            <Link href="/applicants" variant="body1" hidden={props.hideApplicants}>
+                View Applicants
+            </Link>
+            {/* <CardActions>
+                <Button onClick={showApplicants(props.id)} hidden={props.hideApplicants}>View Applicants</Button>
+            </CardActions> */}
         </Card>
     );
 }

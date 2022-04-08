@@ -14,8 +14,8 @@ const GET_APPLICANT = gql`
 `;
 
 const GET_APPLICANTS = gql`
-  query ($id: ID) {
-    applicants(id: $id) {
+  query ($jobId: ID) {
+    applicants(jobId: $jobId) {
       id
       firstName
       lastName
