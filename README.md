@@ -3,7 +3,7 @@ Created by: Muhammad Osman Amjad, Ali Al Rawaf, Jawad Jawid
 
 ## Project URL
 
-**Task:** Provide the link to your deployed application. Please make sure the link works. 
+http://recruitle.me
 
 ## Project Video URL 
 
@@ -60,13 +60,18 @@ We use namecheap to get a domain, and used thesse steps to acquire an automatica
 
 **Task:** What is the top 3 most challenging things that you have learned/developed for you app? Please restrict your answer to only three items. 
 
-1.
+1. Deployment
 2.
 3. 
 
 ## Contributions
 
-**Task:** Describe the contribution of each team member to the project. Please provide the full name of each team member (but no student number). 
+### Mahamad Jawad Jawid
+- Setup database
+- Setup overall structure of the app
+- SignIn and SignUp pages
+- Search and pagination
+- Deployment, and security
 
 # One more thing? 
 
