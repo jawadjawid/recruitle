@@ -12,11 +12,8 @@ import Link from '@mui/material/Link';
 export default function ApplicationCard(props) {
     const navigate = useNavigate();
 
-    function showApplicants(jobId){
-        //navigate("/applicants");
-        // return (
-        //     <ListApplicantsPage isSignedIn={props.isSignedIn} jobId={jobId}/>
-        // );
+    const showApplicants= (jobId) => {
+        navigate(`/applicants/${jobId}`)
     }
 
     return(
@@ -28,12 +25,9 @@ export default function ApplicationCard(props) {
                 <Typography sx={{mb: 1.5, wordBreak: "break-word"}} style={{whiteSpace: 'pre-line'}} variant="body1">{props.app.desc}</Typography>
                 <Typography variant="body2">{props.app.salary} {props.app.currency}/year</Typography>
             </CardContent>
-            <Link href="/applicants" variant="body1" hidden={props.hideApplicants}>
-                View Applicants
-            </Link>
-            {/* <CardActions>
-                <Button onClick={showApplicants(props.id)} hidden={props.hideApplicants}>View Applicants</Button>
-            </CardActions> */}
+            <CardActions>
+                <Button onClick={() => showApplicants(props.app.id)} hidden={props.hideApplicants}>View Applicants</Button>
+            </CardActions>
         </Card>
     );
 }
