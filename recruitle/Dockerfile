@@ -6,4 +6,5 @@ WORKDIR /app/client
 RUN npm install
 RUN npm run build
 WORKDIR /app/
+EXPOSE 80
 ENTRYPOINT ["node", "app.js"]
