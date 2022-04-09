@@ -90,6 +90,13 @@ We use namecheap to get a domain, and used these steps to acquire an automatical
 - Show an employer's job postings on their profile page
 - Allow employer to see applicants for each job posting
 
+### Ali Al Rawaf
+- Full stack job creation
+- Applicants can see and apply to jobs
+- Employers recieve emails about applications to their postings
+- Employers can request interviews to specific applicants for specific jobs with a selected date
+- Employers and applicants can join a room where they can see and interview with eachother 1 on 1
+
 # One more thing? 
 
 **Task:** Any additional comment you want to share with the course staff? 
