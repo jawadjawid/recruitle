@@ -3,6 +3,7 @@ COPY . /app
 WORKDIR /app/
 RUN npm install
 WORKDIR /app/client
+RUN npm install --force --save twilio-video use-twilio-video
 RUN npm install
 RUN npm run build
 WORKDIR /app/
