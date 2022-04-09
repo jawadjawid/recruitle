@@ -100,5 +100,4 @@ Due to time constraints we dont have any autoamted system in place to mointor bu
 - Employers and applicants can join a room where they can see and interview with eachother 1 on 1
 
 # One more thing? 
-
-**Task:** Any additional comment you want to share with the course staff? 
+Thank you very an amazing course. We thought that the work was challnging, but only now as we are finishing up the app, we are realizing how satsfying it all is. This course covered so many useful concepts in web develpoment, and we are excited to apply our skills in the outside world. Thanks :)
