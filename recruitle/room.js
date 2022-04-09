@@ -5,9 +5,9 @@ const VideoGrant = AccessToken.VideoGrant;
 const twilioCreds = require('./config.js').twilio;
 
 const twilioClient = require("twilio")(
-  twilioCreds.TWILIO_API_KEY_SID,
-  twilioCreds.TWILIO_API_KEY_SECRET,
-  { accountSid: twilioCreds.TWILIO_ACCOUNT_SID }
+  process.env.TWILIO_API_KEY_SID || twilioCreds.TWILIO_API_KEY_SID,
+  process.env.TWILIO_API_KEY_SECRET || twilioCreds.TWILIO_API_KEY_SECRET,
+  { accountSid: process.env.TWILIO_ACCOUNT_SID || twilioCreds.TWILIO_ACCOUNT_SID }
 );
 
 const findOrCreateRoom = async (roomName) => {
@@ -28,9 +28,9 @@ const findOrCreateRoom = async (roomName) => {
 
 const getAccessToken = (roomName) => {
     const token = new AccessToken(
-      twilioCreds.TWILIO_ACCOUNT_SID,
-      twilioCreds.TWILIO_API_KEY_SID,
-      twilioCreds.TWILIO_API_KEY_SECRET,
+      process.env.TWILIO_ACCOUNT_SID || twilioCreds.TWILIO_ACCOUNT_SID,
+      process.env.TWILIO_API_KEY_SID || twilioCreds.TWILIO_API_KEY_SID,
+      process.env.TWILIO_API_KEY_SECRET || twilioCreds.TWILIO_API_KEY_SECRET,
       { identity: uuidv4() }
     );
 
