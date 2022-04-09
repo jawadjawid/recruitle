@@ -37,6 +37,7 @@ export default function NavBar(props) {
       return (  
         <Navbar.Collapse className="justify-content-end">
           <Nav className="me-auto">
+            <Nav.Link href="https://recruitle.me/interviews">Interviews</Nav.Link>
             <Nav.Link href="https://recruitle.me/jobs" replace={true}>Jobs</Nav.Link>
             <Nav.Link href="https://recruitle.me/profile" replace={true}>Profile</Nav.Link>
             <Nav.Link href="https://recruitle.me/credits" replace={true}>Credits</Nav.Link>
@@ -59,6 +60,7 @@ export default function NavBar(props) {
       return (  
         <Navbar.Collapse className="justify-content-end">
           <Nav className="me-auto">
+            <Nav.Link href="https://recruitle.me/interviews">Interviews</Nav.Link>
             <Nav.Link href="https://recruitle.me/profile" replace={true}>Profile</Nav.Link>
             <Nav.Link href="https://recruitle.me/credits" replace={true}>Credits</Nav.Link>
           </Nav>

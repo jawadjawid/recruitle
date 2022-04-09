@@ -1,4 +1,5 @@
 // package imports
+const { v4: uuidv4 } = require("uuid");
 const graphqljson = require('graphql-type-json');
 const {GraphQLJSON} = graphqljson;
 const graphql = require('graphql');
@@ -19,6 +20,7 @@ const Applicant = require('../database/models/applicant');
 const Employer = require('../database/models/employer');
 const Job = require('../database/models/job');
 const Application = require('../database/models/application');
+const Interview = require('../database/models/interview');
 
 const ApplicantType = new GraphQLObjectType({
   name: 'Applicant',
@@ -58,6 +60,43 @@ const JobType = new GraphQLObjectType({
     location: { type: GraphQLString },
     desc: { type: GraphQLString },
     applied: { type: GraphQLBoolean }
+  })
+});
+
+const JobInfoType = new GraphQLObjectType({
+  name: 'JobInfo',
+  fields: () => ({
+    id: { type: GraphQLID },
+    title: { type: GraphQLString },
+    companyName: { type: GraphQLString },
+    salary: { type: GraphQLInt },
+    currency: { type: GraphQLString },
+    location: { type: GraphQLString },
+    desc: { type: GraphQLString }
+  })
+});
+
+const InterviewType = new GraphQLObjectType({
+  name: 'Interview',
+  fields: () => ({
+    id: { type: GraphQLID },
+    employerId: { type: GraphQLID },
+    applicantId: { type: GraphQLID },
+    jobId: { type: GraphQLID },
+    date: { type: GraphQLString },
+    roomName: { type: GraphQLString }
+  })
+});
+
+const InterviewInfoType = new GraphQLObjectType({
+  name: 'InterviewInfo',
+  fields: () => ({
+    id: { type: GraphQLID },
+    employerId: {type: EmployerType},
+    applicantId: { type: ApplicantType },
+    jobId: { type: JobInfoType },
+    date: { type: GraphQLString },
+    roomName: { type: GraphQLString }
   })
 });
 
@@ -286,6 +325,17 @@ const RootQuery = new GraphQLObjectType({
         const applicant = await Applicant.findOne({"_id": args.id});
         return applicant.resume.get("originalname") != "No resume on file!";
       }
+    },
+    interviews: {
+      type: new GraphQLList(InterviewInfoType),
+      args: { id: {type: GraphQLID} },
+      async resolve(parents, args) {
+        var interviews = await Interview.find({applicantId: args.id}).populate("applicantId").populate("employerId").populate("jobId");
+        if(interviews.length == 0) {
+          interviews = await Interview.find({employerId: args.id}).populate("applicantId").populate("employerId").populate("jobId");
+        }
+        return interviews;
+      }
     }
   }
 });
@@ -345,6 +395,25 @@ const Mutation = new GraphQLObjectType({
           employer.companyName = args.companyName;
           return employer.save();
         });
+      }
+    },
+    requestInterview: {
+      type: InterviewType,
+      args: {
+        employerId: { type: GraphQLID },
+        applicantId: { type: GraphQLID },
+        jobId: { type: GraphQLID },
+        date: { type: GraphQLString }
+      },
+      resolve(parent, args) {
+        let interview = new Interview({
+          employerId: args.employerId,
+          applicantId: args.applicantId,
+          jobId: args.jobId,
+          date: args.date,
+          roomName: uuidv4()
+        });
+        return interview.save();
       }
     }
   }

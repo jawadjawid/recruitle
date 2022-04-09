@@ -46,6 +46,10 @@ export default function CreditsPage() {
             <td>Profile page editable fields</td>
             <td>https://github.com/learnwithparam/logrocket-inline-edit-ui</td>
           </tr>
+          <tr>
+            <td>Twilio video hooks</td>
+            <td>https://github.com/nlatifahulfah/use-twilio-video</td>
+          </tr>
         </tbody>
       </Table>
     </div>

@@ -4,9 +4,12 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.5.10",
+    "@date-io/date-fns": "^2.13.1",
+    "@date-io/dayjs": "^2.13.1",
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.5.1",
+    "@mui/lab": "^5.0.0-alpha.76",
     "@mui/material": "^5.5.0",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
@@ -21,6 +24,8 @@
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
     "reactstrap": "^9.0.1",
+    "twilio-video": "^2.21.1",
+    "use-twilio-video": "^0.1.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
