@@ -73,8 +73,8 @@ Due to time constraints we dont have any autoamted system in place to mointor bu
 **Task:** What is the top 3 most challenging things that you have learned/developed for you app? Please restrict your answer to only three items. 
 
 1. Deployment. This was definitely one of the most challenging parts of this project as it involved lots of research, learning, understanding and experimentation.
-2. React: We were just not used to the react way of doing things, adn it took some time to get used to states, and other react concepts.
-3. Video calling
+2. React: We were just not used to the react way of doing things, and it took some time to get used to states, and other react concepts.
+3. Video calling: We chose to use the Twilio API to support our interviews, but with the official frontend APIs available for implementing a twilio client, the developers are responsible for implementing their own hooks to control the state of the room. Programmable video APIs were low level, and required a lot of learning and understanding of audio and video, participants, and room logic.
 
 ## Contributions
 
