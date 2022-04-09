@@ -7,9 +7,7 @@ function resolveSignupError(error){
     if (!error.errors)
         return "Error signing up"
     errors = error.errors
-    console.log("jawad")
 
-    console.log(errors)
     if(errors.firstName)
         return errors.firstName.message;
     else if(errors.lastName)
@@ -19,9 +17,7 @@ function resolveSignupError(error){
     else if(errors.email)
         return errors.email.message;
     else if(errors.companyName){
-        console.log("hssdsdaere")
         return errors.companyName.message;
-
     }
 }
 
@@ -116,10 +112,14 @@ module.exports = {
                     req.session.userType = 'applicant'  
                     res.setHeader('Set-Cookie', [cookie.serialize('username', user.id, {
                         path : '/', 
-                        maxAge: 60 * 60 * 24 * 7
+                        maxAge: 60 * 60 * 24 * 7,
+                        secure: true,
+                        sameSite: true,
                     }), cookie.serialize('userType', 'applicant', {
                         path : '/', 
-                        maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
+                        maxAge: 60 * 60 * 24 * 7,
+                        secure: true,
+                        sameSite: true,
                     })]);
                     return res.json(user);
                 })
@@ -130,10 +130,14 @@ module.exports = {
     signout: (req, res, next) => {
       res.setHeader('Set-Cookie', [cookie.serialize('username', '', {
         path : '/', 
-        maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
+        maxAge: 60 * 60 * 24 * 7,
+        secure: true,
+        sameSite: true,
       }), cookie.serialize('userType', '', {
         path : '/', 
-        maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
+        maxAge: 60 * 60 * 24 * 7,
+        secure: true,
+        sameSite: true,
       })]);
       req.session.destroy();
       return res.json("Good");

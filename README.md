@@ -11,7 +11,17 @@ https://recruitle.me/
 
 ## Project Description
 
-**Task:** Provide a detailed description of your app
+Our motivation for this app was to make it easier for applicants to apply to jobs, and make it easier for recruiters to schedule interviews with applicants. 
+Overall our applications main features are to create jobs, see your job postings, see applicants to your jobs, schedule interviews with applicants, allow applicants to apply to jobs, and allow applicants to see their job applications. Below, we will explain the workflow of our application.
+
+On the landing page of our application, the user is prompted to sign in. If they don't have an account, they can visit the sign-up page and sign up as either 
+an applicant or as an employer. Once a user is signed up, they are redirected to the sign-in page where they can sign in with their email and password.
+Upon successfully signing in, the user will be redirected to their own profile page.
+
+If the user who signed in is an applicant, their profile page will include their first and last name, email, and their resume on file (if they've attached one).
+It will also include a paginated list of their job applications (jobs they've applied to). An applicant is also able to modify their first or last name from the profile page. They can also upload a resume from the profile page. If they've already uploaded a resume and try to upload another one, the resume on file will be replaced by the new resume. An applicant is also able to click on the Jobs section from the navigation bar, and they will be redirected to the Jobs page. On the jobs page, an applicant will see a paginated list of jobs with the associated company, location, salary, and job description. They can filter for specific jobs or companies using the search bar. They can apply for a job by clicking "Quick Apply" and their information along with their resume will be emailed to the company who made that job posting. If the applicant does not have a resume on file, they will not be able to apply for jobs and they will be prompted to attach a resume from their profile page. This is the workflow in the point of view of an applicant. 
+
+If the user signed in is an employer, their profile page will include their company name, email, and a paginated list of their job postings. For each job posting, there is a "View Applicants" button so the employer can view the applicants for a specific job posting. If the employer clicks "View Applicants" on a job posting, they will be redirected to a new page showing the applicants for that job posting, and a button to schedule an interview with the applicant. NEED MORE EXPLANATION ABOUT WHAT HAPPENS WHEN INTERVIEW IS SCHEDULED. An employer is also able to click "Create Job" which will prompt them with a form that allows them to create a job. They will have to input the job title, the job description, the location of the job, and the salary of the job (with its associated currency). Once they post the job, it will display on their profile page under their job postings, and it will show on the jobs page for any applicant-type users. This is the worlkflow in the point of view of an employer.
 
 ## Development
 
