@@ -27,7 +27,7 @@ If the user signed in is an employer, their profile page will include their comp
 
 ## Development
 
-**Task:** Leaving deployment aside, explain how the app is built. Please describe the overall code design and be specific about the programming languages, framework, libraries and third-party api that you have used. 
+We built the application like a traditional web application with a frontend and a backend. Our frontend is done using React, and our backend used Express, Node, GraphQL, and MongoDB. We used Twilio's APIs for video conferencing and allowing candidates and employers to join/leave calls. We used React since a couple of us had some experience with it and it is a modern front-end framework. GraphQL was a very valuable and interesting tool to learn and use, and we're glad we chose it since it is a very up and coming technology. Amongst the libraries we used was Material-UI for React, Apollo for GraphQL, and Mongoose for MongoDB. All of these libraries made our development much easier and cleaner. This made rendering and creating components a lot easier. The overall code design we followed was based on the SOLID principles. We made sure each class had its own purpose and we made sure to oragnize the files and folders such that related files are together. For example, we have the Auth folder for sign in and sign up. And, we have the Profile folder for all files related to the profile. These two examples are on the frontend, but we also organized things similarly on the backend, so each file and folder structure serves a purpose. Our server side files are under the recruitle foldr, and our cclient side files are under the client folder. 
 
 ## Deployment
 
