@@ -12,6 +12,7 @@ const twilioClient = require("twilio")(
 
 const findOrCreateRoom = async (roomName) => {
     try {
+      console.log("Fetching " + roomName);
       await twilioClient.video.rooms(roomName).fetch();
     } catch (error) {
       if (error.code == 20404) {
@@ -20,7 +21,7 @@ const findOrCreateRoom = async (roomName) => {
           type: "go",
         });
       } else {
-        throw error;
+        console.log(error);
       }
     }
 };
@@ -49,6 +50,7 @@ module.exports = {
     const roomName = req.body.roomName;
     findOrCreateRoom(roomName);
     const token = getAccessToken(roomName);
+    console.log("Sending token: " + token);
     res.send({
       token: token,
     });

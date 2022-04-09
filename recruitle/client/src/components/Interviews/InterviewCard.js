@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 
 export default function InterviewCard(props) {
     function joinRoom(){
-        console.log("joining room: " + props.interview.roomName);
+        props.setRoomName(props.interview.roomName);
     }
 
     const name = () => {

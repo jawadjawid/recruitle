@@ -25,6 +25,7 @@
     "react-scripts": "5.0.0",
     "reactstrap": "^9.0.1",
     "twilio-video": "^2.21.1",
+    "use-twilio-video": "^0.1.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
