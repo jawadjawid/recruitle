@@ -2,7 +2,10 @@ const { v4: uuidv4 } = require("uuid");
 const AccessToken = require("twilio").jwt.AccessToken;
 const VideoGrant = AccessToken.VideoGrant;
 
-const twilioCreds = require('./config.js').twilio;
+
+if (!process.env.TWILIO_API_KEY_SID){
+  const twilioCreds = require('./config.js').twilio;
+}
 
 const twilioClient = require("twilio")(
   process.env.TWILIO_API_KEY_SID || twilioCreds.TWILIO_API_KEY_SID,

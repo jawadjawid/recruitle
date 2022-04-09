@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { useRoom } from 'use-twilio-video';
 import Participant from './Participant';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 export default function Room({ token, roomName }) {
     const {
@@ -28,27 +31,26 @@ export default function Room({ token, roomName }) {
     // connected
     if (room)
       return (
-        <div>
-          <div>
-            <button onClick={() => disconnectRoom()}>Leave</button>
-            <button onClick={() => toggleCamera()}>
+        <React.Fragment sx={{margin: "auto"}}>
+          <Box>
+            <Button onClick={() => disconnectRoom()}>Leave</Button>
+            <Button onClick={() => toggleCamera()}>
               {isCameraOn ? 'Disable Camera' : 'Enable Camera'}
-            </button>
-            <button onClick={() => toggleMicrophone()}>
+            </Button>
+            <Button onClick={() => toggleMicrophone()}>
               {isMicrophoneOn ? 'Mute' : 'Unmute'}
-            </button>
-          </div>
-  
-          <Participant participant={localParticipant} />
-  
-          <div>Dominant speaker: {JSON.stringify(dominantSpeaker?.identity)}</div>
-  
-          <div>
-            {remoteParticipants.map(p => (
-              <Participant participant={p} />
-            ))}
-          </div>
-        </div>
+            </Button>
+          </Box>
+          <Box sx={{display: "flex", flexDirection: "row", alignItems: "center", justifyItems: "center"}}>
+            <Participant participant={localParticipant} />
+            
+            <React.Fragment>
+              {remoteParticipants.map(p => (
+                <Participant participant={p} />
+              ))}
+            </React.Fragment>
+          </Box>
+        </React.Fragment>
       );
     else 
       return (
