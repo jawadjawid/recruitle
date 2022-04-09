@@ -7,7 +7,8 @@ https://recruitle.me/
 
 ## Project Video URL 
 
-**Task:** Provide the link to your youtube video. Please make sure the link works. 
+https://youtu.be/jGsyYRGayhw
+(Due to time restriction, didn't get to mention that employers receive emails with resume when an applicant applies to one of their jobs)
 
 ## Project Description
 
