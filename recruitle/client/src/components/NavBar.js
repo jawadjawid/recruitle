@@ -37,10 +37,10 @@ export default function NavBar(props) {
       return (  
         <Navbar.Collapse className="justify-content-end">
           <Nav className="me-auto">
-            <Nav.Link href="jobs">Jobs</Nav.Link>
-            <Nav.Link href="interviews">Interviews</Nav.Link>
-            <Nav.Link href="profile">Profile</Nav.Link>
-            <Nav.Link href="credits">Credits</Nav.Link>
+            <Nav.Link href="https://recruitle.me/interviews">Interviews</Nav.Link>
+            <Nav.Link href="https://recruitle.me/jobs" replace={true}>Jobs</Nav.Link>
+            <Nav.Link href="https://recruitle.me/profile" replace={true}>Profile</Nav.Link>
+            <Nav.Link href="https://recruitle.me/credits" replace={true}>Credits</Nav.Link>
           </Nav>
           <Nav>
             {isJobsPage && <Form onSubmit={search} className="d-flex">
@@ -60,12 +60,12 @@ export default function NavBar(props) {
       return (  
         <Navbar.Collapse className="justify-content-end">
           <Nav className="me-auto">
-            <Nav.Link href="interviews">Interviews</Nav.Link>
-            <Nav.Link href="profile">Profile</Nav.Link>
-            <Nav.Link href="credits">Credits</Nav.Link>
+            <Nav.Link href="https://recruitle.me/interviews">Interviews</Nav.Link>
+            <Nav.Link href="https://recruitle.me/profile" replace={true}>Profile</Nav.Link>
+            <Nav.Link href="https://recruitle.me/credits" replace={true}>Credits</Nav.Link>
           </Nav>
           <Nav>
-            <Nav.Link href="create">Create Job</Nav.Link>
+            <Nav.Link href="https://recruitle.me/create" replace={true}>Create Job</Nav.Link>
             <Button className="justify-content-end" variant="text" onClick={signoutUser}> Sign out</Button>
           </Nav>
         </Navbar.Collapse>
