@@ -66,15 +66,15 @@ We use namecheap to get a domain, and used these steps to acquire an automatical
 
 ## Maintenance
 
-**Task:** Explain how you monitor your deployed app to make sure that everything is working as expected.
+Due to time constraints we dont have any autoamted system in place to mointor bugs. We make sure to check the docker container logs constantly to notice any unexpected behvour. But thats about it.
 
 ## Challenges
 
 **Task:** What is the top 3 most challenging things that you have learned/developed for you app? Please restrict your answer to only three items. 
 
 1. Deployment. This was definitely one of the most challenging parts of this project as it involved lots of research, learning, understanding and experimentation.
-2. GraphQL or React Maybe?
-3. Video calling??
+2. React: We were just not used to the react way of doing things, adn it took some time to get used to states, and other react concepts.
+3. Video calling
 
 ## Contributions
 
